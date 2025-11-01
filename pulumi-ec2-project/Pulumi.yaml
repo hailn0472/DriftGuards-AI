@@ -1,0 +1,11 @@
+name: create-ec2
+description: This project is used for creating new ec2
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-python
