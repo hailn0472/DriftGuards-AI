@@ -1,0 +1,10 @@
+# Pulumi Dev Stack Configuration
+# This is the configuration for the 'dev' stack
+
+config:
+  aws:region: us-east-1
+  # Set your Instana agent key
+  # instana:agentKey: your-instana-agent-key-here
+  instana:endpoint: https://saas-us-east-1.instana.io
+  # Set your database password
+  # db:password: YourSecurePassword123!

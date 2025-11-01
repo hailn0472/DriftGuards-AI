@@ -1,0 +1,17 @@
+# Pulumi E-commerce Infrastructure
+
+Requirements for the Pulumi program that provisions AWS e-commerce infrastructure with Instana monitoring.
+
+## Core Pulumi
+pulumi>=3.0.0,<4.0.0
+
+## AWS Providers
+pulumi-aws>=6.0.0,<7.0.0
+pulumi-awsx>=2.0.0,<3.0.0
+pulumi-eks>=2.0.0,<3.0.0
+
+## Kubernetes Provider
+pulumi-kubernetes>=4.0.0,<5.0.0
+
+## Additional dependencies
+pyyaml>=6.0
