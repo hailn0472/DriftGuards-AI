@@ -199,9 +199,14 @@ if not PULUMI_AVAILABLE:
 # If Pulumi is available, run the real Pulumi program.
 if PULUMI_AVAILABLE:
     config = Config()
-    aws_region = config.get("aws:region") or "us-east-1"
-    instana_agent_key = config.require_secret("instana:agentKey")
-    instana_endpoint = config.get("instana:endpoint") or "https://saas-us-east-1.instana.io"
+    aws_config = Config("aws")
+    instana_config = Config("instana")
+    db_config = Config("db")
+
+    aws_region = aws_config.get("region") or "ap-southeast-1"
+    instana_agent_key = instana_config.require_secret("agentKey")
+    instana_endpoint = instana_config.get("endpoint") or "https://saas-ap-southeast-1.instana.io"
+    db_password = db_config.require_secret("password")
 
     # 1) VPC
     vpc = awsx.ec2.Vpc("ecom-vpc", cidr_block="10.0.0.0/16", number_of_availability_zones=2)
@@ -210,7 +215,9 @@ if PULUMI_AVAILABLE:
     eks_cluster = eks.Cluster(
         "frontend-eks",
         vpc_id=vpc.vpc_id,
-        subnet_ids=vpc.public_subnet_ids + vpc.private_subnet_ids,
+        subnet_ids=pulumi.Output.all(vpc.public_subnet_ids, vpc.private_subnet_ids).apply(
+            lambda subnets: subnets[0] + subnets[1]
+        ),
         instance_type="t3.medium",
         desired_capacity=2,
         min_size=1,
@@ -258,7 +265,7 @@ if PULUMI_AVAILABLE:
         network_mode="awsvpc",
         requires_compatibilities=["FARGATE"],
         execution_role_arn=execution_role.arn,
-        container_definitions=pulumi.Output.all(instana_agent_key).apply(
+        container_definitions=pulumi.Output.all(instana_agent_key, ecs_log_group.name).apply(
             lambda args: json.dumps(
                 [
                     {
@@ -269,7 +276,7 @@ if PULUMI_AVAILABLE:
                         "logConfiguration": {
                             "logDriver": "awslogs",
                             "options": {
-                                "awslogs-group": ecs_log_group.name,
+                                "awslogs-group": args[1],
                                 "awslogs-region": aws_region,
                                 "awslogs-stream-prefix": "order",
                             },
@@ -286,7 +293,7 @@ if PULUMI_AVAILABLE:
                         "logConfiguration": {
                             "logDriver": "awslogs",
                             "options": {
-                                "awslogs-group": ecs_log_group.name,
+                                "awslogs-group": args[1],
                                 "awslogs-region": aws_region,
                                 "awslogs-stream-prefix": "instana",
                             },
@@ -305,13 +312,16 @@ if PULUMI_AVAILABLE:
         engine="aurora-mysql",
         engine_mode="provisioned",
         master_username="admin",
-        master_password=config.require_secret("db:password"),
+        master_password=db_password,
         db_subnet_group_name=subnet_group.id,
     )
 
     # at least one instance
     aurora_instance = aws.rds.ClusterInstance(
-        "aurora-instance-1", cluster_identifier=aurora_cluster.id, instance_class="db.r5.large"
+        "aurora-instance-1",
+        cluster_identifier=aurora_cluster.id,
+        instance_class="db.r5.large",
+        engine="aurora-mysql",
     )
 
     # 5) DynamoDB for session storage
@@ -335,8 +345,8 @@ if PULUMI_AVAILABLE:
     msk_cluster = aws.msk.Cluster(
         "msk-cluster",
         cluster_name="ecom-msk",
-        kafka_version="2.8.1",
-        number_of_broker_nodes=3,
+        kafka_version="3.7.x",
+        number_of_broker_nodes=2,
         broker_node_group_info={
             "instance_type": "kafka.m5.large",
             "client_subnets": msk_subnets,

@@ -5,14 +5,15 @@ description: E-commerce infrastructure on AWS with Instana monitoring
 config:
   aws:region:
     description: AWS region to deploy to
-    default: us-east-1
+    value: ap-southeast-1
   instana:agentKey:
     description: Instana agent key (secret)
     secret: true
+    value: PassWord12345
   instana:endpoint:
     description: Instana endpoint URL
-    default: https://saas-us-east-1.instana.io
+    value: https://saas-ap-southeast-1.instana.io
   db:password:
     description: Aurora database master password
     secret: true
-    default: ChangeMe123!
+    value: PassWord12345
