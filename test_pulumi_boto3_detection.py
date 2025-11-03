@@ -20,8 +20,8 @@ from pathlib import Path
 project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
-from scripts.discover_aws_resources import AWSResourceDiscovery
 from app.agents.boto3_detection import Boto3DriftDetector
+from scripts.discover_aws_resources import AWSResourceDiscovery
 
 
 class PulumiBot3Test:
@@ -35,7 +35,7 @@ class PulumiBot3Test:
             "timestamp": datetime.now().isoformat(),
             "stages": {},
             "resources_detected": {},
-            "verification": {}
+            "verification": {},
         }
 
     def print_header(self, title):
@@ -55,11 +55,7 @@ class PulumiBot3Test:
         print(f"  Running: {' '.join(cmd)}")
         try:
             result = subprocess.run(
-                cmd,
-                cwd=cwd or self.pulumi_dir,
-                capture_output=capture,
-                text=True,
-                check=False
+                cmd, cwd=cwd or self.pulumi_dir, capture_output=capture, text=True, check=False
             )
             return result.returncode, result.stdout, result.stderr
         except Exception as e:
@@ -91,7 +87,7 @@ class PulumiBot3Test:
         self.test_results["stages"]["baseline"] = {
             "status": "success",
             "resources": {k: v.get("count", 0) for k, v in baseline.items() if isinstance(v, dict)},
-            "file": str(baseline_file)
+            "file": str(baseline_file),
         }
 
         return baseline
@@ -131,7 +127,7 @@ class PulumiBot3Test:
 
         self.test_results["stages"]["pulumi_check"] = {
             "status": "success",
-            "stack": stack_name if code == 0 else "unknown"
+            "stack": stack_name if code == 0 else "unknown",
         }
 
         return True
@@ -159,7 +155,7 @@ class PulumiBot3Test:
 
         self.test_results["stages"]["preview"] = {
             "status": "success" if code == 0 else "warning",
-            "exit_code": code
+            "exit_code": code,
         }
 
         return True
@@ -178,7 +174,7 @@ class PulumiBot3Test:
             print("  ❌ Deployment cancelled by user")
             self.test_results["stages"]["deployment"] = {
                 "status": "cancelled",
-                "reason": "User cancelled"
+                "reason": "User cancelled",
             }
             return False
 
@@ -187,14 +183,14 @@ class PulumiBot3Test:
         # Run pulumi up with auto-approve
         code, stdout, stderr = self.run_command(
             ["pulumi", "up", "--yes", "--skip-preview"],
-            capture=False  # Show output in real-time
+            capture=False,  # Show output in real-time
         )
 
         if code == 0:
             print("\n  ✅ Deployment successful!")
             self.test_results["stages"]["deployment"] = {
                 "status": "success",
-                "timestamp": datetime.now().isoformat()
+                "timestamp": datetime.now().isoformat(),
             }
             return True
         else:
@@ -203,7 +199,7 @@ class PulumiBot3Test:
             self.test_results["stages"]["deployment"] = {
                 "status": "failed",
                 "exit_code": code,
-                "error": stderr
+                "error": stderr,
             }
             return False
 
@@ -235,7 +231,7 @@ class PulumiBot3Test:
         self.test_results["stages"]["discovery"] = {
             "status": "success",
             "resources": resource_counts,
-            "file": str(after_file)
+            "file": str(after_file),
         }
 
         return after_deployment, resource_counts
@@ -283,7 +279,7 @@ class PulumiBot3Test:
             detection_results[resource_type] = {
                 "expected": expected,
                 "detected": new_count,
-                "status": "success" if detected else "missing"
+                "status": "success" if detected else "missing",
             }
 
             if not detected:
@@ -301,7 +297,7 @@ class PulumiBot3Test:
 
         self.test_results["verification"] = {
             "all_detected": all_detected,
-            "details": detection_results
+            "details": detection_results,
         }
 
         if all_detected:
@@ -325,7 +321,7 @@ class PulumiBot3Test:
             print("  💡 To destroy later, run: cd data-example && pulumi destroy")
             self.test_results["stages"]["cleanup"] = {
                 "status": "skipped",
-                "reason": "User cancelled"
+                "reason": "User cancelled",
             }
             return False
 
@@ -334,14 +330,14 @@ class PulumiBot3Test:
         # Run pulumi destroy
         code, stdout, stderr = self.run_command(
             ["pulumi", "destroy", "--yes", "--skip-preview"],
-            capture=False  # Show output in real-time
+            capture=False,  # Show output in real-time
         )
 
         if code == 0:
             print("\n  ✅ Infrastructure destroyed successfully!")
             self.test_results["stages"]["cleanup"] = {
                 "status": "success",
-                "timestamp": datetime.now().isoformat()
+                "timestamp": datetime.now().isoformat(),
             }
             return True
         else:
@@ -352,7 +348,7 @@ class PulumiBot3Test:
             self.test_results["stages"]["cleanup"] = {
                 "status": "failed",
                 "exit_code": code,
-                "error": stderr
+                "error": stderr,
             }
             return False
 
@@ -420,6 +416,7 @@ class PulumiBot3Test:
         except Exception as e:
             print(f"\n\n❌ Test failed with error: {e}")
             import traceback
+
             traceback.print_exc()
             return False
 
@@ -452,4 +449,3 @@ if __name__ == "__main__":
         sys.exit(1)
 
     asyncio.run(main())
-
