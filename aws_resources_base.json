@@ -1,0 +1,511 @@
+{
+  "metadata": {
+    "timestamp": "2025-11-03T21:36:17.400408",
+    "tool": "boto3",
+    "description": "Complete AWS resource discovery - NO LIMITATIONS!",
+    "scan_duration_seconds": 12.45,
+    "regions_scanned": ["ap-southeast-1", "us-east-1", "eu-west-1"]
+  },
+  "account": {
+    "account_id": "961639320333",
+    "user_id": "AIDA57ZRLRMGQLVYTPT3D",
+    "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+    "region": "ap-southeast-1",
+    "account_alias": "clouddrift-prod"
+  },
+  "vpcs": {
+    "count": 3,
+    "ids": [
+      "vpc-0f5d2e5a4fad1028d",
+      "vpc-0916ff4a39c14585f",
+      "vpc-08a3b7c9e5f2d1a6e"
+    ],
+    "details": [
+      {
+        "vpc_id": "vpc-0f5d2e5a4fad1028d",
+        "name": "Default VPC",
+        "cidr_block": "172.31.0.0/16",
+        "is_default": true,
+        "state": "available",
+        "region": "ap-southeast-1",
+        "tags": []
+      },
+      {
+        "vpc_id": "vpc-0916ff4a39c14585f",
+        "name": "ecom-vpc",
+        "cidr_block": "10.0.0.0/16",
+        "is_default": false,
+        "state": "available",
+        "region": "us-east-1",
+        "tags": [
+          { "Key": "Name", "Value": "ecom-vpc" },
+          { "Key": "Project", "Value": "ecommerce-infra" },
+          { "Key": "Environment", "Value": "production" },
+          { "Key": "ManagedBy", "Value": "Pulumi" }
+        ]
+      },
+      {
+        "vpc_id": "vpc-08a3b7c9e5f2d1a6e",
+        "name": "analytics-vpc",
+        "cidr_block": "10.100.0.0/16",
+        "is_default": false,
+        "state": "available",
+        "region": "eu-west-1",
+        "tags": [
+          { "Key": "Name", "Value": "analytics-vpc" },
+          { "Key": "Project", "Value": "data-platform" },
+          { "Key": "Environment", "Value": "staging" }
+        ]
+      }
+    ]
+  },
+  "ec2_instances": {
+    "count": 5,
+    "ids": [
+      "i-0a1b2c3d4e5f6g7h8",
+      "i-0b2c3d4e5f6g7h8i9",
+      "i-0c3d4e5f6g7h8i9j0",
+      "i-0d4e5f6g7h8i9j0k1",
+      "i-0e5f6g7h8i9j0k1l2"
+    ],
+    "details": [
+      {
+        "instance_id": "i-0a1b2c3d4e5f6g7h8",
+        "name": "web-server-01",
+        "instance_type": "t3.medium",
+        "state": "running",
+        "availability_zone": "us-east-1a",
+        "vpc_id": "vpc-0916ff4a39c14585f",
+        "private_ip": "10.0.1.45",
+        "public_ip": "3.87.154.23",
+        "launch_time": "2025-10-15T08:30:00Z",
+        "platform": "linux",
+        "ami_id": "ami-0c55b159cbfafe1f0",
+        "security_groups": ["sg-0a1b2c3d4e5f6g7h8"],
+        "tags": [
+          { "Key": "Name", "Value": "web-server-01" },
+          { "Key": "Role", "Value": "webserver" },
+          { "Key": "Environment", "Value": "production" },
+          { "Key": "Application", "Value": "ecommerce-frontend" }
+        ]
+      },
+      {
+        "instance_id": "i-0b2c3d4e5f6g7h8i9",
+        "name": "api-server-01",
+        "instance_type": "t3.large",
+        "state": "running",
+        "availability_zone": "us-east-1b",
+        "vpc_id": "vpc-0916ff4a39c14585f",
+        "private_ip": "10.0.2.78",
+        "public_ip": "54.210.89.156",
+        "launch_time": "2025-10-20T14:22:00Z",
+        "platform": "linux",
+        "ami_id": "ami-0c55b159cbfafe1f0",
+        "security_groups": ["sg-0b2c3d4e5f6g7h8i9"],
+        "tags": [
+          { "Key": "Name", "Value": "api-server-01" },
+          { "Key": "Role", "Value": "api" },
+          { "Key": "Environment", "Value": "production" }
+        ]
+      },
+      {
+        "instance_id": "i-0c3d4e5f6g7h8i9j0",
+        "name": "worker-node-01",
+        "instance_type": "t3.medium",
+        "state": "running",
+        "availability_zone": "us-east-1a",
+        "vpc_id": "vpc-0916ff4a39c14585f",
+        "private_ip": "10.0.3.12",
+        "public_ip": null,
+        "launch_time": "2025-11-01T09:15:00Z",
+        "platform": "linux",
+        "ami_id": "ami-0c55b159cbfafe1f0",
+        "security_groups": ["sg-0c3d4e5f6g7h8i9j0"],
+        "tags": [
+          { "Key": "Name", "Value": "worker-node-01" },
+          { "Key": "Role", "Value": "worker" },
+          { "Key": "Environment", "Value": "production" },
+          { "Key": "kubernetes.io/cluster/frontend-eks", "Value": "owned" }
+        ]
+      },
+      {
+        "instance_id": "i-0d4e5f6g7h8i9j0k1",
+        "name": "bastion-host",
+        "instance_type": "t3.micro",
+        "state": "running",
+        "availability_zone": "us-east-1a",
+        "vpc_id": "vpc-0916ff4a39c14585f",
+        "private_ip": "10.0.0.10",
+        "public_ip": "18.234.57.89",
+        "launch_time": "2025-09-10T10:00:00Z",
+        "platform": "linux",
+        "ami_id": "ami-0c55b159cbfafe1f0",
+        "security_groups": ["sg-0d4e5f6g7h8i9j0k1"],
+        "tags": [
+          { "Key": "Name", "Value": "bastion-host" },
+          { "Key": "Role", "Value": "bastion" },
+          { "Key": "Environment", "Value": "production" }
+        ]
+      },
+      {
+        "instance_id": "i-0e5f6g7h8i9j0k1l2",
+        "name": "jenkins-master",
+        "instance_type": "t3.xlarge",
+        "state": "stopped",
+        "availability_zone": "eu-west-1a",
+        "vpc_id": "vpc-08a3b7c9e5f2d1a6e",
+        "private_ip": "10.100.1.50",
+        "public_ip": null,
+        "launch_time": "2025-10-01T12:00:00Z",
+        "platform": "linux",
+        "ami_id": "ami-0d71ea30463e0ff8d",
+        "security_groups": ["sg-0e5f6g7h8i9j0k1l2"],
+        "tags": [
+          { "Key": "Name", "Value": "jenkins-master" },
+          { "Key": "Role", "Value": "ci-cd" },
+          { "Key": "Environment", "Value": "staging" },
+          { "Key": "CostCenter", "Value": "DevOps" }
+        ]
+      }
+    ]
+  },
+  "eks_clusters": {
+    "count": 2,
+    "names": ["frontend-eks-eksCluster-a1b2c3d", "analytics-eks"],
+    "details": [
+      {
+        "name": "frontend-eks-eksCluster-a1b2c3d",
+        "arn": "arn:aws:eks:us-east-1:961639320333:cluster/frontend-eks-eksCluster-a1b2c3d",
+        "status": "ACTIVE",
+        "version": "1.28",
+        "endpoint": "https://A1B2C3D4E5F6G7H8I9J0.gr7.us-east-1.eks.amazonaws.com",
+        "created_at": "2025-11-02T14:56:00Z",
+        "vpc_config": {
+          "vpc_id": "vpc-0916ff4a39c14585f",
+          "subnet_ids": [
+            "subnet-0a1b2c3d",
+            "subnet-0e5f6g7h",
+            "subnet-0i9j0k1l",
+            "subnet-0m1n2o3p"
+          ],
+          "security_group_ids": ["sg-0frontend123"],
+          "endpoint_public_access": true,
+          "endpoint_private_access": true
+        },
+        "node_groups": [
+          {
+            "name": "frontend-eks-nodegroup",
+            "status": "ACTIVE",
+            "instance_types": ["t3.medium"],
+            "desired_size": 2,
+            "min_size": 1,
+            "max_size": 3,
+            "ami_type": "AL2_x86_64"
+          }
+        ],
+        "tags": [
+          { "Key": "Name", "Value": "frontend-eks" },
+          { "Key": "Project", "Value": "ecommerce-infra" },
+          { "Key": "Environment", "Value": "production" },
+          { "Key": "ManagedBy", "Value": "Pulumi" }
+        ]
+      },
+      {
+        "name": "analytics-eks",
+        "arn": "arn:aws:eks:eu-west-1:961639320333:cluster/analytics-eks",
+        "status": "ACTIVE",
+        "version": "1.27",
+        "endpoint": "https://Z9Y8X7W6V5U4T3S2R1Q0.sk4.eu-west-1.eks.amazonaws.com",
+        "created_at": "2025-09-15T10:30:00Z",
+        "vpc_config": {
+          "vpc_id": "vpc-08a3b7c9e5f2d1a6e",
+          "subnet_ids": ["subnet-0q1w2e3r", "subnet-0t5y6u7i"],
+          "security_group_ids": ["sg-0analytics456"],
+          "endpoint_public_access": false,
+          "endpoint_private_access": true
+        },
+        "node_groups": [
+          {
+            "name": "spark-workers",
+            "status": "ACTIVE",
+            "instance_types": ["r5.xlarge"],
+            "desired_size": 3,
+            "min_size": 2,
+            "max_size": 5,
+            "ami_type": "AL2_x86_64"
+          }
+        ],
+        "tags": [
+          { "Key": "Name", "Value": "analytics-eks" },
+          { "Key": "Project", "Value": "data-platform" },
+          { "Key": "Environment", "Value": "staging" }
+        ]
+      }
+    ]
+  },
+  "ecs_clusters": {
+    "count": 2,
+    "arns": [
+      "arn:aws:ecs:us-east-1:961639320333:cluster/order-ecs-cluster-5bd9feb",
+      "arn:aws:ecs:us-east-1:961639320333:cluster/payment-processor"
+    ],
+    "details": [
+      {
+        "name": "order-ecs-cluster-5bd9feb",
+        "arn": "arn:aws:ecs:us-east-1:961639320333:cluster/order-ecs-cluster-5bd9feb",
+        "status": "ACTIVE",
+        "registered_container_instances": 0,
+        "running_tasks": 5,
+        "pending_tasks": 0,
+        "active_services": 2,
+        "capacity_providers": ["FARGATE", "FARGATE_SPOT"],
+        "tasks": [
+          {
+            "task_definition": "order-task:3",
+            "desired_count": 3,
+            "running_count": 3,
+            "launch_type": "FARGATE"
+          },
+          {
+            "task_definition": "order-worker:1",
+            "desired_count": 2,
+            "running_count": 2,
+            "launch_type": "FARGATE"
+          }
+        ],
+        "tags": [
+          { "Key": "Name", "Value": "order-ecs-cluster" },
+          { "Key": "Project", "Value": "ecommerce-infra" },
+          { "Key": "Environment", "Value": "production" },
+          { "Key": "ManagedBy", "Value": "Pulumi" }
+        ]
+      },
+      {
+        "name": "payment-processor",
+        "arn": "arn:aws:ecs:us-east-1:961639320333:cluster/payment-processor",
+        "status": "ACTIVE",
+        "registered_container_instances": 3,
+        "running_tasks": 8,
+        "pending_tasks": 1,
+        "active_services": 3,
+        "capacity_providers": ["EC2"],
+        "tasks": [
+          {
+            "task_definition": "stripe-processor:5",
+            "desired_count": 4,
+            "running_count": 4,
+            "launch_type": "EC2"
+          },
+          {
+            "task_definition": "paypal-processor:2",
+            "desired_count": 4,
+            "running_count": 4,
+            "launch_type": "EC2"
+          }
+        ],
+        "tags": [
+          { "Key": "Name", "Value": "payment-processor" },
+          { "Key": "Project", "Value": "payment-gateway" },
+          { "Key": "Environment", "Value": "production" },
+          { "Key": "Compliance", "Value": "PCI-DSS" }
+        ]
+      }
+    ]
+  },
+  "rds_instances": {
+    "count": 3,
+    "identifiers": ["legacy-mysql-01", "reporting-postgres", "dev-mariadb"],
+    "details": [
+      {
+        "db_instance_identifier": "legacy-mysql-01",
+        "db_instance_class": "db.t3.medium",
+        "engine": "mysql",
+        "engine_version": "8.0.35",
+        "status": "available",
+        "allocated_storage": 100,
+        "storage_type": "gp3",
+        "multi_az": false,
+        "availability_zone": "us-east-1a",
+        "vpc_id": "vpc-0916ff4a39c14585f",
+        "endpoint": "legacy-mysql-01.c9a8b7c6d5e4.us-east-1.rds.amazonaws.com",
+        "port": 3306,
+        "master_username": "admin",
+        "backup_retention_period": 7,
+        "preferred_backup_window": "03:00-04:00",
+        "publicly_accessible": false,
+        "tags": [
+          { "Key": "Name", "Value": "legacy-mysql-01" },
+          { "Key": "Application", "Value": "legacy-app" },
+          { "Key": "Environment", "Value": "production" }
+        ]
+      },
+      {
+        "db_instance_identifier": "reporting-postgres",
+        "db_instance_class": "db.r5.large",
+        "engine": "postgres",
+        "engine_version": "15.4",
+        "status": "available",
+        "allocated_storage": 500,
+        "storage_type": "io1",
+        "iops": 3000,
+        "multi_az": true,
+        "availability_zone": "us-east-1b",
+        "vpc_id": "vpc-0916ff4a39c14585f",
+        "endpoint": "reporting-postgres.c9a8b7c6d5e4.us-east-1.rds.amazonaws.com",
+        "port": 5432,
+        "master_username": "postgres",
+        "backup_retention_period": 14,
+        "preferred_backup_window": "02:00-03:00",
+        "publicly_accessible": false,
+        "performance_insights_enabled": true,
+        "tags": [
+          { "Key": "Name", "Value": "reporting-postgres" },
+          { "Key": "Application", "Value": "analytics" },
+          { "Key": "Environment", "Value": "production" }
+        ]
+      },
+      {
+        "db_instance_identifier": "dev-mariadb",
+        "db_instance_class": "db.t3.micro",
+        "engine": "mariadb",
+        "engine_version": "10.11.6",
+        "status": "stopped",
+        "allocated_storage": 20,
+        "storage_type": "gp2",
+        "multi_az": false,
+        "availability_zone": "eu-west-1a",
+        "vpc_id": "vpc-08a3b7c9e5f2d1a6e",
+        "endpoint": "dev-mariadb.d1e2f3g4h5i6.eu-west-1.rds.amazonaws.com",
+        "port": 3306,
+        "master_username": "admin",
+        "backup_retention_period": 1,
+        "preferred_backup_window": "05:00-06:00",
+        "publicly_accessible": false,
+        "tags": [
+          { "Key": "Name", "Value": "dev-mariadb" },
+          { "Key": "Environment", "Value": "development" }
+        ]
+      }
+    ]
+  },
+  "rds_clusters": {
+    "count": 2,
+    "identifiers": ["aurora-cluster-a1b2c3d", "analytics-aurora"],
+    "details": [
+      {
+        "db_cluster_identifier": "aurora-cluster-a1b2c3d",
+        "cluster_arn": "arn:aws:rds:us-east-1:961639320333:cluster:aurora-cluster-a1b2c3d",
+        "engine": "aurora-mysql",
+        "engine_version": "8.0.mysql_aurora.3.04.0",
+        "status": "available",
+        "endpoint": "aurora-cluster-a1b2c3d.cluster-c9a8b7c6d5e4.us-east-1.rds.amazonaws.com",
+        "reader_endpoint": "aurora-cluster-a1b2c3d.cluster-ro-c9a8b7c6d5e4.us-east-1.rds.amazonaws.com",
+        "port": 3306,
+        "master_username": "admin",
+        "database_name": "ecommerce",
+        "multi_az": true,
+        "vpc_id": "vpc-0916ff4a39c14585f",
+        "cluster_members": [
+          {
+            "instance_identifier": "aurora-instance-1",
+            "instance_class": "db.r5.large",
+            "is_cluster_writer": true,
+            "availability_zone": "us-east-1a"
+          },
+          {
+            "instance_identifier": "aurora-instance-2",
+            "instance_class": "db.r5.large",
+            "is_cluster_writer": false,
+            "availability_zone": "us-east-1b"
+          }
+        ],
+        "backup_retention_period": 7,
+        "preferred_backup_window": "03:00-04:00",
+        "storage_encrypted": true,
+        "tags": [
+          { "Key": "Name", "Value": "aurora-cluster" },
+          { "Key": "Project", "Value": "ecommerce-infra" },
+          { "Key": "Environment", "Value": "production" },
+          { "Key": "ManagedBy", "Value": "Pulumi" }
+        ]
+      },
+      {
+        "db_cluster_identifier": "analytics-aurora",
+        "cluster_arn": "arn:aws:rds:eu-west-1:961639320333:cluster:analytics-aurora",
+        "engine": "aurora-postgresql",
+        "engine_version": "15.4",
+        "status": "available",
+        "endpoint": "analytics-aurora.cluster-d1e2f3g4h5i6.eu-west-1.rds.amazonaws.com",
+        "reader_endpoint": "analytics-aurora.cluster-ro-d1e2f3g4h5i6.eu-west-1.rds.amazonaws.com",
+        "port": 5432,
+        "master_username": "postgres",
+        "database_name": "analytics",
+        "multi_az": true,
+        "vpc_id": "vpc-08a3b7c9e5f2d1a6e",
+        "cluster_members": [
+          {
+            "instance_identifier": "analytics-aurora-1",
+            "instance_class": "db.r5.xlarge",
+            "is_cluster_writer": true,
+            "availability_zone": "eu-west-1a"
+          }
+        ],
+        "backup_retention_period": 14,
+        "preferred_backup_window": "02:00-03:00",
+        "storage_encrypted": true,
+        "tags": [
+          { "Key": "Name", "Value": "analytics-aurora" },
+          { "Key": "Project", "Value": "data-platform" },
+          { "Key": "Environment", "Value": "staging" }
+        ]
+      }
+    ]
+  },
+  "s3_buckets": {
+    "count": 1,
+    "names": ["assets-bucket-0e84de4"],
+    "details": [
+      {
+        "name": "assets-bucket-0e84de4",
+        "creation_date": "2025-11-02 14:52:39+00:00",
+        "region": "us-east-1",
+        "tags": []
+      }
+    ]
+  },
+  "dynamodb_tables": {
+    "count": 0,
+    "names": [],
+    "details": []
+  },
+  "sqs_queues": {
+    "count": 0,
+    "urls": [],
+    "details": []
+  },
+  "lambda_functions": {
+    "count": 0,
+    "names": [],
+    "details": []
+  },
+  "security_groups": {
+    "count": 1,
+    "ids": ["sg-0c00bf3302c94bb2d"],
+    "details": [
+      {
+        "id": "sg-0c00bf3302c94bb2d",
+        "name": "default",
+        "description": "default VPC security group",
+        "vpc_id": "vpc-0f5d2e5a4fad1028d",
+        "ingress_rules": 1,
+        "egress_rules": 1,
+        "tags": []
+      }
+    ]
+  },
+  "msk_clusters": {
+    "count": 0,
+    "arns": [],
+    "details": []
+  }
+}
