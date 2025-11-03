@@ -1,0 +1,105 @@
+{
+  "metadata": {
+    "timestamp": "2025-11-02T23:39:18.497496",
+    "tool": "boto3",
+    "description": "Complete AWS resource discovery - NO LIMITATIONS!"
+  },
+  "account": {
+    "account_id": "961639320333",
+    "user_id": "AIDA57ZRLRMGQLVYTPT3D",
+    "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+    "region": "ap-southeast-1"
+  },
+  "vpcs": {
+    "count": 1,
+    "ids": [
+      "vpc-0f5d2e5a4fad1028d"
+    ],
+    "details": [
+      {
+        "vpc_id": "vpc-0f5d2e5a4fad1028d",
+        "name": "N/A",
+        "cidr_block": "172.31.0.0/16",
+        "is_default": true,
+        "state": "available",
+        "tags": []
+      }
+    ]
+  },
+  "ec2_instances": {
+    "count": 0,
+    "ids": [],
+    "details": []
+  },
+  "eks_clusters": {
+    "count": 0,
+    "names": [],
+    "details": []
+  },
+  "ecs_clusters": {
+    "count": 0,
+    "arns": [],
+    "details": []
+  },
+  "rds_instances": {
+    "count": 0,
+    "identifiers": [],
+    "details": []
+  },
+  "rds_clusters": {
+    "count": 0,
+    "identifiers": [],
+    "details": []
+  },
+  "s3_buckets": {
+    "count": 1,
+    "names": [
+      "assets-bucket-0e84de4"
+    ],
+    "details": [
+      {
+        "name": "assets-bucket-0e84de4",
+        "creation_date": "2025-11-02 14:52:39+00:00",
+        "region": "us-east-1",
+        "tags": []
+      }
+    ]
+  },
+  "dynamodb_tables": {
+    "count": 0,
+    "names": [],
+    "details": []
+  },
+  "sqs_queues": {
+    "count": 0,
+    "urls": [],
+    "details": []
+  },
+  "lambda_functions": {
+    "count": 0,
+    "names": [],
+    "details": []
+  },
+  "security_groups": {
+    "count": 1,
+    "ids": [
+      "sg-0c00bf3302c94bb2d"
+    ],
+    "details": [
+      {
+        "id": "sg-0c00bf3302c94bb2d",
+        "name": "default",
+        "description": "default VPC security group",
+        "vpc_id": "vpc-0f5d2e5a4fad1028d",
+        "ingress_rules": 1,
+        "egress_rules": 1,
+        "tags": []
+      }
+    ]
+  },
+  "msk_clusters": {
+    "count": 0,
+    "arns": [],
+    "details": []
+  }
+}

@@ -1,4 +1,4 @@
-"""Detection Agent for drift detection using Terraform and driftctl."""
+"""Detection Agent for drift detection using boto3 and driftctl."""
 
 import asyncio
 import hashlib
@@ -6,8 +6,9 @@ import json
 import subprocess
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
+from app.agents.boto3_detection import Boto3DriftDetector
 from app.config import get_settings
 from app.models.drift import DriftRecord, DriftType, ScanRequest, Severity
 from app.utils.logger import get_logger
@@ -17,15 +18,15 @@ settings = get_settings()
 
 
 class DetectionAgent:
-    """Agent responsible for detecting infrastructure drift."""
+    """Agent responsible for detecting infrastructure drift using boto3."""
 
     def __init__(self):
         """Initialize detection agent."""
-        self.terraform_path = Path(settings.terraform_binary_path)
         self.driftctl_path = Path(settings.driftctl_binary_path)
         self.working_dir = Path(settings.terraform_working_dir)
+        self.boto3_detector = Boto3DriftDetector()  # Replace Terraform with boto3
 
-    async def detect_drift(self, scan_request: ScanRequest) -> List[DriftRecord]:
+    async def detect_drift(self, scan_request: ScanRequest) -> list[DriftRecord]:
         """
         Main entry point for drift detection.
 
@@ -73,9 +74,9 @@ class DetectionAgent:
         self,
         account_id: str,
         region: str,
-        resource_types: Optional[List[str]] = None,
+        resource_types: list[str] | None = None,
         force_refresh: bool = False,
-    ) -> List[DriftRecord]:
+    ) -> list[DriftRecord]:
         """
         Scan a specific account and region for drift.
 
@@ -91,25 +92,25 @@ class DetectionAgent:
         logger.info(f"Scanning account {account_id} in region {region}")
 
         try:
-            # Run both Terraform and driftctl scans in parallel
-            terraform_task = self._terraform_scan(account_id, region, force_refresh)
+            # Run both boto3 and driftctl scans in parallel
+            boto3_task = self._boto3_scan(account_id, region)
             driftctl_task = self._driftctl_scan(account_id, region)
 
-            terraform_drifts, driftctl_drifts = await asyncio.gather(
-                terraform_task, driftctl_task, return_exceptions=True
+            boto3_drifts, driftctl_drifts = await asyncio.gather(
+                boto3_task, driftctl_task, return_exceptions=True
             )
 
             # Combine and deduplicate results
             all_drifts = []
 
-            if not isinstance(terraform_drifts, Exception):
-                all_drifts.extend(terraform_drifts)
+            if not isinstance(boto3_drifts, Exception):
+                all_drifts.extend(boto3_drifts)
             else:
-                logger.warning(f"Terraform scan failed: {terraform_drifts}")
+                logger.warning(f"boto3 scan failed: {boto3_drifts}")
 
             if not isinstance(driftctl_drifts, Exception):
-                # Add driftctl drifts that aren't already detected by Terraform
-                all_drifts.extend(self._deduplicate_drifts(terraform_drifts, driftctl_drifts))
+                # Add driftctl drifts that aren't already detected by boto3
+                all_drifts.extend(self._deduplicate_drifts(boto3_drifts, driftctl_drifts))
             else:
                 logger.warning(f"driftctl scan failed: {driftctl_drifts}")
 
@@ -126,63 +127,50 @@ class DetectionAgent:
             logger.error(f"Error scanning {account_id}/{region}: {e}", exc_info=True)
             return []
 
-    async def _terraform_scan(
-        self, account_id: str, region: str, force_refresh: bool = False
-    ) -> List[DriftRecord]:
+    async def _boto3_scan(self, account_id: str, region: str) -> list[DriftRecord]:
         """
-        Perform Terraform-based drift detection.
+        Perform boto3-based drift detection.
 
         Args:
             account_id: AWS account ID
             region: AWS region
-            force_refresh: Force state refresh
 
         Returns:
-            List of drift records detected by Terraform
+            List of drift records detected by boto3
         """
-        logger.debug(f"Running Terraform scan for {account_id}/{region}")
+        logger.debug(f"Running boto3 scan for {account_id}/{region}")
 
         try:
-            # Step 1: Initialize Terraform (if needed)
-            await self._run_terraform_command(["init", "-input=false"])
+            # Step 1: Load baseline (expected) state
+            baseline_state = await self.boto3_detector.load_baseline_state()
+            if not baseline_state:
+                logger.warning("No baseline state found. Creating baseline from current state.")
+                await self.boto3_detector.create_baseline(account_id, region)
+                return []  # No drift on first run
 
-            # Step 2: Refresh state (optional)
-            if force_refresh:
-                await self._run_terraform_command(["refresh", "-input=false"])
+            # Step 2: Discover current AWS state
+            current_state = await self.boto3_detector.discover_current_state(account_id, region)
 
-            # Step 3: Generate plan
-            plan_file = f"/tmp/drift_plan_{account_id}_{region}.tfplan"
-            plan_cmd = ["plan", "-detailed-exitcode", "-out", plan_file]
-
-            # Exit code 2 means changes detected
-            exit_code, _, _ = await self._run_terraform_command(
-                plan_cmd, check_exit_code=False
+            # Step 3: Compare and detect drift
+            drift_records = await self.boto3_detector.compare_states(
+                baseline_state, current_state, account_id, region
             )
 
-            if exit_code == 0:
-                # No changes detected
-                logger.info(f"No drift detected by Terraform in {account_id}/{region}")
-                return []
-
-            elif exit_code == 2:
-                # Changes detected - parse the plan
-                logger.info(f"Drift detected by Terraform in {account_id}/{region}")
-                drift_records = await self._parse_terraform_plan(
-                    plan_file, account_id, region
+            if drift_records:
+                logger.info(
+                    f"Drift detected by boto3 in {account_id}/{region}: {len(drift_records)} changes"
                 )
-                return drift_records
-
             else:
-                # Error occurred
-                logger.error(f"Terraform plan failed with exit code {exit_code}")
-                return []
+                logger.info(f"No drift detected by boto3 in {account_id}/{region}")
+
+            return drift_records
 
         except Exception as e:
-            logger.error(f"Terraform scan error: {e}", exc_info=True)
+            logger.error(f"boto3 scan error: {e}", exc_info=True)
             raise
 
     async def _run_terraform_command(
-        self, args: List[str], check_exit_code: bool = True
+        self, args: list[str], check_exit_code: bool = True
     ) -> tuple[int, str, str]:
         """
         Run a Terraform command.
@@ -219,7 +207,7 @@ class DetectionAgent:
 
     async def _parse_terraform_plan(
         self, plan_file: str, account_id: str, region: str
-    ) -> List[DriftRecord]:
+    ) -> list[DriftRecord]:
         """
         Parse Terraform plan output to extract drift records.
 
@@ -233,9 +221,7 @@ class DetectionAgent:
         """
         try:
             # Convert plan to JSON
-            _, stdout, _ = await self._run_terraform_command(
-                ["show", "-json", plan_file]
-            )
+            _, stdout, _ = await self._run_terraform_command(["show", "-json", plan_file])
 
             plan_data = json.loads(stdout)
             drift_records = []
@@ -265,8 +251,8 @@ class DetectionAgent:
             return []
 
     def _create_drift_from_terraform_change(
-        self, change: Dict[str, Any], account_id: str, region: str
-    ) -> Optional[DriftRecord]:
+        self, change: dict[str, Any], account_id: str, region: str
+    ) -> DriftRecord | None:
         """
         Create a DriftRecord from a Terraform resource change.
 
@@ -326,7 +312,7 @@ class DetectionAgent:
             logger.error(f"Error creating drift record: {e}", exc_info=True)
             return None
 
-    async def _driftctl_scan(self, account_id: str, region: str) -> List[DriftRecord]:
+    async def _driftctl_scan(self, account_id: str, region: str) -> list[DriftRecord]:
         """
         Perform driftctl-based drift detection.
 
@@ -377,8 +363,8 @@ class DetectionAgent:
             raise
 
     def _parse_driftctl_output(
-        self, output: Dict[str, Any], account_id: str, region: str
-    ) -> List[DriftRecord]:
+        self, output: dict[str, Any], account_id: str, region: str
+    ) -> list[DriftRecord]:
         """
         Parse driftctl JSON output.
 
@@ -423,11 +409,11 @@ class DetectionAgent:
 
     def _create_drift_from_driftctl(
         self,
-        resource: Dict[str, Any],
+        resource: dict[str, Any],
         drift_type: DriftType,
         account_id: str,
         region: str,
-    ) -> Optional[DriftRecord]:
+    ) -> DriftRecord | None:
         """Create DriftRecord from driftctl resource data."""
         try:
             resource_id = resource.get("id", "")
@@ -464,8 +450,8 @@ class DetectionAgent:
             return None
 
     def _deduplicate_drifts(
-        self, terraform_drifts: List[DriftRecord], driftctl_drifts: List[DriftRecord]
-    ) -> List[DriftRecord]:
+        self, terraform_drifts: list[DriftRecord], driftctl_drifts: list[DriftRecord]
+    ) -> list[DriftRecord]:
         """
         Deduplicate drifts from multiple sources.
 
@@ -484,7 +470,7 @@ class DetectionAgent:
 
         return unique_driftctl
 
-    def _calculate_diff(self, before: Dict[str, Any], after: Dict[str, Any]) -> Dict[str, Any]:
+    def _calculate_diff(self, before: dict[str, Any], after: dict[str, Any]) -> dict[str, Any]:
         """Calculate differences between before and after states."""
         diff = {}
 
@@ -500,7 +486,7 @@ class DetectionAgent:
         return diff
 
     def _calculate_severity(
-        self, _resource_type: str, diff: Dict[str, Any], drift_type: DriftType
+        self, _resource_type: str, diff: dict[str, Any], drift_type: DriftType
     ) -> Severity:
         """
         Calculate drift severity based on resource type and changes.
@@ -546,13 +532,13 @@ class DetectionAgent:
         hash_suffix = hashlib.md5(unique_string.encode()).hexdigest()[:8]
         return f"drift-{now.strftime('%Y%m%d')}-{hash_suffix}"
 
-    def _hash_diff(self, diff: Dict[str, Any]) -> str:
+    def _hash_diff(self, diff: dict[str, Any]) -> str:
         """Generate hash of diff for deduplication."""
         diff_str = json.dumps(diff, sort_keys=True)
         return hashlib.sha256(diff_str.encode()).hexdigest()
 
     def _extract_resource_id(
-        self, before: Dict[str, Any], after: Dict[str, Any], address: str
+        self, before: dict[str, Any], after: dict[str, Any], address: str
     ) -> str:
         """Extract resource ID from Terraform data."""
         # Try to get ID from before or after
@@ -563,4 +549,3 @@ class DetectionAgent:
             resource_id = address
 
         return resource_id or "unknown"
-
