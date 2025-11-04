@@ -11,6 +11,10 @@
 - **Continuous Drift Detection**: Automated hourly scans using Terraform and driftctl
 - **AI-Powered Analysis**: Context-aware explanations using AWS Bedrock (Claude 3)
 - **Multi-Agent Architecture**: Specialized LangGraph agents for detection, analysis, and remediation
+- **Hybrid Remediation Approach**: Combines Pulumi (IaC) and Boto3 (Direct API) for flexible revert options
+  - 🔄 **Pulumi Revert**: Infrastructure as Code management with built-in rollback
+  - 🔧 **Boto3 Revert**: Direct AWS API calls for fast, targeted changes
+  - ⛔ **Resource Termination**: Safe deletion with confirmation dialogs and snapshots
 - **Comprehensive Metrics**: CloudWatch performance, Config compliance, and Cost Explorer data
 - **Policy-as-Code**: Proactive drift prevention using OPA and AWS Config Rules
 - **Automated Remediation**: Safe, audited, and reversible fixes with rollback capabilities
@@ -62,15 +66,26 @@ pip install -r requirements.txt
 
 ### 4. Run the Application
 
-Start the API server:
+Start the Streamlit dashboard:
 ```powershell
-python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+streamlit run dashboard.py
 ```
 
-Start the Streamlit dashboard (in another terminal):
-```powershell
-streamlit run frontend/app.py
-```
+The dashboard will be available at http://localhost:8502
+
+**Dashboard Features:**
+- 🔍 **Scan for Drifts**: Enter AWS account ID and region to scan
+- 📥 **Load Baseline**: Load baseline configuration from JSON
+- 📂 **Load Previous Scans**: View historical scan results
+- ✅ **Approve Drift**: Mark drift as intentional change
+- 🔄 **Revert with Pulumi**: Use Infrastructure as Code to revert to baseline
+- 🔧 **Revert with Boto3**: Use direct AWS API calls for quick fixes
+- ⛔ **Terminate Resource**: Safely stop or delete resources with confirmation
+
+**Hybrid Approach Documentation:**
+- See [HYBRID_APPROACH_GUIDE.md](HYBRID_APPROACH_GUIDE.md) for complete usage guide
+- See [BOTO3_REVERT_CAPABILITIES.md](BOTO3_REVERT_CAPABILITIES.md) for boto3 capabilities
+- See [ARCHITECTURE_DIAGRAM.md](ARCHITECTURE_DIAGRAM.md) for system architecture
 
 ### 5. Access the Application
 

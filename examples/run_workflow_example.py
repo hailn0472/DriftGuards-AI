@@ -31,7 +31,7 @@ async def main():
     scan_request = ScanRequest(
         accounts=["123456789012"],
         regions=["us-east-1"],
-        resource_types=["ec2_instances", "aws_s3_bucket"],
+        resource_types=["ec2_instances", "s3_buckets"],
         force_refresh=False,
     )
 
@@ -85,14 +85,14 @@ async def main():
         # Save results to JSON files
         logger.info("Saving results to output directory...")
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        
+
         # Save detection results
         detection_file = OUTPUT_DIR / f"detection_results_{timestamp}.json"
         detection_data = {
             "metadata": {
                 "timestamp": datetime.now().isoformat(),
                 "scan_request": scan_request.dict(),
-                "total_drifts": len(drift_records)
+                "total_drifts": len(drift_records),
             },
             "drifts": [
                 {
@@ -106,22 +106,22 @@ async def main():
                     "detected_at": d.detected_at.isoformat(),
                     "terraform_value": d.terraform_value,
                     "actual_value": d.actual_value,
-                    "diff": d.diff
+                    "diff": d.diff,
                 }
                 for d in drift_records
-            ]
+            ],
         }
         with open(detection_file, "w", encoding="utf-8") as f:
             json.dump(detection_data, f, indent=2, default=str)
         logger.info(f"✅ Detection results saved: {detection_file}")
-        
+
         # Save AI analysis results
         if analyses:
             analysis_file = OUTPUT_DIR / f"analysis_results_{timestamp}.json"
             analysis_data = {
                 "metadata": {
                     "timestamp": datetime.now().isoformat(),
-                    "total_analyses": len(analyses)
+                    "total_analyses": len(analyses),
                 },
                 "analyses": [
                     {
@@ -139,22 +139,22 @@ async def main():
                         "blast_radius": a.blast_radius,
                         "remediation_steps": a.remediation_steps,
                         "analyzed_at": a.analyzed_at.isoformat(),
-                        "model_id": a.model_id
+                        "model_id": a.model_id,
                     }
                     for a in analyses
-                ]
+                ],
             }
             with open(analysis_file, "w", encoding="utf-8") as f:
                 json.dump(analysis_data, f, indent=2, default=str)
             logger.info(f"✅ AI analysis results saved: {analysis_file}")
-        
+
         # Save policy violations
         if violations:
             violations_file = OUTPUT_DIR / f"policy_violations_{timestamp}.json"
             violations_data = {
                 "metadata": {
                     "timestamp": datetime.now().isoformat(),
-                    "total_violations": len(violations)
+                    "total_violations": len(violations),
                 },
                 "violations": [
                     {
@@ -163,15 +163,15 @@ async def main():
                         "violation_type": v.violation_type,
                         "severity": v.severity,
                         "message": v.message,
-                        "action_required": v.action_required
+                        "action_required": v.action_required,
                     }
                     for v in violations
-                ]
+                ],
             }
             with open(violations_file, "w", encoding="utf-8") as f:
                 json.dump(violations_data, f, indent=2, default=str)
             logger.info(f"✅ Policy violations saved: {violations_file}")
-        
+
         # Save metrics context
         metrics_contexts = final_state.get("metrics_context", [])
         if metrics_contexts:
@@ -179,7 +179,7 @@ async def main():
             metrics_data = {
                 "metadata": {
                     "timestamp": datetime.now().isoformat(),
-                    "total_resources": len(metrics_contexts)
+                    "total_resources": len(metrics_contexts),
                 },
                 "metrics": [
                     {
@@ -190,7 +190,7 @@ async def main():
                                 "metric_name": metric.metric_name,
                                 "namespace": metric.namespace,
                                 "statistics": metric.statistics,
-                                "unit": metric.unit
+                                "unit": metric.unit,
                             }
                             for name, metric in m.cloudwatch_metrics.items()
                         },
@@ -200,7 +200,7 @@ async def main():
                                 "timestamp": ch.timestamp.isoformat(),
                                 "user": ch.user,
                                 "action": ch.action,
-                                "compliance_type": ch.compliance_type
+                                "compliance_type": ch.compliance_type,
                             }
                             for ch in m.config_history
                         ],
@@ -208,22 +208,24 @@ async def main():
                             "current_cost": m.cost_data.current_cost,
                             "projected_cost": m.cost_data.projected_cost,
                             "cost_change": m.cost_data.cost_change,
-                            "cost_change_percent": m.cost_data.cost_change_percent
-                        } if m.cost_data else None,
+                            "cost_change_percent": m.cost_data.cost_change_percent,
+                        }
+                        if m.cost_data
+                        else None,
                         "compliance_violations": [
                             {
                                 "violation_id": cv.violation_id,
                                 "rule_name": cv.rule_name,
                                 "compliance_type": cv.compliance_type,
                                 "severity": cv.severity,
-                                "message": cv.message
+                                "message": cv.message,
                             }
                             for cv in m.compliance_violations
                         ],
-                        "collected_at": m.collected_at.isoformat()
+                        "collected_at": m.collected_at.isoformat(),
                     }
                     for m in metrics_contexts
-                ]
+                ],
             }
             with open(metrics_file, "w", encoding="utf-8") as f:
                 json.dump(metrics_data, f, indent=2, default=str)
@@ -238,4 +240,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-

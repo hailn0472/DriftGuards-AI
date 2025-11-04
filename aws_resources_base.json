@@ -82,6 +82,31 @@
         "platform": "linux",
         "ami_id": "ami-0c55b159cbfafe1f0",
         "security_groups": ["sg-0a1b2c3d4e5f6g7h8"],
+        "instance_specs": {
+          "vcpu": 2,
+          "memory_gb": 4,
+          "storage_gb": 30,
+          "network_performance": "Up to 5 Gigabit",
+          "ebs_optimized": true
+        },
+        "metrics": {
+          "cpu_utilization_percent": 45.7,
+          "cpu_credit_balance": 234,
+          "memory_used_percent": 62.3,
+          "memory_available_gb": 1.5,
+          "disk_read_ops_per_sec": 234.5,
+          "disk_write_ops_per_sec": 123.4,
+          "disk_read_bytes_per_sec": 2457600,
+          "disk_write_bytes_per_sec": 1228800,
+          "network_in_bytes_per_sec": 1048576,
+          "network_out_bytes_per_sec": 2097152,
+          "network_packets_in_per_sec": 1234,
+          "network_packets_out_per_sec": 2345,
+          "status_check_failed": 0,
+          "status_check_passed": 2
+        },
+        "monthly_cost_usd": 30.08,
+        "uptime_days": 20,
         "tags": [
           { "Key": "Name", "Value": "web-server-01" },
           { "Key": "Role", "Value": "webserver" },
@@ -102,6 +127,31 @@
         "platform": "linux",
         "ami_id": "ami-0c55b159cbfafe1f0",
         "security_groups": ["sg-0b2c3d4e5f6g7h8i9"],
+        "instance_specs": {
+          "vcpu": 2,
+          "memory_gb": 8,
+          "storage_gb": 50,
+          "network_performance": "Up to 5 Gigabit",
+          "ebs_optimized": true
+        },
+        "metrics": {
+          "cpu_utilization_percent": 67.8,
+          "cpu_credit_balance": 156,
+          "memory_used_percent": 73.4,
+          "memory_available_gb": 2.1,
+          "disk_read_ops_per_sec": 456.7,
+          "disk_write_ops_per_sec": 234.5,
+          "disk_read_bytes_per_sec": 4194304,
+          "disk_write_bytes_per_sec": 2097152,
+          "network_in_bytes_per_sec": 5242880,
+          "network_out_bytes_per_sec": 10485760,
+          "network_packets_in_per_sec": 3456,
+          "network_packets_out_per_sec": 5678,
+          "status_check_failed": 0,
+          "status_check_passed": 2
+        },
+        "monthly_cost_usd": 60.16,
+        "uptime_days": 15,
         "tags": [
           { "Key": "Name", "Value": "api-server-01" },
           { "Key": "Role", "Value": "api" },
@@ -121,6 +171,31 @@
         "platform": "linux",
         "ami_id": "ami-0c55b159cbfafe1f0",
         "security_groups": ["sg-0c3d4e5f6g7h8i9j0"],
+        "instance_specs": {
+          "vcpu": 2,
+          "memory_gb": 4,
+          "storage_gb": 30,
+          "network_performance": "Up to 5 Gigabit",
+          "ebs_optimized": true
+        },
+        "metrics": {
+          "cpu_utilization_percent": 34.2,
+          "cpu_credit_balance": 345,
+          "memory_used_percent": 56.7,
+          "memory_available_gb": 1.7,
+          "disk_read_ops_per_sec": 123.4,
+          "disk_write_ops_per_sec": 89.1,
+          "disk_read_bytes_per_sec": 1048576,
+          "disk_write_bytes_per_sec": 524288,
+          "network_in_bytes_per_sec": 2097152,
+          "network_out_bytes_per_sec": 1048576,
+          "network_packets_in_per_sec": 1567,
+          "network_packets_out_per_sec": 1234,
+          "status_check_failed": 0,
+          "status_check_passed": 2
+        },
+        "monthly_cost_usd": 30.08,
+        "uptime_days": 3,
         "tags": [
           { "Key": "Name", "Value": "worker-node-01" },
           { "Key": "Role", "Value": "worker" },
@@ -141,6 +216,31 @@
         "platform": "linux",
         "ami_id": "ami-0c55b159cbfafe1f0",
         "security_groups": ["sg-0d4e5f6g7h8i9j0k1"],
+        "instance_specs": {
+          "vcpu": 2,
+          "memory_gb": 1,
+          "storage_gb": 8,
+          "network_performance": "Up to 5 Gigabit",
+          "ebs_optimized": false
+        },
+        "metrics": {
+          "cpu_utilization_percent": 5.2,
+          "cpu_credit_balance": 567,
+          "memory_used_percent": 45.3,
+          "memory_available_gb": 0.5,
+          "disk_read_ops_per_sec": 12.3,
+          "disk_write_ops_per_sec": 5.6,
+          "disk_read_bytes_per_sec": 102400,
+          "disk_write_bytes_per_sec": 51200,
+          "network_in_bytes_per_sec": 204800,
+          "network_out_bytes_per_sec": 409600,
+          "network_packets_in_per_sec": 123,
+          "network_packets_out_per_sec": 234,
+          "status_check_failed": 0,
+          "status_check_passed": 2
+        },
+        "monthly_cost_usd": 7.52,
+        "uptime_days": 55,
         "tags": [
           { "Key": "Name", "Value": "bastion-host" },
           { "Key": "Role", "Value": "bastion" },
@@ -160,6 +260,32 @@
         "platform": "linux",
         "ami_id": "ami-0d71ea30463e0ff8d",
         "security_groups": ["sg-0e5f6g7h8i9j0k1l2"],
+        "instance_specs": {
+          "vcpu": 4,
+          "memory_gb": 16,
+          "storage_gb": 100,
+          "network_performance": "Up to 5 Gigabit",
+          "ebs_optimized": true
+        },
+        "metrics": {
+          "cpu_utilization_percent": 0,
+          "cpu_credit_balance": 0,
+          "memory_used_percent": 0,
+          "memory_available_gb": 0,
+          "disk_read_ops_per_sec": 0,
+          "disk_write_ops_per_sec": 0,
+          "disk_read_bytes_per_sec": 0,
+          "disk_write_bytes_per_sec": 0,
+          "network_in_bytes_per_sec": 0,
+          "network_out_bytes_per_sec": 0,
+          "network_packets_in_per_sec": 0,
+          "network_packets_out_per_sec": 0,
+          "status_check_failed": 0,
+          "status_check_passed": 0
+        },
+        "monthly_cost_usd": 0,
+        "uptime_days": 0,
+        "stopped_days": 4,
         "tags": [
           { "Key": "Name", "Value": "jenkins-master" },
           { "Key": "Role", "Value": "ci-cd" },
@@ -333,6 +459,35 @@
         "backup_retention_period": 7,
         "preferred_backup_window": "03:00-04:00",
         "publicly_accessible": false,
+        "instance_specs": {
+          "vcpu": 2,
+          "memory_gb": 4,
+          "network_performance": "Up to 5 Gigabit"
+        },
+        "metrics": {
+          "cpu_utilization_percent": 42.3,
+          "freeable_memory_gb": 1.8,
+          "freeable_memory_percent": 45,
+          "database_connections": 67,
+          "database_connections_max": 150,
+          "read_iops": 456.7,
+          "write_iops": 234.5,
+          "read_latency_ms": 2.8,
+          "write_latency_ms": 5.1,
+          "read_throughput_mbps": 18.9,
+          "write_throughput_mbps": 12.3,
+          "network_receive_throughput_mbps": 25.6,
+          "network_transmit_throughput_mbps": 18.2,
+          "disk_queue_depth": 1.5,
+          "swap_usage_mb": 0,
+          "transaction_logs_disk_usage_mb": 1024,
+          "bin_log_disk_usage_mb": 256,
+          "replica_lag_seconds": null,
+          "queries_per_second": 234,
+          "slow_queries_per_minute": 3,
+          "innodb_buffer_pool_hit_rate_percent": 98.5
+        },
+        "monthly_cost_usd": 61.32,
         "tags": [
           { "Key": "Name", "Value": "legacy-mysql-01" },
           { "Key": "Application", "Value": "legacy-app" },
@@ -358,6 +513,38 @@
         "preferred_backup_window": "02:00-03:00",
         "publicly_accessible": false,
         "performance_insights_enabled": true,
+        "instance_specs": {
+          "vcpu": 2,
+          "memory_gb": 16,
+          "network_performance": "Up to 10 Gigabit"
+        },
+        "metrics": {
+          "cpu_utilization_percent": 68.9,
+          "freeable_memory_gb": 4.2,
+          "freeable_memory_percent": 26.25,
+          "database_connections": 189,
+          "database_connections_max": 500,
+          "read_iops": 1234.5,
+          "write_iops": 678.9,
+          "read_latency_ms": 0.9,
+          "write_latency_ms": 1.4,
+          "read_throughput_mbps": 98.7,
+          "write_throughput_mbps": 56.4,
+          "network_receive_throughput_mbps": 145.6,
+          "network_transmit_throughput_mbps": 234.5,
+          "disk_queue_depth": 3.8,
+          "swap_usage_mb": 0,
+          "transaction_logs_disk_usage_mb": 8192,
+          "wal_files_count": 45,
+          "replica_lag_seconds": null,
+          "transactions_per_second": 567,
+          "deadlocks_per_minute": 0.8,
+          "longest_running_query_seconds": 67.3,
+          "temp_file_size_mb": 234,
+          "cache_hit_rate_percent": 99.2,
+          "vacuum_running": false
+        },
+        "monthly_cost_usd": 621.6,
         "tags": [
           { "Key": "Name", "Value": "reporting-postgres" },
           { "Key": "Application", "Value": "analytics" },
@@ -381,6 +568,34 @@
         "backup_retention_period": 1,
         "preferred_backup_window": "05:00-06:00",
         "publicly_accessible": false,
+        "instance_specs": {
+          "vcpu": 2,
+          "memory_gb": 1,
+          "network_performance": "Up to 5 Gigabit"
+        },
+        "metrics": {
+          "cpu_utilization_percent": 0,
+          "freeable_memory_gb": 0,
+          "freeable_memory_percent": 0,
+          "database_connections": 0,
+          "database_connections_max": 0,
+          "read_iops": 0,
+          "write_iops": 0,
+          "read_latency_ms": 0,
+          "write_latency_ms": 0,
+          "read_throughput_mbps": 0,
+          "write_throughput_mbps": 0,
+          "network_receive_throughput_mbps": 0,
+          "network_transmit_throughput_mbps": 0,
+          "disk_queue_depth": 0,
+          "swap_usage_mb": 0,
+          "transaction_logs_disk_usage_mb": 0,
+          "replica_lag_seconds": null,
+          "queries_per_second": 0,
+          "slow_queries_per_minute": 0
+        },
+        "monthly_cost_usd": 0,
+        "stopped_days": 12,
         "tags": [
           { "Key": "Name", "Value": "dev-mariadb" },
           { "Key": "Environment", "Value": "development" }
@@ -462,31 +677,909 @@
     ]
   },
   "s3_buckets": {
-    "count": 1,
-    "names": ["assets-bucket-0e84de4"],
+    "count": 6,
+    "names": [
+      "assets-bucket-0e84de4",
+      "ecommerce-images-prod",
+      "analytics-data-lake",
+      "application-logs-961639320333",
+      "terraform-state-backend",
+      "backup-archives-2025"
+    ],
+    "total_size_gb": 645.5,
+    "total_objects": 457679,
     "details": [
       {
         "name": "assets-bucket-0e84de4",
         "creation_date": "2025-11-02 14:52:39+00:00",
         "region": "us-east-1",
-        "tags": []
+        "versioning": "Enabled",
+        "encryption": "AES256",
+        "public_access_block": true,
+        "size_bytes": 2457600000,
+        "size_gb": 2.29,
+        "object_count": 1243,
+        "storage_class": "STANDARD",
+        "monthly_cost_usd": 0.06,
+        "metrics": {
+          "requests_last_24h": 15678,
+          "bandwidth_gb_last_24h": 45.3,
+          "get_requests": 12456,
+          "put_requests": 3222,
+          "average_object_size_kb": 1978
+        },
+        "tags": [
+          { "Key": "Name", "Value": "assets-bucket" },
+          { "Key": "Project", "Value": "ecommerce-infra" },
+          { "Key": "Environment", "Value": "production" },
+          { "Key": "ManagedBy", "Value": "Pulumi" }
+        ]
+      },
+      {
+        "name": "ecommerce-images-prod",
+        "creation_date": "2025-09-20 08:15:00+00:00",
+        "region": "us-east-1",
+        "versioning": "Disabled",
+        "encryption": "aws:kms",
+        "kms_key_id": "arn:aws:kms:us-east-1:961639320333:key/a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6",
+        "public_access_block": true,
+        "size_bytes": 15728640000,
+        "size_gb": 14.65,
+        "object_count": 8956,
+        "storage_class": "INTELLIGENT_TIERING",
+        "monthly_cost_usd": 0.28,
+        "metrics": {
+          "requests_last_24h": 89456,
+          "bandwidth_gb_last_24h": 234.7,
+          "get_requests": 87234,
+          "put_requests": 2222,
+          "average_object_size_kb": 1756,
+          "cache_hit_rate_percent": 87.5
+        },
+        "lifecycle_rules": [
+          {
+            "id": "archive-old-images",
+            "status": "Enabled",
+            "transition_days": 90,
+            "transition_storage_class": "GLACIER"
+          }
+        ],
+        "tags": [
+          { "Key": "Name", "Value": "ecommerce-images-prod" },
+          { "Key": "Application", "Value": "ecommerce-frontend" },
+          { "Key": "Environment", "Value": "production" },
+          { "Key": "DataClassification", "Value": "public" }
+        ]
+      },
+      {
+        "name": "analytics-data-lake",
+        "creation_date": "2025-08-10 12:30:00+00:00",
+        "region": "eu-west-1",
+        "versioning": "Enabled",
+        "encryption": "aws:kms",
+        "kms_key_id": "arn:aws:kms:eu-west-1:961639320333:key/b2c3d4e5-f6g7-h8i9-j0k1-l2m3n4o5p6q7",
+        "public_access_block": true,
+        "size_bytes": 524288000000,
+        "size_gb": 488.28,
+        "object_count": 245678,
+        "storage_class": "STANDARD",
+        "monthly_cost_usd": 11.23,
+        "metrics": {
+          "requests_last_24h": 45678,
+          "bandwidth_gb_last_24h": 156.8,
+          "get_requests": 34567,
+          "put_requests": 11111,
+          "average_object_size_kb": 2134,
+          "data_transfer_out_gb": 78.9
+        },
+        "replication": {
+          "enabled": true,
+          "destination_bucket": "analytics-data-lake-replica",
+          "destination_region": "us-west-2"
+        },
+        "tags": [
+          { "Key": "Name", "Value": "analytics-data-lake" },
+          { "Key": "Project", "Value": "data-platform" },
+          { "Key": "Environment", "Value": "staging" },
+          { "Key": "DataClassification", "Value": "confidential" }
+        ]
+      },
+      {
+        "name": "application-logs-961639320333",
+        "creation_date": "2025-07-01 09:00:00+00:00",
+        "region": "ap-southeast-1",
+        "versioning": "Disabled",
+        "encryption": "AES256",
+        "public_access_block": true,
+        "size_bytes": 78643200000,
+        "size_gb": 73.25,
+        "object_count": 156789,
+        "storage_class": "STANDARD_IA",
+        "monthly_cost_usd": 0.91,
+        "metrics": {
+          "requests_last_24h": 12456,
+          "bandwidth_gb_last_24h": 23.4,
+          "get_requests": 11234,
+          "put_requests": 1222,
+          "average_object_size_kb": 501
+        },
+        "lifecycle_rules": [
+          {
+            "id": "delete-old-logs",
+            "status": "Enabled",
+            "expiration_days": 90
+          },
+          {
+            "id": "transition-to-glacier",
+            "status": "Enabled",
+            "transition_days": 30,
+            "transition_storage_class": "GLACIER"
+          }
+        ],
+        "tags": [
+          { "Key": "Name", "Value": "application-logs" },
+          { "Key": "Purpose", "Value": "logging" },
+          { "Key": "RetentionPeriod", "Value": "90days" }
+        ]
+      },
+      {
+        "name": "terraform-state-backend",
+        "creation_date": "2025-06-15 14:45:00+00:00",
+        "region": "us-east-1",
+        "versioning": "Enabled",
+        "encryption": "aws:kms",
+        "kms_key_id": "arn:aws:kms:us-east-1:961639320333:key/c3d4e5f6-g7h8-i9j0-k1l2-m3n4o5p6q7r8",
+        "public_access_block": true,
+        "size_bytes": 45678900,
+        "size_gb": 0.04,
+        "object_count": 234,
+        "storage_class": "STANDARD",
+        "monthly_cost_usd": 0.01,
+        "metrics": {
+          "requests_last_24h": 456,
+          "bandwidth_gb_last_24h": 0.8,
+          "get_requests": 389,
+          "put_requests": 67,
+          "average_object_size_kb": 195
+        },
+        "object_lock": {
+          "enabled": true,
+          "mode": "GOVERNANCE",
+          "retention_days": 365
+        },
+        "tags": [
+          { "Key": "Name", "Value": "terraform-state-backend" },
+          { "Key": "Purpose", "Value": "iac-state" },
+          { "Key": "CriticalData", "Value": "true" }
+        ]
+      },
+      {
+        "name": "backup-archives-2025",
+        "creation_date": "2025-01-01 00:00:00+00:00",
+        "region": "us-west-2",
+        "versioning": "Enabled",
+        "encryption": "AES256",
+        "public_access_block": true,
+        "size_bytes": 1099511627776,
+        "size_gb": 1024.0,
+        "object_count": 45678,
+        "storage_class": "GLACIER",
+        "monthly_cost_usd": 4.1,
+        "metrics": {
+          "requests_last_24h": 23,
+          "bandwidth_gb_last_24h": 0.0,
+          "get_requests": 12,
+          "put_requests": 11,
+          "restore_requests": 3,
+          "average_object_size_kb": 24064
+        },
+        "tags": [
+          { "Key": "Name", "Value": "backup-archives-2025" },
+          { "Key": "Purpose", "Value": "backup" },
+          { "Key": "RetentionPeriod", "Value": "7years" },
+          { "Key": "Compliance", "Value": "SOX" }
+        ]
       }
     ]
   },
   "dynamodb_tables": {
-    "count": 0,
-    "names": [],
-    "details": []
+    "count": 4,
+    "names": [
+      "session-table-a1b2c3d",
+      "user-profiles",
+      "order-history",
+      "product-inventory"
+    ],
+    "total_size_gb": 10.89,
+    "total_items": 3159813,
+    "details": [
+      {
+        "table_name": "session-table-a1b2c3d",
+        "table_arn": "arn:aws:dynamodb:us-east-1:961639320333:table/session-table-a1b2c3d",
+        "table_status": "ACTIVE",
+        "creation_date": "2025-11-02T14:57:00Z",
+        "item_count": 156789,
+        "table_size_bytes": 524288000,
+        "table_size_gb": 0.49,
+        "billing_mode": "PAY_PER_REQUEST",
+        "partition_key": { "name": "sessionId", "type": "S" },
+        "attributes": [
+          { "name": "sessionId", "type": "S" },
+          { "name": "userId", "type": "S" },
+          { "name": "expiresAt", "type": "N" }
+        ],
+        "global_secondary_indexes": [
+          {
+            "index_name": "UserIdIndex",
+            "partition_key": "userId",
+            "projection_type": "ALL",
+            "index_status": "ACTIVE",
+            "index_size_bytes": 104857600,
+            "item_count": 156789
+          }
+        ],
+        "ttl": { "enabled": true, "attribute_name": "expiresAt" },
+        "point_in_time_recovery": true,
+        "encryption": { "enabled": true, "type": "AWS_OWNED" },
+        "metrics": {
+          "read_capacity_units_consumed_last_hour": 1245,
+          "write_capacity_units_consumed_last_hour": 456,
+          "consumed_read_capacity_average": 20.75,
+          "consumed_write_capacity_average": 7.6,
+          "throttled_requests_last_hour": 0,
+          "user_errors_last_hour": 3,
+          "system_errors_last_hour": 0
+        },
+        "monthly_cost_usd": 12.45,
+        "tags": [
+          { "Key": "Name", "Value": "session-table" },
+          { "Key": "Project", "Value": "ecommerce-infra" },
+          { "Key": "Environment", "Value": "production" },
+          { "Key": "ManagedBy", "Value": "Pulumi" }
+        ]
+      },
+      {
+        "table_name": "user-profiles",
+        "table_arn": "arn:aws:dynamodb:us-east-1:961639320333:table/user-profiles",
+        "table_status": "ACTIVE",
+        "creation_date": "2025-09-10T10:00:00Z",
+        "item_count": 567890,
+        "table_size_bytes": 2147483648,
+        "table_size_gb": 2.0,
+        "billing_mode": "PROVISIONED",
+        "read_capacity_units": 50,
+        "write_capacity_units": 25,
+        "partition_key": { "name": "userId", "type": "S" },
+        "attributes": [
+          { "name": "userId", "type": "S" },
+          { "name": "email", "type": "S" },
+          { "name": "createdAt", "type": "N" }
+        ],
+        "global_secondary_indexes": [
+          {
+            "index_name": "EmailIndex",
+            "partition_key": "email",
+            "projection_type": "KEYS_ONLY",
+            "index_status": "ACTIVE",
+            "read_capacity_units": 10,
+            "write_capacity_units": 5,
+            "index_size_bytes": 214748364,
+            "item_count": 567890
+          }
+        ],
+        "point_in_time_recovery": true,
+        "encryption": {
+          "enabled": true,
+          "type": "KMS",
+          "kms_key_id": "arn:aws:kms:us-east-1:961639320333:key/d4e5f6g7-h8i9-j0k1-l2m3-n4o5p6q7r8s9"
+        },
+        "stream": { "enabled": true, "view_type": "NEW_AND_OLD_IMAGES" },
+        "metrics": {
+          "read_capacity_units_consumed_last_hour": 2876,
+          "write_capacity_units_consumed_last_hour": 1234,
+          "consumed_read_capacity_average": 47.93,
+          "consumed_write_capacity_average": 20.57,
+          "throttled_requests_last_hour": 12,
+          "user_errors_last_hour": 8,
+          "system_errors_last_hour": 0,
+          "read_throttle_events": 7,
+          "write_throttle_events": 5
+        },
+        "monthly_cost_usd": 67.8,
+        "tags": [
+          { "Key": "Name", "Value": "user-profiles" },
+          { "Key": "Application", "Value": "user-management" },
+          { "Key": "Environment", "Value": "production" },
+          { "Key": "DataClassification", "Value": "pii" }
+        ]
+      },
+      {
+        "table_name": "order-history",
+        "table_arn": "arn:aws:dynamodb:us-east-1:961639320333:table/order-history",
+        "table_status": "ACTIVE",
+        "creation_date": "2025-08-20T15:30:00Z",
+        "item_count": 2345678,
+        "table_size_bytes": 8589934592,
+        "table_size_gb": 8.0,
+        "billing_mode": "PAY_PER_REQUEST",
+        "partition_key": { "name": "orderId", "type": "S" },
+        "sort_key": { "name": "timestamp", "type": "N" },
+        "attributes": [
+          { "name": "orderId", "type": "S" },
+          { "name": "timestamp", "type": "N" },
+          { "name": "userId", "type": "S" },
+          { "name": "status", "type": "S" }
+        ],
+        "global_secondary_indexes": [
+          {
+            "index_name": "UserIdIndex",
+            "partition_key": "userId",
+            "sort_key": "timestamp",
+            "projection_type": "ALL",
+            "index_status": "ACTIVE",
+            "index_size_bytes": 3221225472,
+            "item_count": 2345678
+          },
+          {
+            "index_name": "StatusIndex",
+            "partition_key": "status",
+            "sort_key": "timestamp",
+            "projection_type": "KEYS_ONLY",
+            "index_status": "ACTIVE",
+            "index_size_bytes": 536870912,
+            "item_count": 2345678
+          }
+        ],
+        "point_in_time_recovery": true,
+        "encryption": {
+          "enabled": true,
+          "type": "KMS",
+          "kms_key_id": "arn:aws:kms:us-east-1:961639320333:key/e5f6g7h8-i9j0-k1l2-m3n4-o5p6q7r8s9t0"
+        },
+        "metrics": {
+          "read_capacity_units_consumed_last_hour": 8934,
+          "write_capacity_units_consumed_last_hour": 2456,
+          "consumed_read_capacity_average": 148.9,
+          "consumed_write_capacity_average": 40.93,
+          "throttled_requests_last_hour": 0,
+          "user_errors_last_hour": 15,
+          "system_errors_last_hour": 1
+        },
+        "monthly_cost_usd": 156.78,
+        "tags": [
+          { "Key": "Name", "Value": "order-history" },
+          { "Key": "Application", "Value": "order-processing" },
+          { "Key": "Environment", "Value": "production" }
+        ]
+      },
+      {
+        "table_name": "product-inventory",
+        "table_arn": "arn:aws:dynamodb:us-east-1:961639320333:table/product-inventory",
+        "table_status": "ACTIVE",
+        "creation_date": "2025-07-15T11:00:00Z",
+        "item_count": 89456,
+        "table_size_bytes": 536870912,
+        "table_size_gb": 0.5,
+        "billing_mode": "PROVISIONED",
+        "read_capacity_units": 100,
+        "write_capacity_units": 50,
+        "partition_key": { "name": "productId", "type": "S" },
+        "attributes": [
+          { "name": "productId", "type": "S" },
+          { "name": "category", "type": "S" },
+          { "name": "stock", "type": "N" }
+        ],
+        "global_secondary_indexes": [
+          {
+            "index_name": "CategoryIndex",
+            "partition_key": "category",
+            "projection_type": "ALL",
+            "index_status": "ACTIVE",
+            "read_capacity_units": 25,
+            "write_capacity_units": 10,
+            "index_size_bytes": 214748364,
+            "item_count": 89456
+          }
+        ],
+        "point_in_time_recovery": true,
+        "encryption": { "enabled": true, "type": "AWS_OWNED" },
+        "metrics": {
+          "read_capacity_units_consumed_last_hour": 6745,
+          "write_capacity_units_consumed_last_hour": 3456,
+          "consumed_read_capacity_average": 112.42,
+          "consumed_write_capacity_average": 57.6,
+          "throttled_requests_last_hour": 45,
+          "user_errors_last_hour": 12,
+          "system_errors_last_hour": 0,
+          "read_throttle_events": 28,
+          "write_throttle_events": 17,
+          "hot_partition_keys": ["prod-12345", "prod-67890"]
+        },
+        "monthly_cost_usd": 135.6,
+        "tags": [
+          { "Key": "Name", "Value": "product-inventory" },
+          { "Key": "Application", "Value": "inventory-management" },
+          { "Key": "Environment", "Value": "production" }
+        ]
+      }
+    ]
   },
   "sqs_queues": {
-    "count": 0,
-    "urls": [],
-    "details": []
+    "count": 5,
+    "urls": [
+      "https://sqs.us-east-1.amazonaws.com/961639320333/order-queue-4d392a4",
+      "https://sqs.us-east-1.amazonaws.com/961639320333/notification-queue",
+      "https://sqs.us-east-1.amazonaws.com/961639320333/email-queue",
+      "https://sqs.us-east-1.amazonaws.com/961639320333/order-queue-dlq",
+      "https://sqs.ap-southeast-1.amazonaws.com/961639320333/webhook-events.fifo"
+    ],
+    "total_messages": 2380,
+    "details": [
+      {
+        "queue_name": "order-queue-4d392a4",
+        "queue_url": "https://sqs.us-east-1.amazonaws.com/961639320333/order-queue-4d392a4",
+        "queue_arn": "arn:aws:sqs:us-east-1:961639320333:order-queue-4d392a4",
+        "created_timestamp": "2025-11-02T14:57:30Z",
+        "approximate_messages": 1245,
+        "approximate_messages_not_visible": 34,
+        "approximate_messages_delayed": 5,
+        "visibility_timeout": 30,
+        "max_message_size": 262144,
+        "message_retention_period": 345600,
+        "receive_wait_time": 0,
+        "delay_seconds": 0,
+        "fifo_queue": false,
+        "content_based_deduplication": false,
+        "dead_letter_queue": {
+          "target_arn": "arn:aws:sqs:us-east-1:961639320333:order-queue-dlq",
+          "max_receive_count": 5
+        },
+        "encryption": { "enabled": true, "kms_key_id": "alias/aws/sqs" },
+        "metrics": {
+          "messages_sent_last_hour": 3456,
+          "messages_received_last_hour": 3421,
+          "messages_deleted_last_hour": 3398,
+          "empty_receives_last_hour": 234,
+          "age_of_oldest_message_seconds": 1234,
+          "average_message_size_bytes": 8192,
+          "number_of_empty_receives": 876,
+          "approximate_age_of_oldest_message": 1234
+        },
+        "monthly_cost_usd": 0.52,
+        "tags": [
+          { "Key": "Name", "Value": "order-queue" },
+          { "Key": "Project", "Value": "ecommerce-infra" },
+          { "Key": "Environment", "Value": "production" },
+          { "Key": "ManagedBy", "Value": "Pulumi" }
+        ]
+      },
+      {
+        "queue_name": "notification-queue",
+        "queue_url": "https://sqs.us-east-1.amazonaws.com/961639320333/notification-queue",
+        "queue_arn": "arn:aws:sqs:us-east-1:961639320333:notification-queue",
+        "created_timestamp": "2025-09-25T09:15:00Z",
+        "approximate_messages": 567,
+        "approximate_messages_not_visible": 12,
+        "approximate_messages_delayed": 0,
+        "visibility_timeout": 60,
+        "max_message_size": 262144,
+        "message_retention_period": 1209600,
+        "receive_wait_time": 20,
+        "delay_seconds": 0,
+        "fifo_queue": false,
+        "content_based_deduplication": false,
+        "metrics": {
+          "messages_sent_last_hour": 1876,
+          "messages_received_last_hour": 1845,
+          "messages_deleted_last_hour": 1823,
+          "empty_receives_last_hour": 45,
+          "age_of_oldest_message_seconds": 456,
+          "average_message_size_bytes": 4096,
+          "number_of_empty_receives": 123
+        },
+        "monthly_cost_usd": 0.28,
+        "tags": [
+          { "Key": "Name", "Value": "notification-queue" },
+          { "Key": "Application", "Value": "notification-service" },
+          { "Key": "Environment", "Value": "production" }
+        ]
+      },
+      {
+        "queue_name": "email-queue",
+        "queue_url": "https://sqs.us-east-1.amazonaws.com/961639320333/email-queue",
+        "queue_arn": "arn:aws:sqs:us-east-1:961639320333:email-queue",
+        "created_timestamp": "2025-08-30T14:00:00Z",
+        "approximate_messages": 89,
+        "approximate_messages_not_visible": 3,
+        "approximate_messages_delayed": 15,
+        "visibility_timeout": 120,
+        "max_message_size": 262144,
+        "message_retention_period": 86400,
+        "receive_wait_time": 20,
+        "delay_seconds": 60,
+        "fifo_queue": false,
+        "content_based_deduplication": false,
+        "metrics": {
+          "messages_sent_last_hour": 456,
+          "messages_received_last_hour": 445,
+          "messages_deleted_last_hour": 438,
+          "empty_receives_last_hour": 12,
+          "age_of_oldest_message_seconds": 234,
+          "average_message_size_bytes": 16384,
+          "number_of_empty_receives": 45
+        },
+        "monthly_cost_usd": 0.07,
+        "tags": [
+          { "Key": "Name", "Value": "email-queue" },
+          { "Key": "Application", "Value": "email-service" },
+          { "Key": "Environment", "Value": "production" }
+        ]
+      },
+      {
+        "queue_name": "order-queue-dlq",
+        "queue_url": "https://sqs.us-east-1.amazonaws.com/961639320333/order-queue-dlq",
+        "queue_arn": "arn:aws:sqs:us-east-1:961639320333:order-queue-dlq",
+        "created_timestamp": "2025-11-02T14:57:30Z",
+        "approximate_messages": 23,
+        "approximate_messages_not_visible": 0,
+        "approximate_messages_delayed": 0,
+        "visibility_timeout": 30,
+        "max_message_size": 262144,
+        "message_retention_period": 1209600,
+        "receive_wait_time": 0,
+        "delay_seconds": 0,
+        "fifo_queue": false,
+        "content_based_deduplication": false,
+        "metrics": {
+          "messages_sent_last_hour": 5,
+          "messages_received_last_hour": 2,
+          "messages_deleted_last_hour": 1,
+          "empty_receives_last_hour": 8,
+          "age_of_oldest_message_seconds": 45678,
+          "average_message_size_bytes": 8192,
+          "number_of_empty_receives": 234
+        },
+        "monthly_cost_usd": 0.01,
+        "tags": [
+          { "Key": "Name", "Value": "order-queue-dlq" },
+          { "Key": "Purpose", "Value": "dead-letter-queue" },
+          { "Key": "Environment", "Value": "production" }
+        ]
+      },
+      {
+        "queue_name": "webhook-events.fifo",
+        "queue_url": "https://sqs.ap-southeast-1.amazonaws.com/961639320333/webhook-events.fifo",
+        "queue_arn": "arn:aws:sqs:ap-southeast-1:961639320333:webhook-events.fifo",
+        "created_timestamp": "2025-10-01T10:30:00Z",
+        "approximate_messages": 456,
+        "approximate_messages_not_visible": 8,
+        "approximate_messages_delayed": 0,
+        "visibility_timeout": 45,
+        "max_message_size": 262144,
+        "message_retention_period": 345600,
+        "receive_wait_time": 20,
+        "delay_seconds": 0,
+        "fifo_queue": true,
+        "content_based_deduplication": true,
+        "deduplication_scope": "messageGroup",
+        "fifo_throughput_limit": "perMessageGroupId",
+        "metrics": {
+          "messages_sent_last_hour": 2345,
+          "messages_received_last_hour": 2310,
+          "messages_deleted_last_hour": 2298,
+          "empty_receives_last_hour": 67,
+          "age_of_oldest_message_seconds": 789,
+          "average_message_size_bytes": 12288,
+          "number_of_empty_receives": 178,
+          "deduplication_count_last_hour": 23
+        },
+        "monthly_cost_usd": 0.35,
+        "tags": [
+          { "Key": "Name", "Value": "webhook-events" },
+          { "Key": "Application", "Value": "webhook-processor" },
+          { "Key": "Environment", "Value": "production" }
+        ]
+      }
+    ]
   },
   "lambda_functions": {
-    "count": 0,
-    "names": [],
-    "details": []
+    "count": 7,
+    "names": [
+      "order-processor",
+      "image-resizer",
+      "notification-sender",
+      "auth-validator",
+      "data-transformer",
+      "cost-optimizer",
+      "backup-scheduler"
+    ],
+    "total_code_size_mb": 57.53,
+    "total_invocations_last_24h": 487654,
+    "details": [
+      {
+        "function_name": "order-processor",
+        "function_arn": "arn:aws:lambda:us-east-1:961639320333:function:order-processor",
+        "runtime": "python3.11",
+        "handler": "handler.process_order",
+        "code_size": 5242880,
+        "code_size_mb": 5.0,
+        "description": "Processes order events from SQS queue",
+        "timeout": 60,
+        "memory_size": 512,
+        "last_modified": "2025-11-01T16:45:00Z",
+        "version": "$LATEST",
+        "environment_variables": {
+          "DB_ENDPOINT": "aurora-cluster-a1b2c3d.cluster-c9a8b7c6d5e4.us-east-1.rds.amazonaws.com",
+          "QUEUE_URL": "https://sqs.us-east-1.amazonaws.com/961639320333/order-queue-4d392a4",
+          "ENVIRONMENT": "production"
+        },
+        "vpc_config": {
+          "vpc_id": "vpc-0916ff4a39c14585f",
+          "subnet_ids": ["subnet-0a1b2c3d", "subnet-0e5f6g7h"],
+          "security_group_ids": ["sg-0lambda123"]
+        },
+        "dead_letter_config": {
+          "target_arn": "arn:aws:sqs:us-east-1:961639320333:lambda-dlq"
+        },
+        "tracing_config": { "mode": "Active" },
+        "layers": [
+          "arn:aws:lambda:us-east-1:961639320333:layer:aws-sdk-pandas:3"
+        ],
+        "metrics": {
+          "invocations_last_24h": 234567,
+          "errors_last_24h": 123,
+          "throttles_last_24h": 12,
+          "duration_avg_ms": 456.78,
+          "duration_max_ms": 5678.9,
+          "concurrent_executions_avg": 12.5,
+          "concurrent_executions_max": 45,
+          "memory_used_avg_mb": 278,
+          "memory_used_max_mb": 445,
+          "cold_starts_last_24h": 234,
+          "timeout_errors_last_24h": 3,
+          "out_of_memory_errors_last_24h": 0
+        },
+        "monthly_cost_usd": 45.67,
+        "tags": [
+          { "Key": "Name", "Value": "order-processor" },
+          { "Key": "Application", "Value": "order-processing" },
+          { "Key": "Environment", "Value": "production" }
+        ]
+      },
+      {
+        "function_name": "image-resizer",
+        "function_arn": "arn:aws:lambda:us-east-1:961639320333:function:image-resizer",
+        "runtime": "nodejs18.x",
+        "handler": "index.handler",
+        "code_size": 15728640,
+        "code_size_mb": 15.0,
+        "description": "Automatically resizes uploaded images",
+        "timeout": 30,
+        "memory_size": 1024,
+        "last_modified": "2025-10-25T11:20:00Z",
+        "version": "$LATEST",
+        "environment_variables": {
+          "BUCKET_NAME": "ecommerce-images-prod",
+          "MAX_WIDTH": "1920",
+          "MAX_HEIGHT": "1080"
+        },
+        "ephemeral_storage": 1024,
+        "architectures": ["x86_64"],
+        "metrics": {
+          "invocations_last_24h": 145678,
+          "errors_last_24h": 67,
+          "throttles_last_24h": 0,
+          "duration_avg_ms": 1234.56,
+          "duration_max_ms": 4567.8,
+          "concurrent_executions_avg": 8.3,
+          "concurrent_executions_max": 23,
+          "memory_used_avg_mb": 678,
+          "memory_used_max_mb": 945,
+          "cold_starts_last_24h": 456,
+          "timeout_errors_last_24h": 5,
+          "out_of_memory_errors_last_24h": 2
+        },
+        "monthly_cost_usd": 89.34,
+        "tags": [
+          { "Key": "Name", "Value": "image-resizer" },
+          { "Key": "Application", "Value": "media-processing" },
+          { "Key": "Environment", "Value": "production" }
+        ]
+      },
+      {
+        "function_name": "notification-sender",
+        "function_arn": "arn:aws:lambda:us-east-1:961639320333:function:notification-sender",
+        "runtime": "python3.11",
+        "handler": "app.lambda_handler",
+        "code_size": 3145728,
+        "code_size_mb": 3.0,
+        "description": "Sends notifications via email and SMS",
+        "timeout": 45,
+        "memory_size": 256,
+        "last_modified": "2025-10-20T09:30:00Z",
+        "version": "3",
+        "environment_variables": {
+          "SNS_TOPIC_ARN": "arn:aws:sns:us-east-1:961639320333:user-notifications",
+          "SES_FROM_EMAIL": "noreply@example.com"
+        },
+        "reserved_concurrent_executions": 100,
+        "metrics": {
+          "invocations_last_24h": 67890,
+          "errors_last_24h": 45,
+          "throttles_last_24h": 234,
+          "duration_avg_ms": 234.56,
+          "duration_max_ms": 2345.6,
+          "concurrent_executions_avg": 45.7,
+          "concurrent_executions_max": 98,
+          "memory_used_avg_mb": 145,
+          "memory_used_max_mb": 223,
+          "cold_starts_last_24h": 123,
+          "timeout_errors_last_24h": 1,
+          "out_of_memory_errors_last_24h": 0
+        },
+        "monthly_cost_usd": 12.34,
+        "tags": [
+          { "Key": "Name", "Value": "notification-sender" },
+          { "Key": "Application", "Value": "notification-service" },
+          { "Key": "Environment", "Value": "production" }
+        ]
+      },
+      {
+        "function_name": "auth-validator",
+        "function_arn": "arn:aws:lambda:us-east-1:961639320333:function:auth-validator",
+        "runtime": "go1.x",
+        "handler": "main",
+        "code_size": 10485760,
+        "code_size_mb": 10.0,
+        "description": "JWT token validation for API Gateway",
+        "timeout": 10,
+        "memory_size": 128,
+        "last_modified": "2025-10-15T14:00:00Z",
+        "version": "$LATEST",
+        "environment_variables": {
+          "JWT_SECRET": "***",
+          "TOKEN_EXPIRY": "3600"
+        },
+        "metrics": {
+          "invocations_last_24h": 34567,
+          "errors_last_24h": 12,
+          "throttles_last_24h": 0,
+          "duration_avg_ms": 12.34,
+          "duration_max_ms": 234.5,
+          "concurrent_executions_avg": 3.4,
+          "concurrent_executions_max": 15,
+          "memory_used_avg_mb": 67,
+          "memory_used_max_mb": 98,
+          "cold_starts_last_24h": 89,
+          "timeout_errors_last_24h": 0,
+          "out_of_memory_errors_last_24h": 0
+        },
+        "monthly_cost_usd": 2.45,
+        "tags": [
+          { "Key": "Name", "Value": "auth-validator" },
+          { "Key": "Application", "Value": "authentication" },
+          { "Key": "Environment", "Value": "production" }
+        ]
+      },
+      {
+        "function_name": "data-transformer",
+        "function_arn": "arn:aws:lambda:eu-west-1:961639320333:function:data-transformer",
+        "runtime": "python3.11",
+        "handler": "transform.handler",
+        "code_size": 20971520,
+        "code_size_mb": 20.0,
+        "description": "ETL pipeline for analytics data",
+        "timeout": 300,
+        "memory_size": 3008,
+        "last_modified": "2025-10-10T08:15:00Z",
+        "version": "$LATEST",
+        "environment_variables": {
+          "SOURCE_BUCKET": "analytics-data-lake",
+          "DEST_BUCKET": "analytics-processed",
+          "GLUE_DATABASE": "analytics_db"
+        },
+        "ephemeral_storage": 10240,
+        "layers": [
+          "arn:aws:lambda:eu-west-1:336392948345:layer:AWSSDKPandas-Python311:7"
+        ],
+        "metrics": {
+          "invocations_last_24h": 3456,
+          "errors_last_24h": 23,
+          "throttles_last_24h": 0,
+          "duration_avg_ms": 45678.9,
+          "duration_max_ms": 234567.8,
+          "concurrent_executions_avg": 2.1,
+          "concurrent_executions_max": 8,
+          "memory_used_avg_mb": 2345,
+          "memory_used_max_mb": 2987,
+          "cold_starts_last_24h": 45,
+          "timeout_errors_last_24h": 12,
+          "out_of_memory_errors_last_24h": 5
+        },
+        "monthly_cost_usd": 234.56,
+        "tags": [
+          { "Key": "Name", "Value": "data-transformer" },
+          { "Key": "Project", "Value": "data-platform" },
+          { "Key": "Environment", "Value": "staging" }
+        ]
+      },
+      {
+        "function_name": "cost-optimizer",
+        "function_arn": "arn:aws:lambda:us-east-1:961639320333:function:cost-optimizer",
+        "runtime": "python3.11",
+        "handler": "optimizer.main",
+        "code_size": 2097152,
+        "code_size_mb": 2.0,
+        "description": "Analyzes and optimizes AWS costs",
+        "timeout": 180,
+        "memory_size": 512,
+        "last_modified": "2025-09-30T12:00:00Z",
+        "version": "$LATEST",
+        "environment_variables": {
+          "SNS_TOPIC": "arn:aws:sns:us-east-1:961639320333:cost-alerts",
+          "THRESHOLD": "1000"
+        },
+        "schedule": "cron(0 9 * * ? *)",
+        "metrics": {
+          "invocations_last_24h": 1,
+          "errors_last_24h": 0,
+          "throttles_last_24h": 0,
+          "duration_avg_ms": 12345.6,
+          "duration_max_ms": 12345.6,
+          "concurrent_executions_avg": 1.0,
+          "concurrent_executions_max": 1,
+          "memory_used_avg_mb": 345,
+          "memory_used_max_mb": 345,
+          "cold_starts_last_24h": 1,
+          "timeout_errors_last_24h": 0,
+          "out_of_memory_errors_last_24h": 0
+        },
+        "monthly_cost_usd": 0.15,
+        "tags": [
+          { "Key": "Name", "Value": "cost-optimizer" },
+          { "Key": "Purpose", "Value": "cost-management" },
+          { "Key": "Environment", "Value": "production" }
+        ]
+      },
+      {
+        "function_name": "backup-scheduler",
+        "function_arn": "arn:aws:lambda:us-east-1:961639320333:function:backup-scheduler",
+        "runtime": "python3.11",
+        "handler": "backup.schedule_backups",
+        "code_size": 1048576,
+        "code_size_mb": 1.0,
+        "description": "Schedules automated backups for RDS and DynamoDB",
+        "timeout": 60,
+        "memory_size": 256,
+        "last_modified": "2025-09-20T10:30:00Z",
+        "version": "$LATEST",
+        "environment_variables": {
+          "BACKUP_VAULT": "arn:aws:backup:us-east-1:961639320333:vault/default",
+          "RETENTION_DAYS": "30"
+        },
+        "schedule": "cron(0 2 * * ? *)",
+        "metrics": {
+          "invocations_last_24h": 1,
+          "errors_last_24h": 0,
+          "throttles_last_24h": 0,
+          "duration_avg_ms": 3456.7,
+          "duration_max_ms": 3456.7,
+          "concurrent_executions_avg": 1.0,
+          "concurrent_executions_max": 1,
+          "memory_used_avg_mb": 156,
+          "memory_used_max_mb": 156,
+          "cold_starts_last_24h": 1,
+          "timeout_errors_last_24h": 0,
+          "out_of_memory_errors_last_24h": 0
+        },
+        "monthly_cost_usd": 0.08,
+        "tags": [
+          { "Key": "Name", "Value": "backup-scheduler" },
+          { "Key": "Purpose", "Value": "backup-automation" },
+          { "Key": "Environment", "Value": "production" }
+        ]
+      }
+    ]
   },
   "security_groups": {
     "count": 1,
