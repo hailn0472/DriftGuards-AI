@@ -1,7 +1,7 @@
 """Metrics Collector Agent for enriching drift data with AWS metrics."""
 
 import asyncio
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List, Optional
 
 import boto3
@@ -262,7 +262,7 @@ class MetricsCollectorAgent:
                     change_id=item.get("configurationItemCaptureTime", ""),
                     timestamp=datetime.fromisoformat(
                         item.get("configurationItemCaptureTime", "").replace("Z", "+00:00")
-                    ) if item.get("configurationItemCaptureTime") else datetime.now(datetime.UTC),
+                    ) if item.get("configurationItemCaptureTime") else datetime.now(timezone.utc),
                     user=item.get("arn", "").split("/")[-1] if item.get("arn") else None,
                     action=item.get("configurationItemStatus", ""),
                     changes=item.get("configuration", {}),
@@ -380,7 +380,7 @@ class MetricsCollectorAgent:
                 memory_baseline=None,
                 network_baseline=None,
                 disk_baseline=None,
-                established_at=datetime.now(datetime.UTC),
+                established_at=datetime.now(timezone.utc),
             )
             return baseline
 
@@ -433,7 +433,7 @@ class MetricsCollectorAgent:
                             compliance_type=compliance_type,
                             severity="high",
                             message=violation_msg,
-                            detected_at=datetime.now(datetime.UTC),
+                            detected_at=datetime.now(timezone.utc),
                         )
                         violations.append(violation)
 

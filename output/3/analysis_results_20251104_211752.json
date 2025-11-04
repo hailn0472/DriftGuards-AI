@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "timestamp": "2025-11-04T21:17:52.749773",
+    "total_analyses": 1
+  },
+  "analyses": [
+    {
+      "analysis_id": "analysis-drift-boto3-20251104-2647b92e-1762240671",
+      "resource_id": "i-03fd43cd135f6135d",
+      "drift_id": "drift-boto3-20251104-2647b92e",
+      "explanation": "The Name tag of the EC2 instance has been modified from 'my-ec2-instance' to 'my-ec2-instance_test'.",
+      "root_cause": "The Name tag change was likely a manual update by a user or an automated process.",
+      "business_impact": "The tag change itself has minimal direct impact on operations, performance, or security. However, it may indicate a deviation from established naming conventions or processes, which could lead to confusion or inconsistencies in resource management.",
+      "recommended_action": "manual_review",
+      "confidence_score": 90,
+      "severity": "low",
+      "estimated_fix_time": "5 minutes",
+      "rollback_complexity": "simple",
+      "blast_radius": "The impact is limited to the specific EC2 instance.",
+      "remediation_steps": [
+        "Step 1: Investigate the reason for the Name tag change and determine if it was intentional or accidental.",
+        "Step 2: Based on the investigation, either update the Terraform code to match the current AWS state or revert the Name tag on the EC2 instance to match the Terraform state."
+      ],
+      "analyzed_at": "2025-11-04T14:17:51.191030",
+      "model_id": "us.anthropic.claude-3-sonnet-20240229-v1:0"
+    }
+  ]
+}

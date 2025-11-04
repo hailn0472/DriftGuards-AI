@@ -195,13 +195,55 @@ class Boto3DriftDetector:
         """Discover S3 buckets."""
         s3_client = self.factory.get_client("s3")
         response = s3_client.list_buckets()
-        return [
-            {
-                "name": b["Name"],
+        
+        buckets = []
+        for b in response.get("Buckets", []):
+            bucket_name = b["Name"]
+            bucket_info = {
+                "name": bucket_name,
                 "creation_date": str(b.get("CreationDate")),
             }
-            for b in response.get("Buckets", [])
-        ]
+            
+            # Get additional bucket properties
+            try:
+                # Versioning
+                versioning = s3_client.get_bucket_versioning(Bucket=bucket_name)
+                bucket_info["versioning"] = versioning.get("Status", "Disabled")
+                
+                # Encryption
+                try:
+                    encryption = s3_client.get_bucket_encryption(Bucket=bucket_name)
+                    bucket_info["encryption"] = "Enabled"
+                    bucket_info["encryption_type"] = encryption.get("ServerSideEncryptionConfiguration", {}).get("Rules", [{}])[0].get("ApplyServerSideEncryptionByDefault", {}).get("SSEAlgorithm", "Unknown")
+                except s3_client.exceptions.ServerSideEncryptionConfigurationNotFoundError:
+                    bucket_info["encryption"] = "Disabled"
+                
+                # Public access block
+                try:
+                    public_access = s3_client.get_public_access_block(Bucket=bucket_name)
+                    config = public_access.get("PublicAccessBlockConfiguration", {})
+                    bucket_info["public_access_blocked"] = all([
+                        config.get("BlockPublicAcls", False),
+                        config.get("IgnorePublicAcls", False),
+                        config.get("BlockPublicPolicy", False),
+                        config.get("RestrictPublicBuckets", False)
+                    ])
+                except s3_client.exceptions.NoSuchPublicAccessBlockConfiguration:
+                    bucket_info["public_access_blocked"] = False
+                
+                # Tags
+                try:
+                    tags = s3_client.get_bucket_tagging(Bucket=bucket_name)
+                    bucket_info["tags"] = tags.get("TagSet", [])
+                except s3_client.exceptions.NoSuchTagSet:
+                    bucket_info["tags"] = []
+                    
+            except Exception as e:
+                logger.warning(f"Could not get details for bucket {bucket_name}: {e}")
+            
+            buckets.append(bucket_info)
+        
+        return buckets
 
     async def _discover_dynamodb_tables(self) -> list[dict[str, Any]]:
         """Discover DynamoDB tables."""

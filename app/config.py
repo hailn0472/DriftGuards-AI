@@ -38,7 +38,7 @@ class Settings(BaseSettings):
     aws_session_token: str = ""
 
     # AWS Bedrock
-    bedrock_model_id: str = "anthropic.claude-3-sonnet-20240229-v1:0"
+    bedrock_model_id: str = "us.anthropic.claude-3-sonnet-20240229-v1:0"
     bedrock_region: str = "us-east-1"
     bedrock_max_tokens: int = 4096
     bedrock_temperature: float = Field(default=0.1, ge=0.0, le=1.0)

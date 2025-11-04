@@ -1,0 +1,16 @@
+{
+  "metadata": {
+    "timestamp": "2025-11-04T18:17:53.304817",
+    "total_violations": 1
+  },
+  "violations": [
+    {
+      "policy_id": "compliance-001",
+      "drift_id": "drift-boto3-20251104-6a0b5473",
+      "violation_type": "compliance",
+      "severity": "high",
+      "message": "Change violates compliance requirements",
+      "action_required": "block"
+    }
+  ]
+}

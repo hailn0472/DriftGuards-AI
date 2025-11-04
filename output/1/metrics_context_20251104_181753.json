@@ -1,0 +1,17 @@
+{
+  "metadata": {
+    "timestamp": "2025-11-04T18:17:53.305341",
+    "total_resources": 1
+  },
+  "metrics": [
+    {
+      "resource_id": "assets-bucket-0e84de4",
+      "resource_type": "s3_buckets",
+      "cloudwatch_metrics": {},
+      "config_history": [],
+      "cost_data": null,
+      "compliance_violations": [],
+      "collected_at": "2025-11-04T11:17:41.531251"
+    }
+  ]
+}

@@ -174,7 +174,11 @@ Please provide a comprehensive analysis in the following JSON format:
     "explanation": "Clear, human-readable explanation of what changed and when",
     "root_cause": "Why this drift occurred (e.g., manual change, automation, auto-scaling)",
     "business_impact": "Impact on operations, performance, security, and costs",
-    "recommended_action": "update_terraform | revert_aws | ignore | manual_review",
+    "recommended_action": "ONE OF THE FOLLOWING (exactly as written):
+        - 'update_terraform': Update Terraform code to match the current AWS state (accept the drift)
+        - 'revert_aws': Revert AWS resources back to match Terraform state (undo the drift)
+        - 'ignore': Acknowledge drift but take no action (low risk)
+        - 'manual_review': Requires human decision (complex or uncertain cases)",
     "alternative_actions": [
         {{
             "action": "action_name",
@@ -427,4 +431,3 @@ Respond ONLY with the JSON object, no additional text."""
             model_id=self.model_id,
             model_version="fallback",
         )
-

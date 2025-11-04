@@ -4,7 +4,7 @@ import asyncio
 import hashlib
 import json
 import subprocess
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -92,27 +92,23 @@ class DetectionAgent:
         logger.info(f"Scanning account {account_id} in region {region}")
 
         try:
-            # Run both boto3 and driftctl scans in parallel
-            boto3_task = self._boto3_scan(account_id, region)
-            driftctl_task = self._driftctl_scan(account_id, region)
+            # Run boto3 scan only (driftctl temporarily disabled)
+            boto3_drifts = await self._boto3_scan(account_id, region)
 
-            boto3_drifts, driftctl_drifts = await asyncio.gather(
-                boto3_task, driftctl_task, return_exceptions=True
-            )
-
-            # Combine and deduplicate results
+            # Use only boto3 results
             all_drifts = []
 
             if not isinstance(boto3_drifts, Exception):
                 all_drifts.extend(boto3_drifts)
             else:
-                logger.warning(f"boto3 scan failed: {boto3_drifts}")
+                logger.error(f"boto3 scan failed: {boto3_drifts}")
+                all_drifts = []
 
-            if not isinstance(driftctl_drifts, Exception):
-                # Add driftctl drifts that aren't already detected by boto3
-                all_drifts.extend(self._deduplicate_drifts(boto3_drifts, driftctl_drifts))
-            else:
-                logger.warning(f"driftctl scan failed: {driftctl_drifts}")
+            # if not isinstance(driftctl_drifts, Exception):
+            #     # Add driftctl drifts that aren't already detected by boto3
+            #     all_drifts.extend(self._deduplicate_drifts(boto3_drifts, driftctl_drifts))
+            # else:
+            #     logger.warning(f"driftctl scan failed: {driftctl_drifts}")
 
             # Filter by resource types if specified
             if resource_types:
@@ -301,7 +297,7 @@ class DetectionAgent:
                 terraform_value=before,
                 actual_value=after,
                 diff=diff,
-                detected_at=datetime.now(datetime.UTC),
+                detected_at=datetime.now(timezone.utc),
                 severity=severity,
                 account_id=account_id,
                 region=region,
@@ -438,7 +434,7 @@ class DetectionAgent:
                 terraform_value=terraform_value,
                 actual_value=actual_value,
                 diff=diff,
-                detected_at=datetime.now(datetime.UTC),
+                detected_at=datetime.now(timezone.utc),
                 severity=severity,
                 account_id=account_id,
                 region=region,
@@ -526,7 +522,7 @@ class DetectionAgent:
 
     def _generate_drift_id(self, resource_id: str, account_id: str, region: str) -> str:
         """Generate unique drift ID."""
-        now = datetime.now(datetime.UTC)
+        now = datetime.now(timezone.utc)
         timestamp = now.isoformat()
         unique_string = f"{resource_id}-{account_id}-{region}-{timestamp}"
         hash_suffix = hashlib.md5(unique_string.encode()).hexdigest()[:8]

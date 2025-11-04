@@ -356,9 +356,18 @@ class PolicyValidatorAgent:
         # Check for required tags
         actual = input_data.get("actual_value", {})
         tags = actual.get("tags", {})
+        
+        # Handle both list format (from AWS API) and dict format
+        if isinstance(tags, list):
+            # Convert AWS tag format: [{"Key": "Env", "Value": "prod"}] -> {"Env": "prod"}
+            tag_keys = {tag.get("Key") for tag in tags if isinstance(tag, dict)}
+        elif isinstance(tags, dict):
+            tag_keys = set(tags.keys())
+        else:
+            tag_keys = set()
 
         required_tags = {"Environment", "Owner", "Project"}
-        missing_tags = required_tags - set(tags.keys())
+        missing_tags = required_tags - tag_keys
 
         if missing_tags:
             return True
@@ -447,4 +456,3 @@ class PolicyValidatorAgent:
             return any(v.action_required == "block" for v in violations)
 
         return False
-
