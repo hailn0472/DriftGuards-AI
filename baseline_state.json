@@ -1,0 +1,95 @@
+{
+  "account_id": "123456789012",
+  "region": "us-east-1",
+  "timestamp": "2025-11-04T21:14:59.236829",
+  "resources": {
+    "vpcs": [
+      {
+        "id": "vpc-0f5d2e5a4fad1028d",
+        "cidr": "172.31.0.0/16",
+        "is_default": true,
+        "state": "available",
+        "tags": []
+      },
+      {
+        "id": "vpc-0c80bf6d592ec34c0",
+        "cidr": "10.0.0.0/16",
+        "is_default": false,
+        "state": "available",
+        "tags": [
+          {
+            "Key": "Name",
+            "Value": "my-vpc"
+          }
+        ]
+      }
+    ],
+    "ec2_instances": [
+      {
+        "id": "i-0c186a4d4a8b6d08b",
+        "type": "t2.micro",
+        "state": "running",
+        "vpc_id": "vpc-00c924321a07d2d68",
+        "subnet_id": "subnet-0c01c49a2e3cc8bf3",
+        "private_ip": "10.0.1.138",
+        "public_ip": "54.255.185.112",
+        "tags": [
+          {
+            "Key": "Name",
+            "Value": "my-ec2-instance"
+          }
+        ]
+      }
+    ],
+    "eks_clusters": [],
+    "ecs_clusters": [],
+    "rds_instances": [],
+    "rds_clusters": [],
+    "s3_buckets": [
+      {
+        "name": "assets-bucket-0e84de4",
+        "creation_date": "2025-11-04 09:30:25+00:00",
+        "versioning": "Disabled",
+        "encryption": "Enabled",
+        "encryption_type": "AES256",
+        "public_access_blocked": true,
+        "tags": [
+          {
+            "Key": "test1",
+            "Value": "11111"
+          },
+          {
+            "Key": "test222",
+            "Value": "222aaa"
+          }
+        ]
+      }
+    ],
+    "dynamodb_tables": [],
+    "sqs_queues": [],
+    "lambda_functions": [],
+    "security_groups": [
+      {
+        "id": "sg-0c00bf3302c94bb2d",
+        "name": "default",
+        "vpc_id": "vpc-0f5d2e5a4fad1028d",
+        "ingress_rules": 1,
+        "egress_rules": 1
+      },
+      {
+        "id": "sg-071b954da79b2fc6c",
+        "name": "my-security-group-3a89fe0",
+        "vpc_id": "vpc-0c80bf6d592ec34c0",
+        "ingress_rules": 2,
+        "egress_rules": 1
+      },
+      {
+        "id": "sg-02be254b4681e88ab",
+        "name": "default",
+        "vpc_id": "vpc-0c80bf6d592ec34c0",
+        "ingress_rules": 1,
+        "egress_rules": 1
+      }
+    ]
+  }
+}
