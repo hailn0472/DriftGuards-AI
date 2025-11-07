@@ -1,0 +1,13 @@
+{
+  "approval_id": "approval-e7e6604d",
+  "drift_id": "drift-boto3-20251107-0f5cbd8d",
+  "resource_id": "i-07735a53d7e3968a3",
+  "resource_type": "ec2_instances",
+  "approved_by": "test",
+  "approved_at": "2025-11-07T14:58:11.562571",
+  "approval_reason": null,
+  "previous_baseline": {},
+  "new_baseline": {},
+  "environment": null,
+  "tags": {}
+}

@@ -83,16 +83,13 @@ class Settings(BaseSettings):
     # Alerts
     alert_email_from: str = "alerts@driftguards.io"
     alert_email_to: str = "team@driftguards.io"
-    alert_slack_webhook_url: str = ""
-    alert_pagerduty_api_key: str = ""
-    alert_pagerduty_service_id: str = ""
 
-    # SES
-    ses_region: str = "us-east-1"
-    ses_from_email: str = "noreply@driftguards.io"
-
-    # SNS
-    sns_topic_arn: str = ""
+    # SMTP (Simple Email)
+    smtp_host: str = "smtp.gmail.com"
+    smtp_port: int = 587
+    smtp_username: str = ""
+    smtp_password: str = ""
+    smtp_use_tls: bool = True
 
     # OPA
     opa_policy_dir: str = "/app/app/policies/opa"

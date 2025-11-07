@@ -1,18 +1,11 @@
 {
   "account_id": "961639320333",
   "region": "ap-southeast-1",
-  "timestamp": "2025-11-07T20:50:17.287235",
+  "timestamp": "2025-11-07T21:59:50.913705",
   "resources": {
     "vpcs": [
       {
-        "id": "vpc-0f5d2e5a4fad1028d",
-        "cidr": "172.31.0.0/16",
-        "is_default": true,
-        "state": "available",
-        "tags": []
-      },
-      {
-        "id": "vpc-00c924321a07d2d68",
+        "id": "vpc-0ec1a20fc68892527",
         "cidr": "10.0.0.0/16",
         "is_default": false,
         "state": "available",
@@ -24,7 +17,7 @@
         ]
       },
       {
-        "id": "vpc-0ec1a20fc68892527",
+        "id": "vpc-09472342374f408ba",
         "cidr": "10.0.0.0/16",
         "is_default": false,
         "state": "available",
@@ -50,21 +43,6 @@
     ],
     "ec2_instances": [
       {
-        "id": "i-07735a53d7e3968a3",
-        "type": "t2.micro",
-        "state": "terminated",
-        "vpc_id": null,
-        "subnet_id": null,
-        "private_ip": null,
-        "public_ip": null,
-        "tags": [
-          {
-            "Key": "Name",
-            "Value": "my-ec2-instance"
-          }
-        ]
-      },
-      {
         "id": "i-05ea847020dcf0a07",
         "type": "t2.micro",
         "state": "running",
@@ -75,7 +53,7 @@
         "tags": [
           {
             "Key": "Name",
-            "Value": "my-ec2-instance"
+            "Value": "my-ec2-instance-tesst"
           }
         ]
       }
@@ -99,7 +77,6 @@
     "sqs_queues": [],
     "lambda_functions": [
       {
-        "id": "driftguards-lambda-function",
         "name": "driftguards-lambda-function",
         "arn": "arn:aws:lambda:ap-southeast-1:961639320333:function:driftguards-lambda-function",
         "runtime": "python3.11",
@@ -108,27 +85,6 @@
       }
     ],
     "security_groups": [
-      {
-        "id": "sg-0c00bf3302c94bb2d",
-        "name": "default",
-        "vpc_id": "vpc-0f5d2e5a4fad1028d",
-        "ingress_rules": 1,
-        "egress_rules": 1
-      },
-      {
-        "id": "sg-0670d4810e8c0d89b",
-        "name": "default",
-        "vpc_id": "vpc-00c924321a07d2d68",
-        "ingress_rules": 1,
-        "egress_rules": 1
-      },
-      {
-        "id": "sg-0c2b8151aec3e2454",
-        "name": "my-security-group-0022a83",
-        "vpc_id": "vpc-00c924321a07d2d68",
-        "ingress_rules": 3,
-        "egress_rules": 1
-      },
       {
         "id": "sg-062f9fde1b4e44e6d",
         "name": "default",
@@ -141,6 +97,20 @@
         "name": "my-security-group-e5136a8",
         "vpc_id": "vpc-0ec1a20fc68892527",
         "ingress_rules": 2,
+        "egress_rules": 1
+      },
+      {
+        "id": "sg-0d155c14368b85a17",
+        "name": "my-security-group-d0068dd",
+        "vpc_id": "vpc-09472342374f408ba",
+        "ingress_rules": 2,
+        "egress_rules": 1
+      },
+      {
+        "id": "sg-0506160bed0a77591",
+        "name": "default",
+        "vpc_id": "vpc-09472342374f408ba",
+        "ingress_rules": 1,
         "egress_rules": 1
       },
       {
