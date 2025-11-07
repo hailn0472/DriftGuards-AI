@@ -157,12 +157,22 @@ def boto3_revert_to_baseline(
 
 def _revert_ec2(instance_id: str, baseline: Dict, region: str) -> Dict:
     """Revert EC2 instance to baseline state."""
+    from botocore.exceptions import ClientError
+    
     ec2 = boto3.client("ec2", region_name=region)
     actions = []
 
     try:
         # Get current instance state
         response = ec2.describe_instances(InstanceIds=[instance_id])
+        
+        if not response["Reservations"]:
+            return {
+                "status": "error",
+                "message": f"❌ Error: The instance ID '{instance_id}' does not exist in region {region}",
+                "actions": [],
+            }
+        
         current_state = response["Reservations"][0]["Instances"][0]["State"]["Name"]
         logger.info(f"Current instance state: {current_state}")
 
@@ -254,7 +264,13 @@ def _revert_ec2(instance_id: str, baseline: Dict, region: str) -> Dict:
         error_code = e.response["Error"]["Code"]
         error_msg = e.response["Error"]["Message"]
 
-        if error_code == "IncorrectInstanceState":
+        if error_code == "InvalidInstanceID.NotFound":
+            return {
+                "status": "error",
+                "message": f"❌ Error: The instance ID '{instance_id}' does not exist in region {region}. Please verify the instance ID and region.",
+                "actions": actions,
+            }
+        elif error_code == "IncorrectInstanceState":
             return {
                 "status": "error",
                 "message": f"❌ Invalid state transition: {error_msg}",
@@ -262,7 +278,15 @@ def _revert_ec2(instance_id: str, baseline: Dict, region: str) -> Dict:
                 "hint": "Instance may already be in the target state or transitioning",
             }
         else:
-            raise
+            logger.error(f"AWS ClientError: {error_code} - {error_msg}")
+            return {
+                "status": "error",
+                "message": f"❌ AWS Error ({error_code}): {error_msg}",
+                "actions": actions,
+            }
+    except Exception as e:
+        logger.error(f"Error reverting EC2 instance: {e}")
+        return {"status": "error", "message": f"Revert failed: {str(e)}", "actions": actions}
 
 
 def _revert_s3(bucket_name: str, baseline: Dict, region: str) -> Dict:
@@ -562,7 +586,7 @@ def load_baseline_config(resource_type: str, resource_id: str) -> Optional[Dict[
         Baseline configuration dict or None if not found
     """
     try:
-        baseline_file = Path(__file__).parent / "baseline_state.json"
+        baseline_file = Path(__file__).parent.parent.parent / "data" / "baseline" / "baseline_state.json"
 
         if not baseline_file.exists():
             logger.warning(f"Baseline file not found: {baseline_file}")

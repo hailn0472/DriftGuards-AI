@@ -20,6 +20,17 @@
 - **Automated Remediation**: Safe, audited, and reversible fixes with rollback capabilities
 - **Interactive Dashboard**: Streamlit-based UI for visualization and management
 
+## 📚 Documentation
+
+Comprehensive documentation is available in the [`docs/`](docs/) directory:
+
+- **[Architecture](docs/architecture/)** - System design and architecture
+- **[User Guides](docs/guides/)** - Step-by-step guides
+- **[Implementation](docs/implementation/)** - Technical details
+- **[Features](docs/features/)** - Feature documentation
+
+Start with [docs/README.md](docs/README.md) for a complete documentation index.
+
 ## 📋 Prerequisites
 
 - Python 3.11+
@@ -48,30 +59,51 @@ cp .env.example .env
 Copy-Item .env.example .env
 ```
 
-### 3. Install Dependencies
+### 3. Create Virtual Environment & Install Dependencies
 
-Using `uv` (recommended):
-```powershell
-uv venv
-.venv\Scripts\activate
-uv pip install -r requirements.txt
-```
-
-Or using `pip`:
-```powershell
+**Recommended: Using virtual environment**
+```bash
+# Create virtual environment
 python -m venv venv
+
+# Activate virtual environment
+# On Windows:
 venv\Scripts\activate
+# On Linux/Mac:
+source venv/bin/activate
+
+# Install all dependencies
 pip install -r requirements.txt
 ```
 
-### 4. Run the Application
-
-Start the Streamlit dashboard:
-```powershell
-streamlit run dashboard.py
+**⚠️ Important**: The application uses `python-dotenv` to automatically load AWS credentials from `.env` file. Make sure your `.env` file contains:
+```env
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+AWS_REGION=ap-southeast-1
 ```
 
-The dashboard will be available at http://localhost:8502
+**Alternative: Using uv (faster)**
+```bash
+uv venv
+.venv\Scripts\activate  # Windows
+uv pip install -r requirements.txt
+```
+
+### 4. Run the Dashboard
+
+**Start the Streamlit dashboard:**
+```bash
+# Recommended method
+python -m streamlit run app/dashboard/app.py
+
+# Alternative (if streamlit is in PATH)
+streamlit run app/dashboard/app.py
+```
+
+The dashboard will be available at:
+- **Local**: http://localhost:8501
+- **Network**: http://YOUR_IP:8501
 
 **Dashboard Features:**
 - 🔍 **Scan for Drifts**: Enter AWS account ID and region to scan
@@ -80,63 +112,76 @@ The dashboard will be available at http://localhost:8502
 - ✅ **Approve Drift**: Mark drift as intentional change
 - 🔄 **Revert with Pulumi**: Use Infrastructure as Code to revert to baseline
 - 🔧 **Revert with Boto3**: Use direct AWS API calls for quick fixes
+- 🎯 **Selective Revert**: Choose specific fields to revert
 - ⛔ **Terminate Resource**: Safely stop or delete resources with confirmation
+- 🎉 **Health Status**: Clear notifications when no drifts are detected
 
-**Hybrid Approach Documentation:**
-- See [HYBRID_APPROACH_GUIDE.md](HYBRID_APPROACH_GUIDE.md) for complete usage guide
-- See [BOTO3_REVERT_CAPABILITIES.md](BOTO3_REVERT_CAPABILITIES.md) for boto3 capabilities
-- See [ARCHITECTURE_DIAGRAM.md](ARCHITECTURE_DIAGRAM.md) for system architecture
+**📚 Documentation:**
+- See [docs/architecture/HYBRID_APPROACH_GUIDE.md](docs/architecture/HYBRID_APPROACH_GUIDE.md) for hybrid approach
+- See [docs/architecture/ARCHITECTURE_DIAGRAM.md](docs/architecture/ARCHITECTURE_DIAGRAM.md) for system architecture
+- See [docs/guides/DASHBOARD_GUIDE.md](docs/guides/DASHBOARD_GUIDE.md) for dashboard usage
+- See [docs/implementation/](docs/implementation/) for technical details
 
-### 5. Access the Application
+### 5. Explore Examples
 
-- **API Documentation**: http://localhost:8000/docs
-- **Dashboard**: http://localhost:8501
-- **Health Check**: http://localhost:8000/health
+Check out example implementations in [`examples/`](examples/):
+
+```bash
+# Basic workflow example
+python -m examples.basic_workflow.run_workflow_example
+
+# Pulumi EC2 deployment
+cd examples/pulumi-ec2-deployment
+# See README.md for details
+```
 
 ## 📦 Project Structure
 
 ```
-driftguards/
+DriftGuards-AI/
 ├── app/
-│   ├── main.py                    # FastAPI entry point
-│   ├── config.py                  # Configuration management
-│   ├── agents/                    # LangGraph agents
-│   │   ├── detection.py           # Drift detection agent
-│   │   ├── metrics_collector.py   # Metrics collection agent
-│   │   ├── ai_analyzer.py         # AI analysis agent
-│   │   ├── policy_validator.py    # Policy validation agent
-│   │   ├── alert_engine.py        # Alert engine agent
-│   │   └── remediation.py         # Remediation agent
-│   ├── workflows/                 # LangGraph workflows
-│   │   └── drift_workflow.py      # Main drift workflow
-│   ├── models/                    # Data models
-│   │   ├── drift.py               # Drift models
-│   │   ├── metrics.py             # Metrics models
-│   │   └── analysis.py            # Analysis models
-│   ├── services/                  # AWS service clients
-│   │   ├── terraform.py           # Terraform operations
-│   │   ├── driftctl.py            # driftctl integration
-│   │   ├── aws_client.py          # AWS SDK wrappers
-│   │   └── bedrock.py             # Bedrock LLM client
-│   ├── storage/                   # Data storage
-│   │   ├── sqlite.py              # SQLite for dev
-│   │   └── dynamodb.py            # DynamoDB for prod
-│   ├── api/                       # API routes
-│   │   └── v1/                    # API v1
-│   └── utils/                     # Utilities
-├── frontend/                      # Streamlit dashboard
-│   ├── app.py                     # Main app
-│   └── pages/                     # Dashboard pages
-├── tests/                         # Tests
-├── deployment/                    # Deployment configs
-├── docs/                          # Documentation
-├── pyproject.toml                 # Project configuration
-├── requirements.txt               # Dependencies
-├── .env.example                   # Environment template
-├── Dockerfile                     # Docker configuration
-├── DESIGN.md                      # Design document
-└── README.md                      # This file
+│   ├── agents/          # Multi-agent system (detection, analysis, remediation)
+│   ├── dashboard/       # 🆕 Streamlit dashboard (app.py)
+│   ├── models/          # Data models (drift, analysis, metrics)
+│   ├── revert/          # 🆕 Revert operations (boto3, pulumi, selective)
+│   ├── services/        # AWS service clients
+│   ├── workflows/       # LangGraph workflows
+│   └── config.py        # Application configuration
+├── data/
+│   ├── baseline/        # 🆕 Baseline state configurations
+│   └── inventory/       # 🆕 AWS resource inventory
+├── docs/                # 🆕 Comprehensive documentation
+│   ├── architecture/    # System design and diagrams
+│   ├── features/        # Feature documentation
+│   ├── guides/          # User guides
+│   └── implementation/  # Technical details
+├── examples/            # 🆕 Example workflows and deployments
+│   ├── basic_workflow/  # Basic usage examples
+│   └── pulumi-ec2-deployment/  # Pulumi IaC example
+├── scripts/             # 🆕 Utility scripts
+│   ├── check_credentials.py      # Verify AWS credentials
+│   ├── discover_aws_resources.py # Update baseline
+│   └── verify_instance.py        # Debug instance issues
+├── tests/               # 🆕 Comprehensive test suite (18 tests)
+│   ├── test_baseline.py          # Baseline validation
+│   ├── test_config.py            # Config & credentials
+│   ├── test_models.py            # Data models
+│   ├── test_revert_utils.py      # Revert operations
+│   └── conftest.py               # Pytest fixtures
+├── .env.example         # Environment template
+├── requirements.txt     # Python dependencies
+├── pyproject.toml       # Project configuration
+└── README.md
 ```
+
+**🆕 Recent Changes:**
+- ✅ Added comprehensive test suite (18 tests, 11% coverage)
+- ✅ Organized documentation into categories
+- ✅ Created utility scripts for AWS operations
+- ✅ Separated dashboard and revert modules
+- ✅ Added baseline and inventory data management
+- ✅ Improved dashboard UX with clear notifications
+- ✅ Fixed credential loading with python-dotenv
 
 ## 🔧 Configuration
 
@@ -201,14 +246,111 @@ POST /api/v1/drifts/{drift_id}/remediate
 
 ## 🧪 Testing
 
-Run tests:
+DriftGuards includes a comprehensive test suite covering models, configuration, baseline validation, and revert operations.
+
+### Run All Tests
+
 ```powershell
-pytest
+# Run all tests with verbose output
+pytest -v
+
+# Run with short traceback
+pytest -v --tb=short
 ```
 
-Run tests with coverage:
+### Run Specific Test Files
+
 ```powershell
+# Test configuration and AWS credentials
+pytest tests/test_config.py -v
+
+# Test data models
+pytest tests/test_models.py -v
+
+# Test baseline validation
+pytest tests/test_baseline.py -v
+
+# Test revert utilities
+pytest tests/test_revert_utils.py -v
+```
+
+### Coverage Reports
+
+```powershell
+# Generate coverage report (terminal)
+pytest --cov=app --cov-report=term-missing
+
+# Generate HTML coverage report
 pytest --cov=app --cov-report=html
+# Open htmlcov/index.html in browser
+```
+
+### Test Suite Overview
+
+- **18 tests** covering core functionality
+- **100% coverage** for data models (`models/`)
+- **25%+ coverage** for revert operations
+- **AWS credential validation**
+- **Baseline data validation**
+- **Mock-based integration tests**
+
+### Running Specific Tests
+
+```powershell
+# Run single test
+pytest tests/test_config.py::test_boto3_session -v
+
+# Run test class
+pytest tests/test_models.py::TestDriftRecord -v
+```
+
+## 🔧 Troubleshooting
+
+### AWS Account Mismatch
+
+**Problem**: Error "The instance ID does not exist" even though instance is running.
+
+**Solution**: Boto3 may be using credentials from `~/.aws/credentials` instead of `.env` file.
+
+```bash
+# Verify which account is being used
+python scripts/check_credentials.py
+
+# Check if correct credentials are loaded
+python -c "import boto3; print(boto3.client('sts').get_caller_identity())"
+```
+
+### Missing .env Variables
+
+**Problem**: Dashboard cannot connect to AWS.
+
+**Solution**: Ensure `.env` file exists and contains required variables:
+
+```env
+AWS_ACCESS_KEY_ID=your_key
+AWS_SECRET_ACCESS_KEY=your_secret
+AWS_REGION=ap-southeast-1
+```
+
+### Instance Not Found During Revert
+
+**Problem**: Drift detection works but revert fails with "instance does not exist".
+
+**Solution**: Update baseline with current AWS resources:
+
+```bash
+python scripts/discover_aws_resources.py
+```
+
+### Test Failures
+
+**Problem**: Tests fail with import errors.
+
+**Solution**: Ensure all dependencies are installed:
+
+```bash
+pip install -r requirements.txt
+pip install pytest pytest-cov pytest-asyncio pytest-mock
 ```
 
 ## 🐳 Docker Deployment
@@ -242,6 +384,46 @@ The application exposes metrics via:
 - **Secrets Management**: AWS Secrets Manager integration
 - **Audit Logging**: All actions logged to DynamoDB/S3
 
+## 🛠️ Utility Scripts
+
+DriftGuards includes several utility scripts to help manage your infrastructure:
+
+### Check AWS Credentials
+
+Verify which AWS account and credentials are being used:
+
+```bash
+python scripts/check_credentials.py
+```
+
+Outputs:
+- Current AWS account ID
+- Credentials source (environment, .env, ~/.aws/credentials)
+- User ARN and permissions
+
+### Discover AWS Resources
+
+Scan your AWS account and update baseline configuration:
+
+```bash
+python scripts/discover_aws_resources.py
+```
+
+This will:
+- Scan all VPCs, EC2 instances, Security Groups, and S3 buckets
+- Update `data/baseline/baseline_state.json`
+- Create backup of existing baseline
+
+### Verify Instance Existence
+
+Check if a specific EC2 instance exists across all regions:
+
+```bash
+python scripts/verify_instance.py
+```
+
+Useful for debugging "instance not found" errors.
+
 ## 🛠️ Development
 
 Install development dependencies:
@@ -258,10 +440,12 @@ ruff check .
 mypy app/
 ```
 
-## 📖 Documentation
+## 📖 Additional Resources
 
-- [Design Document](DESIGN.md) - Comprehensive architecture and design
-- [API Documentation](http://localhost:8000/docs) - Interactive API docs
+- **[Complete Documentation](docs/README.md)** - Full documentation index
+- **[System Design](docs/architecture/DESIGN.md)** - Comprehensive architecture
+- **[Examples](examples/README.md)** - Code examples and tutorials
+- **[Cleanup Summary](CLEANUP_SUMMARY.md)** - Recent reorganization details
 
 ## 🗺️ Roadmap
 
@@ -317,8 +501,9 @@ This project is licensed under the MIT License.
 
 ## 📧 Contact
 
-- **Repository**: [CloudDrift-AI](https://github.com/hailn0472/CloudDrift-AI)
-- **Issues**: [GitHub Issues](https://github.com/hailn0472/CloudDrift-AI/issues)
+- **Repository**: [DriftGuards-AI](https://github.com/hailn0472/DriftGuards-AI)
+- **Issues**: [GitHub Issues](https://github.com/hailn0472/DriftGuards-AI/issues)
+- **Documentation**: [docs/](docs/README.md)
 
 ## 🙏 Acknowledgments
 

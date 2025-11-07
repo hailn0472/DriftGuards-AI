@@ -20,7 +20,7 @@ class Boto3DriftDetector:
     def __init__(self):
         """Initialize boto3 drift detector."""
         self.factory = AWSClientFactory()
-        self.baseline_file = Path("baseline_state.json")
+        self.baseline_file = Path("data/baseline/baseline_state.json")
 
     async def load_baseline_state(self) -> dict[str, Any] | None:
         """Load baseline (expected) infrastructure state."""

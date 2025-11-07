@@ -1,5 +1,9 @@
 """Simple Streamlit Dashboard for DriftGuards AI."""
 
+# Load .env file FIRST before any other imports
+from dotenv import load_dotenv
+load_dotenv()  # This loads AWS credentials from .env
+
 import asyncio
 import json
 import sys
@@ -8,19 +12,20 @@ from pathlib import Path
 
 import streamlit as st
 
-# Add parent directory to path
-sys.path.insert(0, str(Path(__file__).parent))
+# Add project root to path
+project_root = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(project_root))
 
 from app.models.drift import ScanRequest
 from app.workflows import DriftGuardsWorkflow
 
-# Import revert utilities
-from revert_utils import (
+# Import revert utilities from new location
+from app.revert.boto3_revert import (
     boto3_revert_to_baseline,
     boto3_terminate_resource,
     load_baseline_config,
 )
-from selective_revert import (
+from app.revert.selective_revert import (
     selective_revert,
     get_available_fields,
     parse_diff_from_drift,
@@ -139,6 +144,12 @@ async def run_scan(accounts, regions, resource_types):
         st.session_state.violations = final_state.get("policy_violations", [])
         st.session_state.last_scan = datetime.now()
         st.session_state.scanning = False
+        
+        # Show success message
+        if len(st.session_state.drifts) == 0:
+            st.success("✅ Scan completed successfully! No drifts detected. Your infrastructure is in sync with baseline.")
+        else:
+            st.warning(f"⚠️ Scan completed: {len(st.session_state.drifts)} drift(s) detected")
 
         return True
     except Exception as e:
@@ -508,13 +519,33 @@ def main():
 
     # Main content
     if not st.session_state.drifts:
-        st.info("👆 Click 'Start Scan' to detect drifts or load a previous scan")
-        st.markdown("---")
-        st.markdown("### 📊 Dashboard Features:")
-        st.markdown("- **🔍 Scan:** Detect configuration drifts in your AWS infrastructure")
-        st.markdown("- **📋 Drifts:** View all detected drifts with severity levels")
-        st.markdown("- **🤖 AI Analysis:** Get intelligent recommendations for each drift")
-        st.markdown("- **⚡ Actions:** Approve, remediate, or suppress drifts")
+        # Check if a scan was recently completed
+        if st.session_state.last_scan:
+            # Scan was done but no drifts found
+            st.success("✅ No drifts detected!")
+            st.markdown("### 🎉 Your Infrastructure is Healthy")
+            st.info(
+                f"Last scan: {st.session_state.last_scan.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+                "All resources are in sync with baseline configuration."
+            )
+            
+            # Show what was scanned
+            st.markdown("---")
+            st.markdown("### 📋 Scan Summary")
+            st.markdown("- ✅ No configuration drifts detected")
+            st.markdown("- ✅ All resources match baseline state")
+            st.markdown("- ✅ No policy violations found")
+            
+            st.info("💡 Tip: Run periodic scans to ensure continued compliance")
+        else:
+            # No scan has been run yet
+            st.info("👆 Click 'Start Scan' to detect drifts or load a previous scan")
+            st.markdown("---")
+            st.markdown("### 📊 Dashboard Features:")
+            st.markdown("- **🔍 Scan:** Detect configuration drifts in your AWS infrastructure")
+            st.markdown("- **📋 Drifts:** View all detected drifts with severity levels")
+            st.markdown("- **🤖 AI Analysis:** Get intelligent recommendations for each drift")
+            st.markdown("- **⚡ Actions:** Approve, remediate, or suppress drifts")
     else:
         # Summary metrics
         st.markdown("### 📊 Drift Summary")

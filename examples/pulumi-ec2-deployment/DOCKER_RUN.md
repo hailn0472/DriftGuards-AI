@@ -13,8 +13,8 @@ docker build -t pulumi-ec2:latest .
 **Bash/Linux/macOS:**
 ```bash
 docker run -it --rm \
-  -e AWS_ACCESS_KEY_ID=AKIAQ3XLP23PPCOAVCWG \
-  -e AWS_SECRET_ACCESS_KEY=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 \
+  -e AWS_ACCESS_KEY_ID=AKIA57ZRLRMGYZOXCXHW \
+  -e AWS_SECRET_ACCESS_KEY=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 \
   -e AWS_REGION=ap-southeast-1 \
   -v $(pwd):/pulumi-project \
   pulumi-ec2:latest
@@ -23,8 +23,8 @@ docker run -it --rm \
 **PowerShell (Windows):**
 ```powershell
 docker run -it --rm `
-  -e AWS_ACCESS_KEY_ID=AKIAQ3XLP23PPCOAVCWG `
-  -e AWS_SECRET_ACCESS_KEY=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 `
+  -e AWS_ACCESS_KEY_ID=AKIA57ZRLRMGYZOXCXHW `
+  -e AWS_SECRET_ACCESS_KEY=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 `
   -e AWS_REGION=ap-southeast-1 `
   -v "${PWD}:/pulumi-project" `
   pulumi-ec2:latest

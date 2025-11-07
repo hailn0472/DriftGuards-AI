@@ -1,0 +1,152 @@
+{
+  "account_id": "961639320333",
+  "region": "ap-southeast-1",
+  "timestamp": "2025-11-07T19:44:00.745556",
+  "resources": {
+    "vpcs": [
+      {
+        "id": "vpc-0f5d2e5a4fad1028d",
+        "cidr": "172.31.0.0/16",
+        "is_default": true,
+        "state": "available",
+        "tags": []
+      },
+      {
+        "id": "vpc-00c924321a07d2d68",
+        "cidr": "10.0.0.0/16",
+        "is_default": false,
+        "state": "available",
+        "tags": [
+          {
+            "Key": "Name",
+            "Value": "my-vpc"
+          }
+        ]
+      },
+      {
+        "id": "vpc-0ec1a20fc68892527",
+        "cidr": "10.0.0.0/16",
+        "is_default": false,
+        "state": "available",
+        "tags": [
+          {
+            "Key": "Name",
+            "Value": "my-vpc"
+          }
+        ]
+      },
+      {
+        "id": "vpc-0c80bf6d592ec34c0",
+        "cidr": "10.0.0.0/16",
+        "is_default": false,
+        "state": "available",
+        "tags": [
+          {
+            "Key": "Name",
+            "Value": "my-vpc"
+          }
+        ]
+      }
+    ],
+    "ec2_instances": [
+      {
+        "id": "i-0c186a4d4a8b6d08b",
+        "type": "t2.micro",
+        "state": "terminated",
+        "vpc_id": null,
+        "subnet_id": null,
+        "private_ip": null,
+        "public_ip": null,
+        "tags": [
+          {
+            "Key": "Name",
+            "Value": "my-ec2-instance"
+          }
+        ]
+      },
+      {
+        "id": "i-07735a53d7e3968a3",
+        "type": "t2.micro",
+        "state": "running",
+        "vpc_id": "vpc-0ec1a20fc68892527",
+        "subnet_id": "subnet-0662df403d12b5222",
+        "private_ip": "10.0.1.43",
+        "public_ip": "13.229.100.53",
+        "tags": [
+          {
+            "Key": "Name",
+            "Value": "my-ec2-instance"
+          }
+        ]
+      }
+    ],
+    "eks_clusters": [],
+    "ecs_clusters": [],
+    "rds_instances": [],
+    "rds_clusters": [],
+    "s3_buckets": [
+      {
+        "name": "assets-bucket-0e84de4",
+        "creation_date": "2025-11-05 18:47:29+00:00",
+        "versioning": "Disabled",
+        "encryption": "Enabled",
+        "encryption_type": "AES256",
+        "public_access_blocked": true
+      }
+    ],
+    "dynamodb_tables": [],
+    "sqs_queues": [],
+    "lambda_functions": [],
+    "security_groups": [
+      {
+        "id": "sg-0c00bf3302c94bb2d",
+        "name": "default",
+        "vpc_id": "vpc-0f5d2e5a4fad1028d",
+        "ingress_rules": 1,
+        "egress_rules": 1
+      },
+      {
+        "id": "sg-0670d4810e8c0d89b",
+        "name": "default",
+        "vpc_id": "vpc-00c924321a07d2d68",
+        "ingress_rules": 1,
+        "egress_rules": 1
+      },
+      {
+        "id": "sg-0c2b8151aec3e2454",
+        "name": "my-security-group-0022a83",
+        "vpc_id": "vpc-00c924321a07d2d68",
+        "ingress_rules": 3,
+        "egress_rules": 1
+      },
+      {
+        "id": "sg-062f9fde1b4e44e6d",
+        "name": "default",
+        "vpc_id": "vpc-0ec1a20fc68892527",
+        "ingress_rules": 1,
+        "egress_rules": 1
+      },
+      {
+        "id": "sg-000156dd32d9fb7cb",
+        "name": "my-security-group-e5136a8",
+        "vpc_id": "vpc-0ec1a20fc68892527",
+        "ingress_rules": 2,
+        "egress_rules": 1
+      },
+      {
+        "id": "sg-071b954da79b2fc6c",
+        "name": "my-security-group-3a89fe0",
+        "vpc_id": "vpc-0c80bf6d592ec34c0",
+        "ingress_rules": 2,
+        "egress_rules": 1
+      },
+      {
+        "id": "sg-02be254b4681e88ab",
+        "name": "default",
+        "vpc_id": "vpc-0c80bf6d592ec34c0",
+        "ingress_rules": 1,
+        "egress_rules": 1
+      }
+    ]
+  }
+}
