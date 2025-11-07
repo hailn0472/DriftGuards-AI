@@ -33,7 +33,6 @@ Full EC2 instance deployment using Pulumi IaC with Docker support.
 - `__main__.py` - Pulumi program
 - `Dockerfile` - Docker configuration
 - `README.md` - Detailed setup instructions
-- `requirements.txt` - Python dependencies
 
 **Usage:**
 ```bash
@@ -46,8 +45,36 @@ docker run -it pulumi-ec2:latest
 **What it demonstrates:**
 - Infrastructure as Code with Pulumi
 - EC2 instance provisioning
+- VPC, Security Group, Key Pair setup
 - Docker-based deployment
-- Real infrastructure setup
+
+---
+
+### 3. Pulumi Lambda Deployment
+**Location:** `pulumi-lambda-deployment/`
+
+AWS Lambda function deployment with API Gateway and CloudWatch monitoring.
+
+**Contents:**
+- `__main__.py` - Pulumi infrastructure code
+- `lambda_code/handler.py` - Lambda function code
+- `README.md` - Comprehensive deployment guide
+
+**Usage:**
+```bash
+# See detailed instructions in pulumi-lambda-deployment/README.md
+cd examples
+# Activate venv and install requirements (see below)
+cd pulumi-lambda-deployment
+pulumi up
+```
+
+**What it demonstrates:**
+- Serverless deployment with Pulumi
+- Lambda Function URL (public endpoint)
+- API Gateway integration
+- CloudWatch monitoring and alarms
+- IAM role configuration
 
 ---
 
@@ -60,26 +87,53 @@ docker run -it pulumi-ec2:latest
 
 ### Running Examples
 
-1. **Install dependencies:**
+#### For Pulumi Examples (EC2, Lambda, etc.)
+
+1. **Navigate to examples directory:**
+```bash
+cd examples
+```
+
+2. **Create and activate virtual environment (one-time setup):**
+```bash
+# Create venv
+python -m venv venv
+
+# Activate venv
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
+```
+
+3. **Install shared dependencies (one-time, works for ALL Pulumi examples):**
 ```bash
 pip install -r requirements.txt
 ```
+> **Note**: The `requirements.txt` at `examples/` level contains all Pulumi dependencies. Install it once to use EC2, Lambda, and future Pulumi examples.
 
-2. **Configure AWS credentials:**
+4. **Navigate to specific example and deploy:**
+```bash
+# For EC2 deployment
+cd pulumi-ec2-deployment
+pulumi up
+
+# For Lambda deployment
+cd pulumi-lambda-deployment
+pulumi up
+```
+
+5. **Configure AWS credentials (if not already done):**
 ```bash
 export AWS_ACCESS_KEY_ID=your_key
 export AWS_SECRET_ACCESS_KEY=your_secret
 export AWS_REGION=ap-southeast-1
 ```
 
-3. **Run an example:**
-```bash
-# Basic workflow
-python -m examples.basic_workflow.run_workflow_example
+#### For Basic Workflow Example
 
-# Pulumi deployment (see pulumi-ec2-deployment/README.md)
-cd examples/pulumi-ec2-deployment
-# Follow README instructions
+```bash
+python -m examples.basic_workflow.run_workflow_example
 ```
 
 ---
@@ -115,10 +169,27 @@ Make sure to:
 
 ---
 
+## 📦 Shared Dependencies
+
+The `examples/requirements.txt` contains shared Pulumi dependencies:
+- `pulumi>=3.0.0,<4.0.0` - Core Pulumi CLI
+- `pulumi-aws>=6.0.0,<7.0.0` - AWS provider
+- `pulumi-tls>=5.0.0,<6.0.0` - TLS provider (for SSH keys)
+
+This allows you to:
+- ✅ Install once, use for all Pulumi examples
+- ✅ Keep dependencies consistent across examples
+- ✅ Easily add new Pulumi examples without duplicating setup
+
+---
+
 ## 💡 Example Ideas
 
 Looking for inspiration? Consider creating examples for:
 
+- S3 bucket deployment with versioning
+- DynamoDB table with auto-scaling
+- RDS instance deployment
 - Multi-region drift detection
 - Custom alert integrations
 - Automated remediation workflows

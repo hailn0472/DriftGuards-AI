@@ -97,16 +97,7 @@
     ],
     "dynamodb_tables": [],
     "sqs_queues": [],
-    "lambda_functions": [
-      {
-        "id": "driftguards-lambda-function",
-        "name": "driftguards-lambda-function",
-        "arn": "arn:aws:lambda:ap-southeast-1:961639320333:function:driftguards-lambda-function",
-        "runtime": "python3.11",
-        "memory": 256,
-        "timeout": 30
-      }
-    ],
+    "lambda_functions": [],
     "security_groups": [
       {
         "id": "sg-0c00bf3302c94bb2d",

@@ -1,0 +1,10 @@
+# Shared requirements for all Pulumi examples
+
+# Pulumi core
+pulumi>=3.0.0,<4.0.0
+
+# Pulumi AWS provider
+pulumi-aws>=6.0.0,<7.0.0
+
+# Pulumi TLS provider (for EC2 key pairs)
+pulumi-tls>=5.0.0,<6.0.0

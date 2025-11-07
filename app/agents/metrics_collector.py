@@ -280,9 +280,44 @@ class MetricsCollectorAgent:
             logger.error(f"Config history error: {e}", exc_info=True)
             return []
 
+    def _map_resource_type_to_service(self, resource_type: str) -> Optional[str]:
+        """
+        Map resource type to AWS service name for Cost Explorer.
+        
+        Args:
+            resource_type: Resource type (e.g., 'aws_instance', 'aws_s3_bucket')
+            
+        Returns:
+            AWS service name or None
+        """
+        # Map common resource types to Cost Explorer service names
+        service_mapping = {
+            "aws_instance": "Amazon Elastic Compute Cloud - Compute",
+            "aws_ec2_instance": "Amazon Elastic Compute Cloud - Compute",
+            "aws_s3_bucket": "Amazon Simple Storage Service",
+            "aws_rds_instance": "Amazon Relational Database Service",
+            "aws_rds_cluster": "Amazon Relational Database Service",
+            "aws_dynamodb_table": "Amazon DynamoDB",
+            "aws_lambda_function": "AWS Lambda",
+            "aws_ecs_service": "Amazon EC2 Container Service",
+            "aws_ecs_cluster": "Amazon EC2 Container Service",
+            "aws_eks_cluster": "Amazon Elastic Container Service for Kubernetes",
+            "aws_elb": "Elastic Load Balancing",
+            "aws_lb": "Elastic Load Balancing",
+            "aws_alb": "Elastic Load Balancing",
+            "aws_vpc": "Amazon Virtual Private Cloud",
+            "aws_cloudfront_distribution": "Amazon CloudFront",
+            "aws_sns_topic": "Amazon Simple Notification Service",
+            "aws_sqs_queue": "Amazon Simple Queue Service",
+        }
+        return service_mapping.get(resource_type.lower())
+
     async def _collect_cost_data(self, drift: DriftRecord) -> Optional[CostAnalysis]:
         """
         Collect cost data from Cost Explorer.
+        
+        Note: AWS Cost Explorer doesn't support per-resource cost filtering.
+        This method returns service-level costs as an approximation.
 
         Args:
             drift: Drift record
@@ -296,21 +331,35 @@ class MetricsCollectorAgent:
             end_date = datetime.utcnow().date()
             start_date = end_date - timedelta(days=settings.cost_explorer_lookback_days)
 
-            # Get cost for this specific resource
-            response = await asyncio.to_thread(
-                ce.get_cost_and_usage,
-                TimePeriod={
+            # Map resource type to AWS service for cost filtering
+            service_name = self._map_resource_type_to_service(drift.resource_type)
+            
+            # Build filter - use SERVICE dimension if we can map the resource type
+            cost_filter = None
+            if service_name:
+                cost_filter = {
+                    "Dimensions": {
+                        "Key": "SERVICE",
+                        "Values": [service_name],
+                    }
+                }
+
+            # Get cost for this service (or all services if unmapped)
+            get_cost_params = {
+                "TimePeriod": {
                     "Start": start_date.isoformat(),
                     "End": end_date.isoformat(),
                 },
-                Granularity="DAILY",
-                Metrics=["UnblendedCost", "UsageQuantity"],
-                Filter={
-                    "Dimensions": {
-                        "Key": "RESOURCE_ID",
-                        "Values": [drift.resource_id],
-                    }
-                },
+                "Granularity": "DAILY",
+                "Metrics": ["UnblendedCost", "UsageQuantity"],
+            }
+            
+            if cost_filter:
+                get_cost_params["Filter"] = cost_filter
+                
+            response = await asyncio.to_thread(
+                ce.get_cost_and_usage,
+                **get_cost_params
             )
 
             results_by_time = response.get("ResultsByTime", [])

@@ -64,6 +64,12 @@ class DriftRecord(BaseModel):
     remediation_id: Optional[str] = Field(default=None, description="Associated remediation ID")
     assigned_to: Optional[str] = Field(default=None, description="User assigned to handle drift")
     resolved_at: Optional[datetime] = Field(default=None, description="Resolution timestamp")
+    
+    # Approval tracking
+    approved: bool = Field(default=False, description="Whether drift is approved")
+    approved_by: Optional[str] = Field(default=None, description="User who approved")
+    approved_at: Optional[datetime] = Field(default=None, description="Approval timestamp")
+    approval_reason: Optional[str] = Field(default=None, description="Approval reason")
 
     class Config:
         json_schema_extra = {

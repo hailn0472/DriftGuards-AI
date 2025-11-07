@@ -1,0 +1,12 @@
+*.pyc
+__pycache__/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Pulumi
+.pulumi/
+Pulumi.*.yaml
+!Pulumi.dev.yaml

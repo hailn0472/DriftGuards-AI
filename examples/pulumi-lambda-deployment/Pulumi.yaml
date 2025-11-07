@@ -1,0 +1,11 @@
+name: pulumi-lambda-deployment
+runtime: python
+description: AWS Lambda function deployment with Pulumi for DriftGuards testing
+
+config:
+  environment:
+    type: string
+    default: dev
+  app_name:
+    type: string
+    default: driftguards-lambda

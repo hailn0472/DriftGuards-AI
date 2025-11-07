@@ -1,0 +1,27 @@
+{
+  "approval_id": "approval-dd20199c",
+  "drift_id": "drift-boto3-20251107-94ba6a72",
+  "resource_id": "i-05ea847020dcf0a07",
+  "resource_type": "ec2_instances",
+  "approved_by": "aaa@gmail.com",
+  "approved_at": "2025-11-07T14:04:55.238660",
+  "approval_reason": "h\u00e1d",
+  "previous_baseline": {},
+  "new_baseline": {
+    "id": "i-05ea847020dcf0a07",
+    "type": "t2.micro",
+    "state": "running",
+    "vpc_id": "vpc-09472342374f408ba",
+    "subnet_id": "subnet-0d9007c604d7ac6c2",
+    "private_ip": "10.0.1.83",
+    "public_ip": "13.212.14.94",
+    "tags": [
+      {
+        "Key": "Name",
+        "Value": "my-ec2-instance"
+      }
+    ]
+  },
+  "environment": null,
+  "tags": {}
+}

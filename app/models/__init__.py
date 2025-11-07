@@ -1,6 +1,7 @@
 """Data models package."""
 
 from app.models.analysis import ActionOption, AnalysisRequest, AnalysisResponse, DriftAnalysis
+from app.models.approval import ApprovalRecord, ApprovalRequest
 from app.models.drift import (
     DriftListResponse,
     DriftRecord,
@@ -32,6 +33,9 @@ __all__ = [
     "ScanRequest",
     "DriftListResponse",
     "DriftStatistics",
+    # Approval models
+    "ApprovalRecord",
+    "ApprovalRequest",
     # Metrics models
     "CloudWatchMetric",
     "ConfigChange",

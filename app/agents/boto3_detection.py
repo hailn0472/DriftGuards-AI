@@ -5,6 +5,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from botocore.exceptions import ClientError
+
 from app.config import get_settings
 from app.models.drift import DriftRecord, DriftType, Severity
 from app.services.aws_client import AWSClientFactory
@@ -235,8 +237,11 @@ class Boto3DriftDetector:
                 try:
                     tags = s3_client.get_bucket_tagging(Bucket=bucket_name)
                     bucket_info["tags"] = tags.get("TagSet", [])
-                except s3_client.exceptions.NoSuchTagSet:
-                    bucket_info["tags"] = []
+                except ClientError as e:
+                    if e.response['Error']['Code'] == 'NoSuchTagSet':
+                        bucket_info["tags"] = []
+                    else:
+                        raise
                     
             except Exception as e:
                 logger.warning(f"Could not get details for bucket {bucket_name}: {e}")

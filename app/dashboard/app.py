@@ -17,6 +17,8 @@ project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 from app.models.drift import ScanRequest
+from app.models.approval import ApprovalRequest
+from app.services.approval_service import ApprovalService
 from app.workflows import DriftGuardsWorkflow
 
 # Import revert utilities from new location
@@ -760,11 +762,123 @@ def main():
                 # Action buttons
                 col1, col2 = st.columns(2)
                 with col1:
-                    if st.button(
-                        "✅ Approve Drift", key=f"approve_{drift_id}", use_container_width=True
-                    ):
-                        st.success("✅ Drift approved - keeping current configuration")
-                        st.info("📝 Drift marked as intentional change")
+                    # Check if approval form is open
+                    approval_form_key = f"show_approval_form_{drift_id}"
+                    if approval_form_key not in st.session_state:
+                        st.session_state[approval_form_key] = False
+                    
+                    if not st.session_state[approval_form_key]:
+                        if st.button(
+                            "✅ Approve Drift", key=f"approve_btn_{drift_id}", use_container_width=True
+                        ):
+                            st.session_state[approval_form_key] = True
+                            st.rerun()
+                    else:
+                        # Show approval form
+                        with st.form(key=f"approval_form_{drift_id}"):
+                            st.subheader("📝 Approve Drift")
+                            
+                            # Get current user (from session/auth)
+                            approved_by = st.text_input(
+                                "Your Name/Email *", 
+                                value=st.session_state.get("username", ""),
+                                key=f"approver_{drift_id}",
+                                placeholder="admin@example.com"
+                            )
+                            
+                            # Approval reason
+                            reason = st.text_area(
+                                "Reason for Approval",
+                                placeholder="Why is this change acceptable? (optional)",
+                                key=f"reason_{drift_id}",
+                                height=100
+                            )
+                            
+                            # Options
+                            st.markdown("**Options:**")
+                            update_baseline = st.checkbox(
+                                "Update baseline with this configuration",
+                                value=True,
+                                help="Make this the new expected state",
+                                key=f"update_baseline_{drift_id}"
+                            )
+                            
+                            notify = st.checkbox(
+                                "Send notifications",
+                                value=False,
+                                help="Notify team about this approval",
+                                key=f"notify_{drift_id}"
+                            )
+                            
+                            # Submit buttons
+                            col_submit, col_cancel = st.columns(2)
+                            
+                            with col_submit:
+                                submitted = st.form_submit_button(
+                                    "✅ Confirm Approval",
+                                    use_container_width=True,
+                                    type="primary"
+                                )
+                            
+                            with col_cancel:
+                                cancelled = st.form_submit_button(
+                                    "❌ Cancel",
+                                    use_container_width=True
+                                )
+                            
+                            if submitted:
+                                if not approved_by:
+                                    st.error("⚠️ Please enter your name or email")
+                                else:
+                                    try:
+                                        # Initialize approval service
+                                        approval_service = ApprovalService()
+                                        
+                                        # Create approval request
+                                        approval_req = ApprovalRequest(
+                                            drift_id=drift_id,
+                                            approved_by=approved_by,
+                                            reason=reason if reason else None,
+                                            update_baseline=update_baseline,
+                                            notify=notify
+                                        )
+                                        
+                                        # Process approval
+                                        with st.spinner("⏳ Processing approval..."):
+                                            approval = asyncio.run(
+                                                approval_service.approve_drift(
+                                                    drift, 
+                                                    approval_req
+                                                )
+                                            )
+                                        
+                                        st.success(
+                                            f"✅ Drift approved by {approved_by}!\n\n"
+                                            f"Approval ID: `{approval.approval_id}`"
+                                        )
+                                        
+                                        if update_baseline:
+                                            st.info("📝 Baseline updated with new configuration")
+                                        
+                                        if notify:
+                                            st.info("📢 Notifications sent")
+                                        
+                                        # Reset form state
+                                        st.session_state[approval_form_key] = False
+                                        
+                                        # Wait a moment then refresh
+                                        import time
+                                        time.sleep(1)
+                                        st.rerun()
+                                        
+                                    except Exception as e:
+                                        st.error(f"❌ Approval failed: {str(e)}")
+                                        import traceback
+                                        st.error(traceback.format_exc())
+                            
+                            if cancelled:
+                                st.session_state[approval_form_key] = False
+                                st.rerun()
 
                 with col2:
                     # Show selective revert expander

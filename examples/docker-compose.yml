@@ -1,0 +1,46 @@
+services:
+  # EC2 Deployment Service
+  pulumi-ec2:
+    build:
+      context: ./pulumi-ec2-deployment
+      dockerfile: Dockerfile
+    image: pulumi-ec2:latest
+    container_name: driftguards-pulumi-ec2
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION:-ap-southeast-1}
+      - PULUMI_CONFIG_PASSPHRASE=
+      - PULUMI_SKIP_UPDATE_CHECK=true
+    stdin_open: true
+    tty: true
+    networks:
+      - driftguards-network
+    profiles:
+      - ec2
+      - all
+
+  # Lambda Deployment Service
+  pulumi-lambda:
+    build:
+      context: ./pulumi-lambda-deployment
+      dockerfile: Dockerfile
+    image: pulumi-lambda:latest
+    container_name: driftguards-pulumi-lambda
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION:-ap-southeast-1}
+      - PULUMI_CONFIG_PASSPHRASE=
+      - PULUMI_SKIP_UPDATE_CHECK=true
+    stdin_open: true
+    tty: true
+    networks:
+      - driftguards-network
+    profiles:
+      - lambda
+      - all
+
+networks:
+  driftguards-network:
+    driver: bridge
