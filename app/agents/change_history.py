@@ -26,7 +26,7 @@ class ChangeHistoryCollector:
         resource_id: str,
         resource_type: str,
         region: str,
-        lookback_hours: int = 168,  # 7 days
+        lookback_hours: int = 48,  # 48 hours (2 days)
     ) -> list[dict[str, Any]]:
         """
         Get CloudTrail events for a resource.
@@ -52,11 +52,15 @@ class ChangeHistoryCollector:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=lookback_hours)
 
-            # Build lookup attributes
+            # Build lookup attributes - but make them optional
+            # Sometimes using LookupAttributes filters out too many events
             lookup_attributes = []
 
-            # Add resource filter if EC2
-            if resource_type == "ec2_instances":
+            # For EC2, we'll search more broadly and filter in code
+            # CloudTrail's ResourceName filter can miss events where instance is in a list
+            use_lookup_filter = False  # Disable for broader search
+
+            if use_lookup_filter and resource_type == "ec2_instances":
                 lookup_attributes.append(
                     {
                         "AttributeKey": "ResourceName",
@@ -66,6 +70,10 @@ class ChangeHistoryCollector:
 
             events = []
             next_token = None
+
+            logger.info(
+                f"Searching CloudTrail for {resource_type} {resource_id} (last {lookback_hours}h)"
+            )
 
             # CloudTrail pagination
             while True:
@@ -320,19 +328,31 @@ class ChangeHistoryCollector:
         request_params = event.get("requestParameters", {})
         response_elements = event.get("responseElements", {})
 
-        # Different resources use different field names
-        id_fields = [
-            "instanceId",
-            "instancesSet",
-            "functionName",
-            "dBInstanceIdentifier",
-            "bucketName",
-        ]
-
-        for field in id_fields:
-            if request_params.get(field) == resource_id:
+        # Helper function to recursively search for resource ID in nested structures
+        def contains_resource_id(obj: Any) -> bool:
+            """Recursively search for resource ID in any nested structure."""
+            if obj == resource_id:
                 return True
-            if response_elements.get(field) == resource_id:
+            if isinstance(obj, dict):
+                return any(contains_resource_id(v) for v in obj.values())
+            if isinstance(obj, list):
+                return any(contains_resource_id(item) for item in obj)
+            if isinstance(obj, str):
+                return resource_id in obj
+            return False
+
+        # Check both request parameters and response elements
+        if contains_resource_id(request_params) or contains_resource_id(response_elements):
+            logger.debug(f"Event {event_name} matched resource {resource_id}")
+            return True
+
+        # Also check resources field (for some events)
+        resources = event.get("resources", [])
+        for resource in resources:
+            resource_arn = resource.get("ARN", "")
+            resource_name = resource.get("ResourceName", "")
+            if resource_id in resource_arn or resource_id == resource_name:
+                logger.debug(f"Event {event_name} matched resource {resource_id} via ARN/Name")
                 return True
 
         return False

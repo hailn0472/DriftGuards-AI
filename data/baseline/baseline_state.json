@@ -1,7 +1,7 @@
 {
   "account_id": "961639320333",
   "region": "ap-southeast-1",
-  "timestamp": "2025-11-08T22:35:57.176575",
+  "timestamp": "2025-11-08T22:49:09.757627",
   "resources": {
     "vpcs": [
       {
@@ -45,60 +45,25 @@
       {
         "id": "i-05ea847020dcf0a07",
         "type": "t2.micro",
-        "state": "running",
-        "state_transition_reason": "",
+        "state": "terminated",
+        "state_transition_reason": "User initiated (2025-11-08 15:37:53 GMT)",
         "launch_time": "2025-11-08 15:34:41+00:00",
         "availability_zone": "ap-southeast-1a",
         "tenancy": "default",
         "host_id": null,
-        "vpc_id": "vpc-09472342374f408ba",
-        "subnet_id": "subnet-0d9007c604d7ac6c2",
-        "private_ip": "10.0.1.83",
-        "private_dns": "ip-10-0-1-83.ap-southeast-1.compute.internal",
-        "public_ip": "13.212.89.23",
-        "public_dns": "ec2-13-212-89-23.ap-southeast-1.compute.amazonaws.com",
-        "network_interfaces": [
-          {
-            "id": "eni-0be7804486a499f7e",
-            "subnet_id": "subnet-0d9007c604d7ac6c2",
-            "private_ip": "10.0.1.83",
-            "public_ip": "13.212.89.23",
-            "security_groups": [
-              {
-                "id": "sg-0506160bed0a77591",
-                "name": "default"
-              },
-              {
-                "id": "sg-0d155c14368b85a17",
-                "name": "my-security-group-d0068dd"
-              }
-            ],
-            "source_dest_check": true,
-            "device_index": 0
-          }
-        ],
-        "security_groups": [
-          {
-            "id": "sg-0506160bed0a77591",
-            "name": "default"
-          },
-          {
-            "id": "sg-0d155c14368b85a17",
-            "name": "my-security-group-d0068dd"
-          }
-        ],
+        "vpc_id": null,
+        "subnet_id": null,
+        "private_ip": null,
+        "private_dns": "",
+        "public_ip": null,
+        "public_dns": "",
+        "network_interfaces": [],
+        "security_groups": [],
         "key_name": "my-key-pair-55f490c",
         "iam_instance_profile": null,
         "root_device_type": "ebs",
         "root_device_name": "/dev/xvda",
-        "block_device_mappings": [
-          {
-            "device_name": "/dev/xvda",
-            "volume_id": "vol-08a1554f3e6ed22da",
-            "status": "attached",
-            "delete_on_termination": true
-          }
-        ],
+        "block_device_mappings": [],
         "platform": null,
         "platform_details": "Linux/UNIX",
         "image_id": "ami-0a277168b24e51187",
@@ -117,13 +82,7 @@
         "capacity_reservation_specification": {
           "CapacityReservationPreference": "open"
         },
-        "elastic_ip_associations": [
-          {
-            "public_ip": "13.212.89.23",
-            "allocation_id": null,
-            "ip_owner_id": "amazon"
-          }
-        ],
+        "elastic_ip_associations": [],
         "metadata_options": {
           "http_tokens": "optional",
           "http_put_response_hop_limit": 1,
@@ -137,14 +96,117 @@
             "Key": "Name",
             "Value": "my-ec2-instance"
           }
+        ]
+      },
+      {
+        "id": "i-0fdc5695a661c70d8",
+        "type": "t2.nano",
+        "state": "running",
+        "state_transition_reason": "",
+        "launch_time": "2025-11-08 15:45:22+00:00",
+        "availability_zone": "ap-southeast-1a",
+        "tenancy": "default",
+        "host_id": null,
+        "vpc_id": "vpc-09472342374f408ba",
+        "subnet_id": "subnet-0d9007c604d7ac6c2",
+        "private_ip": "10.0.1.58",
+        "private_dns": "ip-10-0-1-58.ap-southeast-1.compute.internal",
+        "public_ip": "13.229.89.176",
+        "public_dns": "ec2-13-229-89-176.ap-southeast-1.compute.amazonaws.com",
+        "network_interfaces": [
+          {
+            "id": "eni-0fcc09b6d58096ae8",
+            "subnet_id": "subnet-0d9007c604d7ac6c2",
+            "private_ip": "10.0.1.58",
+            "public_ip": "13.229.89.176",
+            "security_groups": [
+              {
+                "id": "sg-04f1dc491794423df",
+                "name": "launch-wizard-1"
+              }
+            ],
+            "source_dest_check": true,
+            "device_index": 0
+          }
+        ],
+        "security_groups": [
+          {
+            "id": "sg-04f1dc491794423df",
+            "name": "launch-wizard-1"
+          }
+        ],
+        "key_name": "my-key-pair-55f490c",
+        "iam_instance_profile": null,
+        "root_device_type": "ebs",
+        "root_device_name": "/dev/sda1",
+        "block_device_mappings": [
+          {
+            "device_name": "/dev/sda1",
+            "volume_id": "vol-0d60b09ebce38d18f",
+            "status": "attached",
+            "delete_on_termination": true
+          }
+        ],
+        "platform": null,
+        "platform_details": "Linux/UNIX",
+        "image_id": "ami-00d8fc944fb171e29",
+        "architecture": "x86_64",
+        "virtualization_type": "hvm",
+        "hypervisor": "xen",
+        "cpu_options": {
+          "core_count": 1,
+          "threads_per_core": 1
+        },
+        "ena_support": true,
+        "ebs_optimized": false,
+        "monitoring_state": "disabled",
+        "instance_lifecycle": null,
+        "capacity_reservation_id": null,
+        "capacity_reservation_specification": {
+          "CapacityReservationPreference": "open"
+        },
+        "elastic_ip_associations": [
+          {
+            "public_ip": "13.229.89.176",
+            "allocation_id": null,
+            "ip_owner_id": "amazon"
+          }
+        ],
+        "metadata_options": {
+          "http_tokens": "required",
+          "http_put_response_hop_limit": 2,
+          "http_endpoint": "enabled"
+        },
+        "hibernation_configured": false,
+        "usage_operation": "RunInstances",
+        "usage_operation_update_time": "2025-11-08 15:45:22+00:00",
+        "tags": [
+          {
+            "Key": "Name",
+            "Value": "my-ec2-instance-test"
+          }
         ],
         "metrics_baseline": {
           "cpuutilization": {
-            "average": 0.0039927254483688,
-            "maximum": 0.0039927254483688,
-            "minimum": 0.0039927254483688,
+            "average": 4.249306921712575,
+            "maximum": 11.459409040940738,
+            "minimum": 0.0026897309300766,
             "period_hours": 24,
-            "captured_at": "2025-11-08T15:36:16.263824"
+            "captured_at": "2025-11-08T15:49:29.506387"
+          },
+          "networkin": {
+            "average": 126460.66666666667,
+            "maximum": 377432.0,
+            "minimum": 720.0,
+            "period_hours": 24,
+            "captured_at": "2025-11-08T15:49:29.571806"
+          },
+          "networkout": {
+            "average": 11159.333333333334,
+            "maximum": 31726.0,
+            "minimum": 720.0,
+            "period_hours": 24,
+            "captured_at": "2025-11-08T15:49:29.636352"
           }
         }
       }
@@ -224,6 +286,13 @@
         "name": "my-security-group-d0068dd",
         "vpc_id": "vpc-09472342374f408ba",
         "ingress_rules": 2,
+        "egress_rules": 1
+      },
+      {
+        "id": "sg-04f1dc491794423df",
+        "name": "launch-wizard-1",
+        "vpc_id": "vpc-09472342374f408ba",
+        "ingress_rules": 1,
         "egress_rules": 1
       },
       {
