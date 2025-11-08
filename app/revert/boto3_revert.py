@@ -158,21 +158,21 @@ def boto3_revert_to_baseline(
 def _revert_ec2(instance_id: str, baseline: Dict, region: str) -> Dict:
     """Revert EC2 instance to baseline state."""
     from botocore.exceptions import ClientError
-    
+
     ec2 = boto3.client("ec2", region_name=region)
     actions = []
 
     try:
         # Get current instance state
         response = ec2.describe_instances(InstanceIds=[instance_id])
-        
+
         if not response["Reservations"]:
             return {
                 "status": "error",
                 "message": f"❌ Error: The instance ID '{instance_id}' does not exist in region {region}",
                 "actions": [],
             }
-        
+
         current_state = response["Reservations"][0]["Instances"][0]["State"]["Name"]
         logger.info(f"Current instance state: {current_state}")
 
@@ -294,37 +294,68 @@ def _revert_s3(bucket_name: str, baseline: Dict, region: str) -> Dict:
     s3 = boto3.client("s3", region_name=region)
     actions = []
 
-    # Revert encryption
-    if baseline.get("encryption") == "Enabled":
-        s3.put_bucket_encryption(
-            Bucket=bucket_name,
-            ServerSideEncryptionConfiguration={
-                "Rules": [{"ApplyServerSideEncryptionByDefault": {"SSEAlgorithm": "AES256"}}]
-            },
-        )
-        actions.append("Enabled encryption")
-    elif baseline.get("encryption") == "Disabled":
+    try:
+        # First, check if bucket exists
         try:
-            s3.delete_bucket_encryption(Bucket=bucket_name)
-            actions.append("Disabled encryption")
-        except:
-            pass  # Already disabled
+            s3.head_bucket(Bucket=bucket_name)
+        except ClientError as e:
+            error_code = e.response.get("Error", {}).get("Code", "")
+            if error_code == "404":
+                logger.warning(f"Bucket {bucket_name} does not exist - cannot revert configuration")
+                return {
+                    "status": "error",
+                    "message": f"❌ Bucket '{bucket_name}' does not exist. Cannot update non-existent bucket.",
+                    "actions": [],
+                }
+            else:
+                raise  # Re-raise other errors
 
-    # Revert versioning
-    if baseline.get("versioning") == "Enabled":
-        s3.put_bucket_versioning(Bucket=bucket_name, VersioningConfiguration={"Status": "Enabled"})
-        actions.append("Enabled versioning")
-    elif baseline.get("versioning") == "Disabled":
-        s3.put_bucket_versioning(
-            Bucket=bucket_name, VersioningConfiguration={"Status": "Suspended"}
-        )
-        actions.append("Disabled versioning")
+        # Revert encryption
+        if baseline.get("encryption") == "Enabled":
+            s3.put_bucket_encryption(
+                Bucket=bucket_name,
+                ServerSideEncryptionConfiguration={
+                    "Rules": [{"ApplyServerSideEncryptionByDefault": {"SSEAlgorithm": "AES256"}}]
+                },
+            )
+            actions.append("Enabled encryption")
+        elif baseline.get("encryption") == "Disabled":
+            try:
+                s3.delete_bucket_encryption(Bucket=bucket_name)
+                actions.append("Disabled encryption")
+            except:
+                pass  # Already disabled
 
-    return {
-        "status": "success",
-        "message": f"✅ Reverted S3 {bucket_name}: {', '.join(actions)}",
-        "actions": actions,
-    }
+        # Revert versioning
+        if baseline.get("versioning") == "Enabled":
+            s3.put_bucket_versioning(
+                Bucket=bucket_name, VersioningConfiguration={"Status": "Enabled"}
+            )
+            actions.append("Enabled versioning")
+        elif baseline.get("versioning") == "Disabled":
+            s3.put_bucket_versioning(
+                Bucket=bucket_name, VersioningConfiguration={"Status": "Suspended"}
+            )
+            actions.append("Disabled versioning")
+
+        return {
+            "status": "success",
+            "message": f"✅ Reverted S3 {bucket_name}: {', '.join(actions)}",
+            "actions": actions,
+        }
+
+    except ClientError as e:
+        error_code = e.response.get("Error", {}).get("Code", "")
+        error_msg = e.response.get("Error", {}).get("Message", str(e))
+        logger.error(f"AWS ClientError reverting S3 bucket: {error_code} - {error_msg}")
+        return {
+            "status": "error",
+            "message": f"❌ AWS Error ({error_code}): {error_msg}",
+            "actions": actions,
+        }
+    except Exception as e:
+        logger.error(f"Error reverting S3 bucket: {e}")
+        return {"status": "error", "message": f"Revert failed: {str(e)}", "actions": actions}
 
 
 def _revert_rds(db_instance_id: str, baseline: Dict, region: str) -> Dict:
@@ -586,7 +617,9 @@ def load_baseline_config(resource_type: str, resource_id: str) -> Optional[Dict[
         Baseline configuration dict or None if not found
     """
     try:
-        baseline_file = Path(__file__).parent.parent.parent / "data" / "baseline" / "baseline_state.json"
+        baseline_file = (
+            Path(__file__).parent.parent.parent / "data" / "baseline" / "baseline_state.json"
+        )
 
         if not baseline_file.exists():
             logger.warning(f"Baseline file not found: {baseline_file}")

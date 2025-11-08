@@ -26,7 +26,7 @@ class ChangeHistoryCollector:
         resource_id: str,
         resource_type: str,
         region: str,
-        lookback_hours: int = 48,  # 48 hours (2 days)
+        lookback_hours: int = 0.5,  # 0.5 hour
     ) -> list[dict[str, Any]]:
         """
         Get CloudTrail events for a resource.

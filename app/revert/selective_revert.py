@@ -294,6 +294,21 @@ def _selective_revert_s3(
     reverted_fields = []
 
     try:
+        # First, check if bucket exists
+        try:
+            s3.head_bucket(Bucket=bucket_name)
+        except ClientError as e:
+            error_code = e.response.get("Error", {}).get("Code", "")
+            if error_code == "404":
+                return {
+                    "status": "error",
+                    "message": f"❌ Bucket '{bucket_name}' does not exist. Cannot update non-existent bucket.",
+                    "reverted_fields": [],
+                    "actions": [],
+                }
+            else:
+                raise  # Re-raise other errors
+
         for field in selected_fields:
             if field not in diff:
                 continue

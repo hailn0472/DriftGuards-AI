@@ -53,6 +53,7 @@ class ApprovalService:
             actual_value = drift.actual_value
             environment = drift.environment
             tags = drift.tags
+            drift_type = str(drift.drift_type) if hasattr(drift, "drift_type") else None
         elif isinstance(drift, dict):
             drift_id = drift.get("drift_id")
             resource_id = drift.get("resource_id")
@@ -60,6 +61,7 @@ class ApprovalService:
             actual_value = drift.get("actual_value")
             environment = drift.get("environment")
             tags = drift.get("tags")
+            drift_type = drift.get("drift_type")
         else:
             raise ValueError("drift must be a DriftRecord object or dict")
 
@@ -96,10 +98,17 @@ class ApprovalService:
 
         # Update baseline if requested
         if request.update_baseline:
-            self._update_baseline_from_values(
-                resource_id, resource_type, actual_value, previous_baseline
-            )
-            logger.info(f"✅ Baseline updated for {resource_id}")
+            # Check if this is a deleted resource
+            if drift_type and "DELETED" in str(drift_type).upper():
+                # Remove from baseline for deleted resources
+                self._remove_from_baseline(resource_id, resource_type, previous_baseline)
+                logger.info(f"✅ Removed deleted resource from baseline: {resource_id}")
+            else:
+                # Update baseline with new values for modified resources
+                self._update_baseline_from_values(
+                    resource_id, resource_type, actual_value, previous_baseline
+                )
+                logger.info(f"✅ Baseline updated for {resource_id}")
 
         # Save approval log
         self._save_approval_log(approval)
@@ -234,6 +243,63 @@ class ApprovalService:
 
         # Save updated baseline
         self._save_baseline(current_baseline)
+
+    def _remove_from_baseline(self, resource_id: str, resource_type: str, current_baseline: dict):
+        """Remove a deleted resource from baseline."""
+        logger.info(f"Removing deleted resource from baseline: {resource_id}")
+        logger.info(f"  Resource type: {resource_type}")
+
+        # Map resource type to baseline key
+        type_mapping = {
+            "aws_instance": "ec2_instances",
+            "aws_ec2_instance": "ec2_instances",
+            "aws_s3_bucket": "s3_buckets",
+            "aws_rds_instance": "rds_instances",
+            "aws_rds_cluster": "rds_clusters",
+            "aws_dynamodb_table": "dynamodb_tables",
+            "aws_lambda_function": "lambda_functions",
+            "aws_ecs_service": "ecs_services",
+            "ec2_instances": "ec2_instances",
+            "s3_buckets": "s3_buckets",
+            "vpcs": "vpcs",
+            "security_groups": "security_groups",
+        }
+
+        key = type_mapping.get(resource_type, resource_type)
+        logger.info(f"  Mapped to baseline key: {key}")
+
+        # Find the resource list
+        resources = None
+        location = None
+
+        if "resources" in current_baseline and key in current_baseline["resources"]:
+            resources = current_baseline["resources"][key]
+            location = "resources section"
+        elif key in current_baseline:
+            resources = current_baseline[key]
+            location = "top-level"
+
+        if resources is None:
+            logger.warning(f"Resource list '{key}' not found in baseline")
+            return
+
+        logger.info(f"  Found {len(resources)} resources in {location}")
+
+        # Remove all entries matching this resource_id
+        initial_count = len(resources)
+        resources[:] = [
+            r for r in resources if r.get("id") != resource_id and r.get("name") != resource_id
+        ]
+        removed_count = initial_count - len(resources)
+
+        if removed_count > 0:
+            logger.info(f"✅ Removed {removed_count} entry(ies) for resource: {resource_id}")
+            logger.info(f"  Baseline now has {len(resources)} {key}")
+
+            # Save updated baseline
+            self._save_baseline(current_baseline)
+        else:
+            logger.warning(f"Resource {resource_id} not found in baseline {key}")
 
     def _save_baseline(self, baseline: dict):
         """Save baseline to file."""

@@ -1,7 +1,7 @@
 {
   "account_id": "961639320333",
   "region": "ap-southeast-1",
-  "timestamp": "2025-11-08T22:49:09.757627",
+  "timestamp": "2025-11-08T23:55:09.772500",
   "resources": {
     "vpcs": [
       {
@@ -42,62 +42,6 @@
       }
     ],
     "ec2_instances": [
-      {
-        "id": "i-05ea847020dcf0a07",
-        "type": "t2.micro",
-        "state": "terminated",
-        "state_transition_reason": "User initiated (2025-11-08 15:37:53 GMT)",
-        "launch_time": "2025-11-08 15:34:41+00:00",
-        "availability_zone": "ap-southeast-1a",
-        "tenancy": "default",
-        "host_id": null,
-        "vpc_id": null,
-        "subnet_id": null,
-        "private_ip": null,
-        "private_dns": "",
-        "public_ip": null,
-        "public_dns": "",
-        "network_interfaces": [],
-        "security_groups": [],
-        "key_name": "my-key-pair-55f490c",
-        "iam_instance_profile": null,
-        "root_device_type": "ebs",
-        "root_device_name": "/dev/xvda",
-        "block_device_mappings": [],
-        "platform": null,
-        "platform_details": "Linux/UNIX",
-        "image_id": "ami-0a277168b24e51187",
-        "architecture": "x86_64",
-        "virtualization_type": "hvm",
-        "hypervisor": "xen",
-        "cpu_options": {
-          "core_count": 1,
-          "threads_per_core": 1
-        },
-        "ena_support": true,
-        "ebs_optimized": false,
-        "monitoring_state": "disabled",
-        "instance_lifecycle": null,
-        "capacity_reservation_id": null,
-        "capacity_reservation_specification": {
-          "CapacityReservationPreference": "open"
-        },
-        "elastic_ip_associations": [],
-        "metadata_options": {
-          "http_tokens": "optional",
-          "http_put_response_hop_limit": 1,
-          "http_endpoint": "enabled"
-        },
-        "hibernation_configured": false,
-        "usage_operation": "RunInstances",
-        "usage_operation_update_time": "2025-11-07 13:52:22+00:00",
-        "tags": [
-          {
-            "Key": "Name",
-            "Value": "my-ec2-instance"
-          }
-        ]
-      },
       {
         "id": "i-0fdc5695a661c70d8",
         "type": "t2.nano",
@@ -183,30 +127,30 @@
         "tags": [
           {
             "Key": "Name",
-            "Value": "my-ec2-instance-test"
+            "Value": "my-ec2-instance"
           }
         ],
         "metrics_baseline": {
           "cpuutilization": {
-            "average": 4.249306921712575,
+            "average": 3.0610401481555227,
             "maximum": 11.459409040940738,
             "minimum": 0.0026897309300766,
             "period_hours": 24,
-            "captured_at": "2025-11-08T15:49:29.506387"
+            "captured_at": "2025-11-08T16:55:32.173760"
           },
           "networkin": {
-            "average": 126460.66666666667,
-            "maximum": 377432.0,
-            "minimum": 720.0,
+            "average": 36828.819444444445,
+            "maximum": 1822831.0,
+            "minimum": 0.0,
             "period_hours": 24,
-            "captured_at": "2025-11-08T15:49:29.571806"
+            "captured_at": "2025-11-08T16:55:32.240973"
           },
           "networkout": {
-            "average": 11159.333333333334,
+            "average": 2572.647222222222,
             "maximum": 31726.0,
-            "minimum": 720.0,
+            "minimum": 0.0,
             "period_hours": 24,
-            "captured_at": "2025-11-08T15:49:29.636352"
+            "captured_at": "2025-11-08T16:55:32.362292"
           }
         }
       }
@@ -215,17 +159,7 @@
     "ecs_clusters": [],
     "rds_instances": [],
     "rds_clusters": [],
-    "s3_buckets": [
-      {
-        "name": "assets-bucket-0e84de4",
-        "creation_date": "2025-11-05 18:47:29+00:00",
-        "versioning": "Disabled",
-        "encryption": "Enabled",
-        "encryption_type": "AES256",
-        "public_access_blocked": true,
-        "tags": []
-      }
-    ],
+    "s3_buckets": [],
     "dynamodb_tables": [],
     "sqs_queues": [],
     "lambda_functions": [

@@ -1029,29 +1029,15 @@ def main():
                                     st.markdown("**Select fields to revert:**")
 
                                     # Quick action buttons
-                                    col_q1, col_q2, col_q3 = st.columns(3)
-                                    with col_q1:
-                                        if st.button("✓ All", key=f"select_all_{drift_id}"):
-                                            st.session_state[f"selected_fields_{drift_id}"] = (
-                                                available_fields
-                                            )
-                                            st.rerun()
-                                    with col_q2:
-                                        if st.button("✗ None", key=f"select_none_{drift_id}"):
-                                            st.session_state[f"selected_fields_{drift_id}"] = []
-                                            st.rerun()
-                                    with col_q3:
-                                        # Tags only button
-                                        tag_fields = [
-                                            f for f in available_fields if f.startswith("tags")
-                                        ]
-                                        if tag_fields and st.button(
-                                            "🏷️ Tags", key=f"select_tags_{drift_id}"
-                                        ):
-                                            st.session_state[f"selected_fields_{drift_id}"] = (
-                                                tag_fields
-                                            )
-                                            st.rerun()
+                                    # Tags only button
+                                    tag_fields = [
+                                        f for f in available_fields if f.startswith("tags")
+                                    ]
+                                    if tag_fields and st.button(
+                                        "🏷️ Tags Only", key=f"select_tags_{drift_id}"
+                                    ):
+                                        st.session_state[f"selected_fields_{drift_id}"] = tag_fields
+                                        st.rerun()
 
                                     # Initialize selected fields in session state
                                     if f"selected_fields_{drift_id}" not in st.session_state:
