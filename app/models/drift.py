@@ -64,7 +64,13 @@ class DriftRecord(BaseModel):
     remediation_id: Optional[str] = Field(default=None, description="Associated remediation ID")
     assigned_to: Optional[str] = Field(default=None, description="User assigned to handle drift")
     resolved_at: Optional[datetime] = Field(default=None, description="Resolution timestamp")
-    
+
+    # Change history enrichment (WHO/WHEN/WHAT changed)
+    change_history: Optional[Dict[str, Any]] = Field(
+        default=None,
+        description="CloudTrail/Config history showing who made changes and when",
+    )
+
     # Approval tracking
     approved: bool = Field(default=False, description="Whether drift is approved")
     approved_by: Optional[str] = Field(default=None, description="User who approved")

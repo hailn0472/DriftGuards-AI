@@ -1,7 +1,7 @@
 {
   "account_id": "961639320333",
   "region": "ap-southeast-1",
-  "timestamp": "2025-11-07T21:59:50.913705",
+  "timestamp": "2025-11-08T22:35:57.176575",
   "resources": {
     "vpcs": [
       {
@@ -46,16 +46,107 @@
         "id": "i-05ea847020dcf0a07",
         "type": "t2.micro",
         "state": "running",
+        "state_transition_reason": "",
+        "launch_time": "2025-11-08 15:34:41+00:00",
+        "availability_zone": "ap-southeast-1a",
+        "tenancy": "default",
+        "host_id": null,
         "vpc_id": "vpc-09472342374f408ba",
         "subnet_id": "subnet-0d9007c604d7ac6c2",
         "private_ip": "10.0.1.83",
-        "public_ip": "13.212.14.94",
+        "private_dns": "ip-10-0-1-83.ap-southeast-1.compute.internal",
+        "public_ip": "13.212.89.23",
+        "public_dns": "ec2-13-212-89-23.ap-southeast-1.compute.amazonaws.com",
+        "network_interfaces": [
+          {
+            "id": "eni-0be7804486a499f7e",
+            "subnet_id": "subnet-0d9007c604d7ac6c2",
+            "private_ip": "10.0.1.83",
+            "public_ip": "13.212.89.23",
+            "security_groups": [
+              {
+                "id": "sg-0506160bed0a77591",
+                "name": "default"
+              },
+              {
+                "id": "sg-0d155c14368b85a17",
+                "name": "my-security-group-d0068dd"
+              }
+            ],
+            "source_dest_check": true,
+            "device_index": 0
+          }
+        ],
+        "security_groups": [
+          {
+            "id": "sg-0506160bed0a77591",
+            "name": "default"
+          },
+          {
+            "id": "sg-0d155c14368b85a17",
+            "name": "my-security-group-d0068dd"
+          }
+        ],
+        "key_name": "my-key-pair-55f490c",
+        "iam_instance_profile": null,
+        "root_device_type": "ebs",
+        "root_device_name": "/dev/xvda",
+        "block_device_mappings": [
+          {
+            "device_name": "/dev/xvda",
+            "volume_id": "vol-08a1554f3e6ed22da",
+            "status": "attached",
+            "delete_on_termination": true
+          }
+        ],
+        "platform": null,
+        "platform_details": "Linux/UNIX",
+        "image_id": "ami-0a277168b24e51187",
+        "architecture": "x86_64",
+        "virtualization_type": "hvm",
+        "hypervisor": "xen",
+        "cpu_options": {
+          "core_count": 1,
+          "threads_per_core": 1
+        },
+        "ena_support": true,
+        "ebs_optimized": false,
+        "monitoring_state": "disabled",
+        "instance_lifecycle": null,
+        "capacity_reservation_id": null,
+        "capacity_reservation_specification": {
+          "CapacityReservationPreference": "open"
+        },
+        "elastic_ip_associations": [
+          {
+            "public_ip": "13.212.89.23",
+            "allocation_id": null,
+            "ip_owner_id": "amazon"
+          }
+        ],
+        "metadata_options": {
+          "http_tokens": "optional",
+          "http_put_response_hop_limit": 1,
+          "http_endpoint": "enabled"
+        },
+        "hibernation_configured": false,
+        "usage_operation": "RunInstances",
+        "usage_operation_update_time": "2025-11-07 13:52:22+00:00",
         "tags": [
           {
             "Key": "Name",
-            "Value": "my-ec2-instance-tesst"
+            "Value": "my-ec2-instance"
           }
-        ]
+        ],
+        "metrics_baseline": {
+          "cpuutilization": {
+            "average": 0.0039927254483688,
+            "maximum": 0.0039927254483688,
+            "minimum": 0.0039927254483688,
+            "period_hours": 24,
+            "captured_at": "2025-11-08T15:36:16.263824"
+          }
+        }
       }
     ],
     "eks_clusters": [],
@@ -79,9 +170,38 @@
       {
         "name": "driftguards-lambda-function",
         "arn": "arn:aws:lambda:ap-southeast-1:961639320333:function:driftguards-lambda-function",
+        "description": "",
+        "role": "arn:aws:iam::961639320333:role/lambda-role-4905aab",
         "runtime": "python3.11",
-        "memory": 256,
-        "timeout": 30
+        "handler": "handler.lambda_handler",
+        "code_size": 1152,
+        "code_sha256": "kx+XaEjlobydcaPXvujPt7E8nJCjoDvvek8eqQjMBXk=",
+        "memory_size": 256,
+        "timeout": 30,
+        "ephemeral_storage": 512,
+        "reserved_concurrent_executions": null,
+        "environment_variables": {
+          "ENVIRONMENT": "dev",
+          "APP_NAME": "driftguards-lambda",
+          "LOG_LEVEL": "INFO"
+        },
+        "layers": [],
+        "vpc_config": null,
+        "architectures": [
+          "x86_64"
+        ],
+        "package_type": "Zip",
+        "state": null,
+        "state_reason": null,
+        "last_modified": "2025-11-07T14:36:23.943+0000",
+        "version": "$LATEST",
+        "logging_config": {
+          "log_format": "Text",
+          "log_group": "/aws/lambda/driftguards-lambda-function"
+        },
+        "dead_letter_config": null,
+        "tracing_config": "PassThrough",
+        "image_config": null
       }
     ],
     "security_groups": [

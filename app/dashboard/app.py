@@ -2,6 +2,7 @@
 
 # Load .env file FIRST before any other imports
 from dotenv import load_dotenv
+
 load_dotenv()  # This loads AWS credentials from .env
 
 import asyncio
@@ -35,6 +36,20 @@ from app.revert.selective_revert import (
 
 # Constants
 DEFAULT_CRON_EXPRESSION = "0 * * * *"  # Every hour
+
+
+# Helper function to safely print Unicode (emojis) on Windows
+def safe_print(message):
+    """Print message, handling Unicode encoding errors on Windows."""
+    try:
+        print(message)
+    except UnicodeEncodeError:
+        # Remove emojis and special characters, keep the text
+        import re
+
+        ascii_message = re.sub(r"[^\x00-\x7F]+", "", message)
+        print(ascii_message)
+
 
 # Page config
 st.set_page_config(
@@ -102,6 +117,24 @@ if "notifications_enabled" not in st.session_state:
     st.session_state.notifications_enabled = True
 if "auto_remediation" not in st.session_state:
     st.session_state.auto_remediation = False
+if "next_auto_scan" not in st.session_state:
+    st.session_state.next_auto_scan = None
+if "auto_scan_accounts" not in st.session_state:
+    st.session_state.auto_scan_accounts = ["961639320333"]
+if "auto_scan_regions" not in st.session_state:
+    st.session_state.auto_scan_regions = ["ap-southeast-1"]
+if "auto_scan_resource_types" not in st.session_state:
+    st.session_state.auto_scan_resource_types = [
+        "ec2_instances",
+        "rds_instances",
+        "rds_clusters",
+        "s3_buckets",
+        "dynamodb_tables",
+        "sqs_queues",
+        "lambda_functions",
+        "ecs_clusters",
+        "eks_clusters",
+    ]
 
 
 def get_severity_color(severity):
@@ -122,6 +155,8 @@ def get_severity_class(severity):
 
 async def run_scan(accounts, regions, resource_types):
     """Run drift detection scan."""
+    import pytz
+
     st.session_state.scanning = True
 
     # Create workflow
@@ -140,16 +175,19 @@ async def run_scan(accounts, regions, resource_types):
         with st.spinner("🔍 Scanning for drifts..."):
             final_state = await workflow.run(scan_request)
 
-        # Store results
+        # Store results with UTC+7 timezone
+        utc_plus_7 = pytz.timezone("Asia/Bangkok")
         st.session_state.drifts = final_state.get("drift_records", [])
         st.session_state.analyses = final_state.get("ai_analysis", [])
         st.session_state.violations = final_state.get("policy_violations", [])
-        st.session_state.last_scan = datetime.now()
+        st.session_state.last_scan = datetime.now(utc_plus_7)
         st.session_state.scanning = False
-        
+
         # Show success message
         if len(st.session_state.drifts) == 0:
-            st.success("✅ Scan completed successfully! No drifts detected. Your infrastructure is in sync with baseline.")
+            st.success(
+                "✅ Scan completed successfully! No drifts detected. Your infrastructure is in sync with baseline."
+            )
         else:
             st.warning(f"⚠️ Scan completed: {len(st.session_state.drifts)} drift(s) detected")
 
@@ -216,9 +254,109 @@ def display_drift_card(drift, analysis=None):
     st.markdown("</div>", unsafe_allow_html=True)
 
 
+def check_and_run_auto_scan():
+    """Check if auto-scan should run and execute it."""
+    from datetime import datetime, timedelta
+    import pytz
+
+    if not st.session_state.auto_scan_enabled:
+        return False
+
+    if st.session_state.scanning:
+        return False  # Already scanning
+
+    # Use UTC+7 timezone
+    utc_plus_7 = pytz.timezone("Asia/Bangkok")
+    now = datetime.now(utc_plus_7)
+
+    # Calculate next scan time based on schedule
+    if st.session_state.last_scan:
+        schedule_intervals = {
+            "1min": timedelta(minutes=1),
+            "15min": timedelta(minutes=15),
+            "30min": timedelta(minutes=30),
+            "hourly": timedelta(hours=1),
+            "6hours": timedelta(hours=6),
+            "12hours": timedelta(hours=12),
+            "daily": timedelta(days=1),
+            "weekly": timedelta(weeks=1),
+        }
+
+        schedule = st.session_state.scan_schedule
+        interval = schedule_intervals.get(schedule, timedelta(hours=1))
+
+        # Make sure last_scan is timezone-aware
+        last_scan = st.session_state.last_scan
+        if last_scan.tzinfo is None:
+            last_scan = utc_plus_7.localize(last_scan)
+
+        next_scan = last_scan + interval
+
+        # Store next scan time
+        st.session_state.next_auto_scan = next_scan
+
+        # Check if it's time to scan
+        if now >= next_scan:
+            return True
+        else:
+            return False
+    else:
+        # No previous scan - don't auto-run, wait for manual trigger
+        return False
+
+    return False
+
+
 # Main app
 def main():
     """Main dashboard."""
+    # Load latest auto-scan results if available
+    auto_scan_file = Path(__file__).parent / "latest_auto_scan.json"
+    if auto_scan_file.exists():
+        try:
+            import pytz
+
+            with open(auto_scan_file) as f:
+                auto_results = json.load(f)
+
+            # Check if results are newer than current session
+            scan_time_str = auto_results.get("scan_time")
+            if scan_time_str:
+                scan_time = datetime.fromisoformat(scan_time_str)
+
+                # Only load if newer than current last_scan
+                if not st.session_state.last_scan or scan_time > st.session_state.last_scan:
+                    # Convert dict results back to proper format
+                    st.session_state.drifts = auto_results.get("drifts", [])
+                    st.session_state.analyses = auto_results.get("analyses", [])
+                    st.session_state.violations = auto_results.get("violations", [])
+
+                    # Make timezone-aware
+                    utc_plus_7 = pytz.timezone("Asia/Bangkok")
+                    if scan_time.tzinfo is None:
+                        scan_time = utc_plus_7.localize(scan_time)
+                    st.session_state.last_scan = scan_time
+
+                    # Show notification about auto-scan
+                    if auto_results.get("status") == "success":
+                        drift_count = auto_results.get("drift_count", 0)
+                        if drift_count > 0:
+                            st.info(f"🔄 Auto-scan completed: {drift_count} drift(s) detected")
+        except Exception as e:
+            # Silently fail if file is corrupted
+            pass
+
+    # Auto-refresh for checking new scan results (every 30 seconds)
+    if st.session_state.auto_scan_enabled:
+        import time
+
+        # Add auto-refresh meta tag
+        refresh_interval = 30  # seconds
+        st.markdown(
+            f'<meta http-equiv="refresh" content="{refresh_interval}">',
+            unsafe_allow_html=True,
+        )
+
     # Header
     st.title("🛡️ DriftGuards AI - Drift Detection Dashboard")
 
@@ -264,6 +402,11 @@ def main():
         elif not regions:
             st.sidebar.error("Please select at least one region")
         else:
+            # Save scan parameters for auto-scan
+            st.session_state.auto_scan_accounts = accounts
+            st.session_state.auto_scan_regions = regions
+            st.session_state.auto_scan_resource_types = resource_types
+
             asyncio.run(run_scan(accounts, regions, resource_types))
             st.rerun()
 
@@ -281,97 +424,33 @@ def main():
     st.session_state.auto_scan_enabled = auto_scan
 
     if auto_scan:
-        # Schedule type selector
-        schedule_type = st.sidebar.radio(
-            "Schedule Type",
-            ["Preset", "Custom Cron"],
-            help="Choose preset intervals or enter custom cron expression",
+        # Schedule selector
+        schedule_options = {
+            "Every 1 minute": "1min",
+            "Every 15 minutes": "15min",
+            "Every 30 minutes": "30min",
+            "Hourly": "hourly",
+            "Every 6 hours": "6hours",
+            "Every 12 hours": "12hours",
+            "Daily": "daily",
+            "Weekly": "weekly",
+        }
+
+        selected_schedule = st.sidebar.selectbox(
+            "📅 Scan Schedule",
+            options=list(schedule_options.keys()),
+            index=3,  # Default to "Hourly"
+            help="How often to automatically scan for drifts",
         )
-
-        if schedule_type == "Preset":
-            # Schedule selector
-            schedule_options = {
-                "Every 15 minutes": "15min",
-                "Every 30 minutes": "30min",
-                "Hourly": "hourly",
-                "Every 6 hours": "6hours",
-                "Every 12 hours": "12hours",
-                "Daily": "daily",
-                "Weekly": "weekly",
-            }
-
-            selected_schedule = st.sidebar.selectbox(
-                "📅 Scan Schedule",
-                options=list(schedule_options.keys()),
-                index=2,  # Default to "Hourly"
-                help="How often to automatically scan for drifts",
-            )
-            st.session_state.scan_schedule = schedule_options[selected_schedule]
-            st.session_state.cron_expression = None
-        else:
-            # Custom cron expression input
-            cron_expr = st.sidebar.text_input(
-                "⏰ Cron Expression",
-                value=st.session_state.get("cron_expression", DEFAULT_CRON_EXPRESSION),
-                help="Enter cron expression (minute hour day month weekday)",
-                placeholder=DEFAULT_CRON_EXPRESSION,
-            )
-            st.session_state.cron_expression = cron_expr
-            st.session_state.scan_schedule = "custom"
-
-            # Show cron expression helper
-            with st.sidebar.expander("📖 Cron Expression Guide"):
-                st.markdown(
-                    """
-                **Format:** `minute hour day month weekday`
-                
-                **Examples:**
-                - `*/15 * * * *` - Every 15 minutes
-                - `0 * * * *` - Every hour
-                - `0 */6 * * *` - Every 6 hours
-                - `0 0 * * *` - Daily at midnight
-                - `0 9 * * 1` - Every Monday at 9 AM
-                - `0 0 1 * *` - First day of month
-                - `0 0 * * 0` - Every Sunday
-                
-                **Fields:**
-                - Minute: 0-59
-                - Hour: 0-23
-                - Day: 1-31
-                - Month: 1-12
-                - Weekday: 0-6 (0=Sunday)
-                """
-                )
-
-            # Validate cron expression
-            try:
-                from croniter import croniter
-                from datetime import datetime
-
-                if croniter.is_valid(cron_expr):
-                    st.sidebar.success("✅ Valid cron expression")
-
-                    # Show next 3 run times
-                    base = datetime.now()
-                    cron = croniter(cron_expr, base)
-                    st.sidebar.info("🔮 Next 3 runs:")
-                    for i in range(3):
-                        next_run = cron.get_next(datetime)
-                        st.sidebar.caption(f"{i + 1}. {next_run.strftime('%Y-%m-%d %H:%M:%S')}")
-                else:
-                    st.sidebar.error("❌ Invalid cron expression")
-            except ImportError:
-                st.sidebar.warning(
-                    "⚠️ Install `croniter` for cron validation: `pip install croniter`"
-                )
-            except Exception as e:
-                st.sidebar.error(f"❌ Invalid cron: {str(e)}")
+        st.session_state.scan_schedule = schedule_options[selected_schedule]
 
         # Show next scan time
         if st.session_state.last_scan:
+            import pytz
             from datetime import timedelta
 
             schedule_intervals = {
+                "1min": timedelta(minutes=1),
                 "15min": timedelta(minutes=15),
                 "30min": timedelta(minutes=30),
                 "hourly": timedelta(hours=1),
@@ -380,10 +459,39 @@ def main():
                 "daily": timedelta(days=1),
                 "weekly": timedelta(weeks=1),
             }
-            next_scan = (
-                st.session_state.last_scan + schedule_intervals[st.session_state.scan_schedule]
-            )
-            st.sidebar.info(f"⏰ Next scan: {next_scan.strftime('%Y-%m-%d %H:%M:%S')}")
+
+            schedule = st.session_state.scan_schedule
+            interval = schedule_intervals.get(schedule, timedelta(hours=1))
+
+            # Make sure last_scan is timezone-aware (UTC+7)
+            utc_plus_7 = pytz.timezone("Asia/Bangkok")
+            last_scan = st.session_state.last_scan
+            if last_scan.tzinfo is None:
+                last_scan = utc_plus_7.localize(last_scan)
+
+            next_scan = last_scan + interval
+
+            st.session_state.next_auto_scan = next_scan
+
+            # Show next scan time with countdown
+            now = datetime.now(utc_plus_7)
+            time_until_scan = next_scan - now
+            seconds_remaining = int(time_until_scan.total_seconds())
+
+            if seconds_remaining > 0:
+                if seconds_remaining < 60:
+                    time_str = f"{seconds_remaining}s"
+                elif seconds_remaining < 3600:
+                    time_str = f"{seconds_remaining // 60}m {seconds_remaining % 60}s"
+                else:
+                    hours = seconds_remaining // 3600
+                    minutes = (seconds_remaining % 3600) // 60
+                    time_str = f"{hours}h {minutes}m"
+
+                st.sidebar.success(f"⏰ Next scan: {next_scan.strftime('%H:%M:%S')}")
+                st.sidebar.caption(f"⏳ In {time_str}")
+            else:
+                st.sidebar.warning("⏰ Scan overdue - will run on next refresh")
 
     # Notifications toggle
     notifications = st.sidebar.toggle(
@@ -422,64 +530,61 @@ def main():
 
     # Save configuration button
     if st.sidebar.button("💾 Save Configuration", use_container_width=True):
-        config = {
-            "auto_scan_enabled": st.session_state.auto_scan_enabled,
-            "scan_schedule": st.session_state.scan_schedule,
-            "cron_expression": st.session_state.cron_expression,
-            "notifications_enabled": st.session_state.notifications_enabled,
-            "auto_remediation": st.session_state.auto_remediation,
-        }
-        config_file = Path(__file__).parent / "drift_config.json"
-        with open(config_file, "w") as f:
-            json.dump(config, f, indent=2)
-        st.sidebar.success("✅ Configuration saved!")
-
-    # Load configuration button
-    if st.sidebar.button("📂 Load Configuration", use_container_width=True):
-        config_file = Path(__file__).parent / "drift_config.json"
-        if config_file.exists():
-            with open(config_file) as f:
-                config = json.load(f)
-            st.session_state.auto_scan_enabled = config.get("auto_scan_enabled", False)
-            st.session_state.scan_schedule = config.get("scan_schedule", "hourly")
-            st.session_state.cron_expression = config.get(
-                "cron_expression", DEFAULT_CRON_EXPRESSION
-            )
-            st.session_state.notifications_enabled = config.get("notifications_enabled", True)
-            st.session_state.auto_remediation = config.get("auto_remediation", False)
-            st.sidebar.success("✅ Configuration loaded!")
-            st.rerun()
-        else:
-            st.sidebar.error("❌ No saved configuration found")
-
-    st.sidebar.markdown("---")
-
-    # Load baseline config button
-    st.sidebar.header("📋 Load Baseline & Run Scan")
-    if st.sidebar.button("📥 Load Baseline & Detect", type="secondary"):
         try:
-            baseline_file = Path(__file__).parent / "baseline_state.json"
-            if not baseline_file.exists():
-                st.sidebar.error("❌ baseline_state.json not found")
-            else:
-                with open(baseline_file) as f:
-                    baseline_data = json.load(f)
+            config = {
+                "auto_scan_enabled": st.session_state.auto_scan_enabled,
+                "scan_schedule": st.session_state.scan_schedule,
+                "cron_expression": st.session_state.cron_expression,
+                "notifications_enabled": st.session_state.notifications_enabled,
+                "auto_remediation": st.session_state.auto_remediation,
+                "auto_scan_accounts": st.session_state.auto_scan_accounts,
+                "auto_scan_regions": st.session_state.auto_scan_regions,
+                "auto_scan_resource_types": st.session_state.auto_scan_resource_types,
+            }
+            config_file = Path(__file__).parent / "drift_config.json"
 
-                # Extract account and region from baseline
-                account_id = baseline_data.get("account_id")
-                region = baseline_data.get("region")
+            # Save with explicit encoding
+            with open(config_file, "w", encoding="utf-8") as f:
+                json.dump(config, f, indent=2)
 
-                st.sidebar.info(f"📊 Running scan for account: {account_id}")
+            # Log the save operation (visible in terminal) - safe Unicode handling
+            safe_print(f"✅ Configuration saved to {config_file}")
+            safe_print(f"   Auto-scan enabled: {config['auto_scan_enabled']}")
+            safe_print(f"   Schedule: {config['scan_schedule']}")
+            safe_print(f"   Accounts: {config['auto_scan_accounts']}")
+            safe_print(f"   Regions: {config['auto_scan_regions']}")
 
-                # Run actual workflow with baseline data
-                asyncio.run(run_scan([account_id], [region], resource_types))
-                st.rerun()
+            # Show detailed success message
+            st.sidebar.success("✅ Configuration saved!")
+            st.sidebar.info(f"📁 Saved to: drift_config.json")
+
+            # Show configuration summary
+            with st.sidebar.expander("📋 Saved Configuration", expanded=True):
+                st.write(
+                    f"**Auto-scan**: {'✅ Enabled' if config['auto_scan_enabled'] else '❌ Disabled'}"
+                )
+                st.write(f"**Schedule**: {config['scan_schedule']}")
+                st.write(f"**Accounts**: {', '.join(config['auto_scan_accounts'])}")
+                st.write(f"**Regions**: {', '.join(config['auto_scan_regions'])}")
+                st.write(f"**Resource types**: {len(config['auto_scan_resource_types'])} types")
+
+                if config["auto_scan_enabled"]:
+                    st.success("🚀 Auto-scan is active! Run the scheduler:")
+                    st.code("python app/dashboard/auto_scheduler.py", language="bash")
+                else:
+                    st.warning("⏸️ Auto-scan is disabled")
+
         except Exception as e:
-            st.sidebar.error(f"❌ Error: {str(e)}")
+            # Use safe print for error logging
+            safe_print(f"❌ Error saving configuration: {e}")
+
+            st.sidebar.error(f"❌ Error saving configuration: {str(e)}")
+            import traceback
+
+            safe_print(traceback.format_exc())
+            st.sidebar.code(traceback.format_exc())
 
     # Load from file button
-    st.sidebar.markdown("---")
-    st.sidebar.header("📂 Load Previous Scan")
     output_dir = Path(__file__).parent / "output"
     if output_dir.exists():
         json_files = sorted(output_dir.glob("detection_results_*.json"), reverse=True)
@@ -530,14 +635,14 @@ def main():
                 f"Last scan: {st.session_state.last_scan.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
                 "All resources are in sync with baseline configuration."
             )
-            
+
             # Show what was scanned
             st.markdown("---")
             st.markdown("### 📋 Scan Summary")
             st.markdown("- ✅ No configuration drifts detected")
             st.markdown("- ✅ All resources match baseline state")
             st.markdown("- ✅ No policy violations found")
-            
+
             st.info("💡 Tip: Run periodic scans to ensure continued compliance")
         else:
             # No scan has been run yet
@@ -738,7 +843,14 @@ def main():
                 # Show Policy Violations if available
                 matching_violations = []
                 for v in st.session_state.violations:
-                    v_drift_id = v.drift_id if hasattr(v, "drift_id") else v.get("drift_id")
+                    # Safely get drift_id from either object or dict
+                    if hasattr(v, "drift_id"):
+                        v_drift_id = v.drift_id
+                    elif isinstance(v, dict):
+                        v_drift_id = v.get("drift_id")
+                    else:
+                        continue  # Skip if neither object nor dict
+
                     if v_drift_id == drift_id:
                         matching_violations.append(v)
                 if matching_violations:
@@ -750,11 +862,13 @@ def main():
                                 message = violation.message
                                 v_severity = violation.severity
                                 action_required = violation.action_required
-                            else:
+                            elif isinstance(violation, dict):
                                 policy_id = violation.get("policy_id")
                                 message = violation.get("message")
                                 v_severity = violation.get("severity")
                                 action_required = violation.get("action_required")
+                            else:
+                                continue  # Skip invalid violation
 
                             st.markdown(f"**{policy_id}:** {message}")
                             st.caption(f"Severity: {v_severity} | Action: {action_required}")
@@ -766,10 +880,12 @@ def main():
                     approval_form_key = f"show_approval_form_{drift_id}"
                     if approval_form_key not in st.session_state:
                         st.session_state[approval_form_key] = False
-                    
+
                     if not st.session_state[approval_form_key]:
                         if st.button(
-                            "✅ Approve Drift", key=f"approve_btn_{drift_id}", use_container_width=True
+                            "✅ Approve Drift",
+                            key=f"approve_btn_{drift_id}",
+                            use_container_width=True,
                         ):
                             st.session_state[approval_form_key] = True
                             st.rerun()
@@ -777,55 +893,52 @@ def main():
                         # Show approval form
                         with st.form(key=f"approval_form_{drift_id}"):
                             st.subheader("📝 Approve Drift")
-                            
+
                             # Get current user (from session/auth)
                             approved_by = st.text_input(
-                                "Your Name/Email *", 
+                                "Your Name/Email *",
                                 value=st.session_state.get("username", ""),
                                 key=f"approver_{drift_id}",
-                                placeholder="admin@example.com"
+                                placeholder="admin@example.com",
                             )
-                            
+
                             # Approval reason
                             reason = st.text_area(
                                 "Reason for Approval",
                                 placeholder="Why is this change acceptable? (optional)",
                                 key=f"reason_{drift_id}",
-                                height=100
+                                height=100,
                             )
-                            
+
                             # Options
                             st.markdown("**Options:**")
                             update_baseline = st.checkbox(
                                 "Update baseline with this configuration",
                                 value=True,
                                 help="Make this the new expected state",
-                                key=f"update_baseline_{drift_id}"
+                                key=f"update_baseline_{drift_id}",
                             )
-                            
+
                             notify = st.checkbox(
                                 "Send notifications",
                                 value=False,
                                 help="Notify team about this approval",
-                                key=f"notify_{drift_id}"
+                                key=f"notify_{drift_id}",
                             )
-                            
+
                             # Submit buttons
                             col_submit, col_cancel = st.columns(2)
-                            
+
                             with col_submit:
                                 submitted = st.form_submit_button(
-                                    "✅ Confirm Approval",
-                                    use_container_width=True,
-                                    type="primary"
+                                    "✅ Confirm Approval", use_container_width=True, type="primary"
                                 )
-                            
+
                             with col_cancel:
                                 cancelled = st.form_submit_button(
-                                    "❌ Cancel",
-                                    use_container_width=True
+                                    "❌ Cancel", use_container_width=True
                                 )
-                            
+
                             if submitted:
                                 if not approved_by:
                                     st.error("⚠️ Please enter your name or email")
@@ -833,49 +946,48 @@ def main():
                                     try:
                                         # Initialize approval service
                                         approval_service = ApprovalService()
-                                        
+
                                         # Create approval request
                                         approval_req = ApprovalRequest(
                                             drift_id=drift_id,
                                             approved_by=approved_by,
                                             reason=reason if reason else None,
                                             update_baseline=update_baseline,
-                                            notify=notify
+                                            notify=notify,
                                         )
-                                        
+
                                         # Process approval
                                         with st.spinner("⏳ Processing approval..."):
                                             approval = asyncio.run(
-                                                approval_service.approve_drift(
-                                                    drift, 
-                                                    approval_req
-                                                )
+                                                approval_service.approve_drift(drift, approval_req)
                                             )
-                                        
+
                                         st.success(
                                             f"✅ Drift approved by {approved_by}!\n\n"
                                             f"Approval ID: `{approval.approval_id}`"
                                         )
-                                        
+
                                         if update_baseline:
                                             st.info("📝 Baseline updated with new configuration")
-                                        
+
                                         if notify:
                                             st.info("📢 Notifications sent")
-                                        
+
                                         # Reset form state
                                         st.session_state[approval_form_key] = False
-                                        
+
                                         # Wait a moment then refresh
                                         import time
+
                                         time.sleep(1)
                                         st.rerun()
-                                        
+
                                     except Exception as e:
                                         st.error(f"❌ Approval failed: {str(e)}")
                                         import traceback
+
                                         st.error(traceback.format_exc())
-                            
+
                             if cancelled:
                                 st.session_state[approval_form_key] = False
                                 st.rerun()
@@ -884,8 +996,12 @@ def main():
                     # Show selective revert expander
                     with st.expander("🔄 Revert Options", expanded=False):
                         # Get diff from drift
-                        diff = drift.get("diff", {}) if isinstance(drift, dict) else getattr(drift, "diff", {})
-                        
+                        diff = (
+                            drift.get("diff", {})
+                            if isinstance(drift, dict)
+                            else getattr(drift, "diff", {})
+                        )
+
                         if not diff:
                             st.warning("⚠️ No diff information available for selective revert")
                             st.info("Using full revert mode")
@@ -894,7 +1010,7 @@ def main():
                         else:
                             # Get available fields from diff
                             available_fields = get_available_fields(diff)
-                            
+
                             if not available_fields:
                                 st.warning("⚠️ No fields available for selective revert")
                                 revert_mode = "full"
@@ -906,17 +1022,19 @@ def main():
                                     options=["selective", "full"],
                                     index=0,
                                     key=f"revert_mode_{drift_id}",
-                                    help="Selective: Choose specific fields | Full: Revert everything"
+                                    help="Selective: Choose specific fields | Full: Revert everything",
                                 )
-                                
+
                                 if revert_mode == "selective":
                                     st.markdown("**Select fields to revert:**")
-                                    
+
                                     # Quick action buttons
                                     col_q1, col_q2, col_q3 = st.columns(3)
                                     with col_q1:
                                         if st.button("✓ All", key=f"select_all_{drift_id}"):
-                                            st.session_state[f"selected_fields_{drift_id}"] = available_fields
+                                            st.session_state[f"selected_fields_{drift_id}"] = (
+                                                available_fields
+                                            )
                                             st.rerun()
                                     with col_q2:
                                         if st.button("✗ None", key=f"select_none_{drift_id}"):
@@ -924,84 +1042,126 @@ def main():
                                             st.rerun()
                                     with col_q3:
                                         # Tags only button
-                                        tag_fields = [f for f in available_fields if f.startswith('tags')]
-                                        if tag_fields and st.button("🏷️ Tags", key=f"select_tags_{drift_id}"):
-                                            st.session_state[f"selected_fields_{drift_id}"] = tag_fields
+                                        tag_fields = [
+                                            f for f in available_fields if f.startswith("tags")
+                                        ]
+                                        if tag_fields and st.button(
+                                            "🏷️ Tags", key=f"select_tags_{drift_id}"
+                                        ):
+                                            st.session_state[f"selected_fields_{drift_id}"] = (
+                                                tag_fields
+                                            )
                                             st.rerun()
-                                    
+
                                     # Initialize selected fields in session state
                                     if f"selected_fields_{drift_id}" not in st.session_state:
                                         st.session_state[f"selected_fields_{drift_id}"] = []
-                                    
+
                                     # Checkboxes for each field
                                     selected_fields = []
                                     for field in available_fields:
-                                        is_selected = field in st.session_state[f"selected_fields_{drift_id}"]
-                                        
+                                        is_selected = (
+                                            field in st.session_state[f"selected_fields_{drift_id}"]
+                                        )
+
                                         # Get baseline and current values for display
-                                        field_parts = field.split('.')
+                                        field_parts = field.split(".")
                                         if len(field_parts) == 2 and field_parts[0] in diff:
                                             # Nested field like 'tags.Name'
-                                            baseline_tags = diff[field_parts[0]].get('baseline', []) or []
-                                            current_tags = diff[field_parts[0]].get('current', []) or []
-                                            
-                                            baseline_val = next((t.get('Value', 'N/A') for t in baseline_tags if isinstance(t, dict) and t.get('Key') == field_parts[1]), 'N/A')
-                                            current_val = next((t.get('Value', 'N/A') for t in current_tags if isinstance(t, dict) and t.get('Key') == field_parts[1]), 'N/A')
+                                            baseline_tags = (
+                                                diff[field_parts[0]].get("baseline", []) or []
+                                            )
+                                            current_tags = (
+                                                diff[field_parts[0]].get("current", []) or []
+                                            )
+
+                                            baseline_val = next(
+                                                (
+                                                    t.get("Value", "N/A")
+                                                    for t in baseline_tags
+                                                    if isinstance(t, dict)
+                                                    and t.get("Key") == field_parts[1]
+                                                ),
+                                                "N/A",
+                                            )
+                                            current_val = next(
+                                                (
+                                                    t.get("Value", "N/A")
+                                                    for t in current_tags
+                                                    if isinstance(t, dict)
+                                                    and t.get("Key") == field_parts[1]
+                                                ),
+                                                "N/A",
+                                            )
                                             label = f"`{field}`: {current_val} → {baseline_val}"
                                         elif field in diff:
                                             # Simple field
-                                            baseline_val = diff[field].get('baseline', 'N/A')
-                                            current_val = diff[field].get('current', 'N/A')
+                                            baseline_val = diff[field].get("baseline", "N/A")
+                                            current_val = diff[field].get("current", "N/A")
                                             label = f"`{field}`: {current_val} → {baseline_val}"
                                         else:
                                             label = f"`{field}`"
-                                        
-                                        if st.checkbox(label, value=is_selected, key=f"field_{drift_id}_{field}"):
+
+                                        if st.checkbox(
+                                            label,
+                                            value=is_selected,
+                                            key=f"field_{drift_id}_{field}",
+                                        ):
                                             selected_fields.append(field)
-                                            st.session_state[f"selected_fields_{drift_id}"] = selected_fields
+                                            st.session_state[f"selected_fields_{drift_id}"] = (
+                                                selected_fields
+                                            )
                                         elif is_selected and field not in selected_fields:
                                             # Field was deselected
-                                            st.session_state[f"selected_fields_{drift_id}"].remove(field)
-                                    
+                                            st.session_state[f"selected_fields_{drift_id}"].remove(
+                                                field
+                                            )
+
                                     if not selected_fields:
                                         st.warning("⚠️ Please select at least one field to revert")
                                 else:
                                     selected_fields = available_fields
-                        
+
                         # Revert button
                         if st.button(
                             f"� {'Apply Selective Revert' if revert_mode == 'selective' else 'Revert All to Baseline'}",
                             key=f"revert_btn_{drift_id}",
                             use_container_width=True,
-                            type="primary"
+                            type="primary",
                         ):
                             if revert_mode == "selective" and not selected_fields:
                                 st.error("❌ Please select at least one field to revert")
                             else:
                                 with st.spinner("⏳ Reverting configuration..."):
                                     st.info(f"🎯 Target: {resource_type} - {resource_id}")
-                                    
+
                                     if revert_mode == "selective":
-                                        st.info(f"🔧 Selective mode: Reverting {len(selected_fields)} field(s)")
+                                        st.info(
+                                            f"🔧 Selective mode: Reverting {len(selected_fields)} field(s)"
+                                        )
                                         st.caption(f"Fields: {', '.join(selected_fields)}")
-                                        
+
                                         # Use selective revert
                                         result = selective_revert(
                                             resource_type=resource_type,
                                             resource_id=resource_id,
                                             region=region,
                                             diff=diff,
-                                            selected_fields=selected_fields
+                                            selected_fields=selected_fields,
                                         )
                                     else:
                                         st.info("🔧 Full mode: Reverting all fields")
-                                        
+
                                         # Load baseline config for full revert
                                         baseline = load_baseline_config(resource_type, resource_id)
-                                        
+
                                         if not baseline:
-                                            st.error(f"❌ No baseline configuration found for {resource_id}")
-                                            st.warning("Please ensure baseline_state.json contains this resource")
+                                            st.error(
+                                                f"❌ No baseline configuration found for {resource_id}"
+                                            )
+                                            st.warning(
+                                                "Please ensure baseline_state.json contains this resource"
+                                            )
                                             result = None
                                         else:
                                             # Use boto3 for full revert
@@ -1012,7 +1172,7 @@ def main():
                                                 region=region,
                                                 baseline_config=baseline,
                                             )
-                                    
+
                                     if result:
                                         if result["status"] == "success":
                                             st.success(result["message"])
@@ -1020,7 +1180,9 @@ def main():
                                                 for action in result["actions"]:
                                                     st.info(f"✓ {action}")
                                             if "reverted_fields" in result:
-                                                st.success(f"📝 Reverted fields: {', '.join(result['reverted_fields'])}")
+                                                st.success(
+                                                    f"📝 Reverted fields: {', '.join(result['reverted_fields'])}"
+                                                )
                                         elif result["status"] == "no_changes":
                                             st.warning(result["message"])
                                         else:

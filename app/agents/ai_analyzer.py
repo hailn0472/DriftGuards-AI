@@ -3,7 +3,7 @@
 import asyncio
 import json
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any, List, Optional
 
 import boto3
 from botocore.exceptions import BotoCoreError, ClientError
@@ -77,9 +77,7 @@ class AIAnalyzerAgent:
             valid_analyses = []
             for i, analysis in enumerate(analyses):
                 if isinstance(analysis, Exception):
-                    logger.error(
-                        f"Failed to analyze drift {drift_records[i].drift_id}: {analysis}"
-                    )
+                    logger.error(f"Failed to analyze drift {drift_records[i].drift_id}: {analysis}")
                 else:
                     valid_analyses.append(analysis)
 
@@ -143,7 +141,12 @@ class AIAnalyzerAgent:
         if metrics:
             metrics_summary = self._format_metrics_summary(metrics)
 
-        prompt = f"""You are a cloud infrastructure expert specializing in AWS and Terraform.
+        # Build change history summary
+        change_history_summary = "No change history available"
+        if drift.change_history:
+            change_history_summary = self._format_change_history(drift.change_history)
+
+        prompt = f"""You are a cloud infrastructure expert specializing in AWS infrastructure drift detection.
 Analyze the following infrastructure drift with full context and provide actionable insights.
 
 DRIFT DETECTED:
@@ -155,14 +158,17 @@ Region: {drift.region}
 Detected At: {drift.detected_at.isoformat()}
 
 CHANGES DETECTED:
-Terraform Expected State:
+Baseline (Expected) State:
 {json.dumps(drift.terraform_value, indent=2)}
 
-Actual AWS State:
+Current AWS State:
 {json.dumps(drift.actual_value, indent=2)}
 
 Differences:
 {json.dumps(drift.diff, indent=2)}
+
+CHANGE HISTORY:
+{change_history_summary}
 
 METRICS & CONTEXT:
 {metrics_summary}
@@ -175,9 +181,9 @@ Please provide a comprehensive analysis in the following JSON format:
     "root_cause": "Why this drift occurred (e.g., manual change, automation, auto-scaling)",
     "business_impact": "Impact on operations, performance, security, and costs",
     "recommended_action": "ONE OF THE FOLLOWING (exactly as written):
-        - 'update_terraform': Update Terraform code to match the current AWS state (accept the drift)
-        - 'revert_aws': Revert AWS resources back to match Terraform state (undo the drift)
-        - 'ignore': Acknowledge drift but take no action (low risk)
+        - 'update_baseline': Update baseline to accept this change (authorized drift)
+        - 'revert_aws': Revert AWS resources back to baseline state (undo unauthorized drift)
+        - 'ignore': Acknowledge drift but take no action (low risk, temporary)
         - 'manual_review': Requires human decision (complex or uncertain cases)",
     "alternative_actions": [
         {{
@@ -234,7 +240,9 @@ Respond ONLY with the JSON object, no additional text."""
 
         # Config history
         if metrics.config_history:
-            summary_parts.append(f"\nConfiguration Changes (Last 7 days): {len(metrics.config_history)} changes")
+            summary_parts.append(
+                f"\nConfiguration Changes (Last 7 days): {len(metrics.config_history)} changes"
+            )
             for change in metrics.config_history[:3]:  # Show last 3
                 summary_parts.append(
                     f"  {change.timestamp.isoformat()}: {change.action} by {change.user or 'unknown'}"
@@ -243,15 +251,9 @@ Respond ONLY with the JSON object, no additional text."""
         # Cost data
         if metrics.cost_data:
             summary_parts.append("\nCost Analysis:")
-            summary_parts.append(
-                f"  Current Daily Cost: ${metrics.cost_data.current_cost:.2f}"
-            )
-            summary_parts.append(
-                f"  Monthly Projection: ${metrics.cost_data.projected_cost:.2f}"
-            )
-            summary_parts.append(
-                f"  Cost Change: {metrics.cost_data.cost_change_percent:+.1f}%"
-            )
+            summary_parts.append(f"  Current Daily Cost: ${metrics.cost_data.current_cost:.2f}")
+            summary_parts.append(f"  Monthly Projection: ${metrics.cost_data.projected_cost:.2f}")
+            summary_parts.append(f"  Cost Change: {metrics.cost_data.cost_change_percent:+.1f}%")
             if metrics.cost_data.budget_impact:
                 summary_parts.append(f"  Impact: {metrics.cost_data.budget_impact}")
 
@@ -265,7 +267,53 @@ Respond ONLY with the JSON object, no additional text."""
 
         return "\n".join(summary_parts) if summary_parts else "No metrics available"
 
-    async def _call_bedrock(self, prompt: str) -> Dict[str, Any]:
+    def _format_change_history(self, change_history: dict[str, Any]) -> str:
+        """Format change history into readable summary for AI."""
+        if not change_history:
+            return "No change history available"
+
+        summary_parts = []
+
+        # Last modified info
+        if change_history.get("last_modified_by"):
+            summary_parts.append(f"Last Modified By: {change_history['last_modified_by']}")
+            summary_parts.append(f"Last Modified At: {change_history['last_modified_at']}")
+            summary_parts.append(f"Total Change Events: {change_history.get('total_events', 0)}")
+            summary_parts.append("")
+
+        # Recent events
+        recent_events = change_history.get("recent_events", [])
+        if recent_events:
+            summary_parts.append("Recent Change Events:")
+            for event in recent_events[:5]:  # Show last 5 events
+                timestamp = event.get("timestamp", "Unknown time")
+                source = event.get("source", "unknown").upper()
+
+                if source == "CLOUDTRAIL":
+                    event_name = event.get("event_name", "Unknown")
+                    user = event.get("user", "Unknown")
+                    source_ip = event.get("source_ip", "Unknown")
+                    summary_parts.append(f"  [{timestamp}] {event_name}")
+                    summary_parts.append(f"    User: {user} from IP {source_ip}")
+
+                    # Add user identity details if available
+                    user_identity = event.get("user_identity", {})
+                    if user_identity.get("type"):
+                        summary_parts.append(f"    Type: {user_identity.get('type')}")
+                else:  # CONFIG
+                    summary_parts.append(f"  [{timestamp}] Configuration Change")
+                    changes = event.get("changes", {})
+                    if changes:
+                        for field, change_detail in list(changes.items())[:3]:  # First 3 changes
+                            from_val = change_detail.get("from", "N/A")
+                            to_val = change_detail.get("to", "N/A")
+                            summary_parts.append(f"    • {field}: {from_val} → {to_val}")
+
+                summary_parts.append("")
+
+        return "\n".join(summary_parts)
+
+    async def _call_bedrock(self, prompt: str) -> dict[str, Any]:
         """
         Call AWS Bedrock API with the analysis prompt.
 
@@ -311,7 +359,7 @@ Respond ONLY with the JSON object, no additional text."""
             raise
 
     def _parse_analysis_response(
-        self, response: Dict[str, Any], drift: DriftRecord
+        self, response: dict[str, Any], drift: DriftRecord
     ) -> DriftAnalysis:
         """
         Parse Bedrock response into structured analysis.

@@ -1,0 +1,24 @@
+{
+  "auto_scan_enabled": true,
+  "scan_schedule": "1min",
+  "cron_expression": "0 * * * *",
+  "notifications_enabled": true,
+  "auto_remediation": false,
+  "auto_scan_accounts": [
+    "961639320333"
+  ],
+  "auto_scan_regions": [
+    "ap-southeast-1"
+  ],
+  "auto_scan_resource_types": [
+    "ec2_instances",
+    "rds_instances",
+    "rds_clusters",
+    "s3_buckets",
+    "dynamodb_tables",
+    "sqs_queues",
+    "lambda_functions",
+    "ecs_clusters",
+    "eks_clusters"
+  ]
+}

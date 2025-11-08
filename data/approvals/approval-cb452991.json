@@ -1,0 +1,119 @@
+{
+  "approval_id": "approval-cb452991",
+  "drift_id": "drift-boto3-20251108-4e06dab1",
+  "resource_id": "i-05ea847020dcf0a07",
+  "resource_type": "ec2_instances",
+  "approved_by": "test",
+  "approved_at": "2025-11-08T15:17:37.274658",
+  "approval_reason": null,
+  "previous_baseline": {},
+  "new_baseline": {
+    "id": "i-05ea847020dcf0a07",
+    "type": "t2.micro",
+    "state": "stopped",
+    "state_transition_reason": "User initiated (2025-11-07 15:15:10 GMT)",
+    "launch_time": "2025-11-07 13:52:22+00:00",
+    "availability_zone": "ap-southeast-1a",
+    "tenancy": "default",
+    "host_id": null,
+    "vpc_id": "vpc-09472342374f408ba",
+    "subnet_id": "subnet-0d9007c604d7ac6c2",
+    "private_ip": "10.0.1.83",
+    "private_dns": "ip-10-0-1-83.ap-southeast-1.compute.internal",
+    "public_ip": null,
+    "public_dns": "",
+    "network_interfaces": [
+      {
+        "id": "eni-0be7804486a499f7e",
+        "subnet_id": "subnet-0d9007c604d7ac6c2",
+        "private_ip": "10.0.1.83",
+        "public_ip": null,
+        "security_groups": [
+          {
+            "id": "sg-0506160bed0a77591",
+            "name": "default"
+          },
+          {
+            "id": "sg-0d155c14368b85a17",
+            "name": "my-security-group-d0068dd"
+          }
+        ],
+        "source_dest_check": true,
+        "device_index": 0
+      }
+    ],
+    "security_groups": [
+      {
+        "id": "sg-0506160bed0a77591",
+        "name": "default"
+      },
+      {
+        "id": "sg-0d155c14368b85a17",
+        "name": "my-security-group-d0068dd"
+      }
+    ],
+    "key_name": "my-key-pair-55f490c",
+    "iam_instance_profile": null,
+    "root_device_type": "ebs",
+    "root_device_name": "/dev/xvda",
+    "block_device_mappings": [
+      {
+        "device_name": "/dev/xvda",
+        "volume_id": "vol-08a1554f3e6ed22da",
+        "status": "attached",
+        "delete_on_termination": true
+      }
+    ],
+    "platform": null,
+    "platform_details": "Linux/UNIX",
+    "image_id": "ami-0a277168b24e51187",
+    "architecture": "x86_64",
+    "virtualization_type": "hvm",
+    "hypervisor": "xen",
+    "cpu_options": {
+      "core_count": 1,
+      "threads_per_core": 1
+    },
+    "ena_support": true,
+    "ebs_optimized": false,
+    "monitoring_state": "disabled",
+    "instance_lifecycle": null,
+    "capacity_reservation_id": null,
+    "capacity_reservation_specification": {
+      "CapacityReservationPreference": "open"
+    },
+    "elastic_ip_associations": [],
+    "metadata_options": {
+      "http_tokens": "optional",
+      "http_put_response_hop_limit": 1,
+      "http_endpoint": "enabled"
+    },
+    "hibernation_configured": false,
+    "usage_operation": "RunInstances",
+    "usage_operation_update_time": "2025-11-07 13:52:22+00:00",
+    "tags": [
+      {
+        "Key": "Name",
+        "Value": "my-ec2-instance"
+      }
+    ],
+    "metrics_baseline": {
+      "networkin": {
+        "average": 90.0,
+        "maximum": 90.0,
+        "minimum": 90.0,
+        "period_hours": 24,
+        "captured_at": "2025-11-08T15:12:54.415953"
+      },
+      "networkout": {
+        "average": 90.0,
+        "maximum": 90.0,
+        "minimum": 90.0,
+        "period_hours": 24,
+        "captured_at": "2025-11-08T15:12:54.490197"
+      }
+    }
+  },
+  "environment": null,
+  "tags": {}
+}

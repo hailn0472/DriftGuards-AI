@@ -29,8 +29,8 @@ class DriftAnalysis(BaseModel):
     business_impact: str = Field(..., description="Business and operational impact")
 
     # Recommendations
-    recommended_action: Literal["update_terraform", "revert_aws", "ignore", "manual_review"] = (
-        Field(..., description="Recommended action")
+    recommended_action: Literal["update_baseline", "revert_aws", "ignore", "manual_review"] = Field(
+        ..., description="Recommended action"
     )
     alternative_actions: List[ActionOption] = Field(
         default_factory=list, description="Alternative actions"
