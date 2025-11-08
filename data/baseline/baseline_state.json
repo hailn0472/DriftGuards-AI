@@ -183,30 +183,30 @@
         "tags": [
           {
             "Key": "Name",
-            "Value": "my-ec2-instance-test"
+            "Value": "my-ec2-instance"
           }
         ],
         "metrics_baseline": {
           "cpuutilization": {
-            "average": 4.249306921712575,
+            "average": 3.1344196701039175,
             "maximum": 11.459409040940738,
             "minimum": 0.0026897309300766,
             "period_hours": 24,
-            "captured_at": "2025-11-08T15:49:29.506387"
+            "captured_at": "2025-11-08T16:01:36.493399"
           },
           "networkin": {
-            "average": 126460.66666666667,
+            "average": 25808.133333333335,
             "maximum": 377432.0,
-            "minimum": 720.0,
+            "minimum": 90.0,
             "period_hours": 24,
-            "captured_at": "2025-11-08T15:49:29.571806"
+            "captured_at": "2025-11-08T16:01:36.560172"
           },
           "networkout": {
-            "average": 11159.333333333334,
+            "average": 2759.866666666667,
             "maximum": 31726.0,
-            "minimum": 720.0,
+            "minimum": 270.0,
             "period_hours": 24,
-            "captured_at": "2025-11-08T15:49:29.636352"
+            "captured_at": "2025-11-08T16:01:36.629444"
           }
         }
       }
