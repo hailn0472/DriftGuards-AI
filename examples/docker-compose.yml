@@ -2,8 +2,8 @@ services:
   # EC2 Deployment Service
   pulumi-ec2:
     build:
-      context: ./pulumi-ec2-deployment
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./pulumi-ec2-deployment/Dockerfile
     image: pulumi-ec2:latest
     container_name: driftguards-pulumi-ec2
     environment:
@@ -12,6 +12,8 @@ services:
       - AWS_REGION=${AWS_REGION:-ap-southeast-1}
       - PULUMI_CONFIG_PASSPHRASE=
       - PULUMI_SKIP_UPDATE_CHECK=true
+    volumes:
+      - pulumi-ec2-state:/pulumi-project/.pulumi
     stdin_open: true
     tty: true
     networks:
@@ -23,8 +25,8 @@ services:
   # Lambda Deployment Service
   pulumi-lambda:
     build:
-      context: ./pulumi-lambda-deployment
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./pulumi-lambda-deployment/Dockerfile
     image: pulumi-lambda:latest
     container_name: driftguards-pulumi-lambda
     environment:
@@ -33,6 +35,8 @@ services:
       - AWS_REGION=${AWS_REGION:-ap-southeast-1}
       - PULUMI_CONFIG_PASSPHRASE=
       - PULUMI_SKIP_UPDATE_CHECK=true
+    volumes:
+      - pulumi-lambda-state:/pulumi-project/.pulumi
     stdin_open: true
     tty: true
     networks:
@@ -40,6 +44,180 @@ services:
     profiles:
       - lambda
       - all
+
+  # S3 Deployment Service
+  pulumi-s3:
+    build:
+      context: .
+      dockerfile: ./pulumi-s3-deployment/Dockerfile
+    image: pulumi-s3:latest
+    container_name: driftguards-pulumi-s3
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION:-ap-southeast-1}
+      - PULUMI_CONFIG_PASSPHRASE=
+      - PULUMI_SKIP_UPDATE_CHECK=true
+    volumes:
+      - pulumi-s3-state:/pulumi-project/.pulumi
+    stdin_open: true
+    tty: true
+    networks:
+      - driftguards-network
+    profiles:
+      - s3
+      - all
+
+  # EKS Deployment Service
+  pulumi-eks:
+    build:
+      context: .
+      dockerfile: ./pulumi-eks-deployment/Dockerfile
+    image: pulumi-eks:latest
+    container_name: driftguards-pulumi-eks
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION:-ap-southeast-1}
+      - PULUMI_CONFIG_PASSPHRASE=
+      - PULUMI_SKIP_UPDATE_CHECK=true
+    volumes:
+      - pulumi-eks-state:/pulumi-project/.pulumi
+    stdin_open: true
+    tty: true
+    networks:
+      - driftguards-network
+    profiles:
+      - eks
+      - all
+
+  # ECS Deployment Service
+  pulumi-ecs:
+    build:
+      context: .
+      dockerfile: ./pulumi-ecs-deployment/Dockerfile
+    image: pulumi-ecs:latest
+    container_name: driftguards-pulumi-ecs
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION:-ap-southeast-1}
+      - PULUMI_CONFIG_PASSPHRASE=
+      - PULUMI_SKIP_UPDATE_CHECK=true
+    volumes:
+      - pulumi-ecs-state:/pulumi-project/.pulumi
+    stdin_open: true
+    tty: true
+    networks:
+      - driftguards-network
+    profiles:
+      - ecs
+      - all
+
+  # RDS Instances Deployment Service
+  pulumi-rds-instances:
+    build:
+      context: .
+      dockerfile: ./pulumi-rds-instances-deployment/Dockerfile
+    image: pulumi-rds-instances:latest
+    container_name: driftguards-pulumi-rds-instances
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION:-ap-southeast-1}
+      - PULUMI_CONFIG_PASSPHRASE=
+      - PULUMI_SKIP_UPDATE_CHECK=true
+    volumes:
+      - pulumi-rds-instances-state:/pulumi-project/.pulumi
+    stdin_open: true
+    tty: true
+    networks:
+      - driftguards-network
+    profiles:
+      - rds-instances
+      - rds
+      - all
+
+  # RDS Clusters Deployment Service
+  pulumi-rds-clusters:
+    build:
+      context: .
+      dockerfile: ./pulumi-rds-clusters-deployment/Dockerfile
+    image: pulumi-rds-clusters:latest
+    container_name: driftguards-pulumi-rds-clusters
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION:-ap-southeast-1}
+      - PULUMI_CONFIG_PASSPHRASE=
+      - PULUMI_SKIP_UPDATE_CHECK=true
+    volumes:
+      - pulumi-rds-clusters-state:/pulumi-project/.pulumi
+    stdin_open: true
+    tty: true
+    networks:
+      - driftguards-network
+    profiles:
+      - rds-clusters
+      - rds
+      - all
+
+  # DynamoDB Tables Deployment Service
+  pulumi-dynamodb:
+    build:
+      context: .
+      dockerfile: ./pulumi-dynamodb-deployment/Dockerfile
+    image: pulumi-dynamodb:latest
+    container_name: driftguards-pulumi-dynamodb
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION:-ap-southeast-1}
+      - PULUMI_CONFIG_PASSPHRASE=
+      - PULUMI_SKIP_UPDATE_CHECK=true
+    volumes:
+      - pulumi-dynamodb-state:/pulumi-project/.pulumi
+    stdin_open: true
+    tty: true
+    networks:
+      - driftguards-network
+    profiles:
+      - dynamodb
+      - all
+
+  # SQS Queues Deployment Service
+  pulumi-sqs:
+    build:
+      context: .
+      dockerfile: ./pulumi-sqs-deployment/Dockerfile
+    image: pulumi-sqs:latest
+    container_name: driftguards-pulumi-sqs
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION:-ap-southeast-1}
+      - PULUMI_CONFIG_PASSPHRASE=
+      - PULUMI_SKIP_UPDATE_CHECK=true
+    volumes:
+      - pulumi-sqs-state:/pulumi-project/.pulumi
+    stdin_open: true
+    tty: true
+    networks:
+      - driftguards-network
+    profiles:
+      - sqs
+      - all
+
+volumes:
+  pulumi-ec2-state:
+  pulumi-lambda-state:
+  pulumi-s3-state:
+  pulumi-eks-state:
+  pulumi-ecs-state:
+  pulumi-rds-instances-state:
+  pulumi-rds-clusters-state:
+  pulumi-dynamodb-state:
+  pulumi-sqs-state:
 
 networks:
   driftguards-network:

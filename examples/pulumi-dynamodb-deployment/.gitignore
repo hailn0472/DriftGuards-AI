@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv
+venv/
+Pulumi.*.yaml
+!Pulumi.yaml
+pulumi-plugins/
+.pulumi/

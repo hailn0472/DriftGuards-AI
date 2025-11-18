@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# EKS Cluster Destruction Script
+echo "🗑️  Starting EKS cluster destruction..."
+
+# Check if Pulumi project exists
+if [ ! -f "Pulumi.yaml" ]; then
+    echo "❌ No Pulumi project found in current directory"
+    exit 1
+fi
+
+# Set AWS region if not set
+if [ -z "$AWS_REGION" ]; then
+    export AWS_REGION="ap-southeast-1"
+fi
+
+echo "🌍 Using AWS region: $AWS_REGION"
+
+# Show current stack info
+echo "📊 Current EKS cluster info:"
+pulumi stack output cluster_name 2>/dev/null || echo "No cluster name found"
+pulumi stack output cluster_endpoint 2>/dev/null || echo "No cluster endpoint found"
+
+echo ""
+echo "⚠️  WARNING: This will destroy the EKS cluster and all associated resources!"
+echo "This action cannot be undone."
+
+# Destroy the EKS cluster
+echo "💥 Destroying EKS cluster..."
+if [ "$1" = "--yes" ]; then
+    pulumi destroy --yes
+else
+    pulumi destroy
+fi
+
+if [ $? -eq 0 ]; then
+    echo "✅ EKS cluster destroyed successfully!"
+    echo ""
+    echo "🧹 Cleanup completed. All resources have been removed."
+    echo ""
+    echo "💡 Note: You may want to clean up any remaining:"
+    echo "   - kubectl contexts"
+    echo "   - AWS Load Balancers (if any were created by services)"
+    echo "   - EBS volumes (if any persistent volumes were created)"
+else
+    echo "❌ EKS cluster destruction failed!"
+    echo "Please check the error messages above and try again."
+    exit 1
+fi

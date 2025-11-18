@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# ECS Cluster Destruction Script
+echo "🗑️  Starting ECS cluster destruction..."
+
+# Check if Pulumi project exists
+if [ ! -f "Pulumi.yaml" ]; then
+    echo "❌ No Pulumi project found in current directory"
+    exit 1
+fi
+
+# Set AWS region if not set
+if [ -z "$AWS_REGION" ]; then
+    export AWS_REGION="ap-southeast-1"
+fi
+
+echo "🌍 Using AWS region: $AWS_REGION"
+
+# Show current stack info
+echo "📊 Current ECS cluster info:"
+pulumi stack output cluster_name 2>/dev/null || echo "No cluster name found"
+pulumi stack output service_name 2>/dev/null || echo "No service name found"
+pulumi stack output load_balancer_url 2>/dev/null || echo "No load balancer URL found"
+
+echo ""
+echo "⚠️  WARNING: This will destroy the ECS cluster and all associated resources!"
+echo "This includes:"
+echo "  - ECS Cluster and Services"
+echo "  - Application Load Balancer"
+echo "  - VPC and Networking components"
+echo "  - CloudWatch Log Groups"
+echo "  - IAM Roles and Policies"
+echo ""
+echo "This action cannot be undone."
+
+# Destroy the ECS cluster
+echo "💥 Destroying ECS cluster..."
+if [ "$1" = "--yes" ]; then
+    pulumi destroy --yes
+else
+    pulumi destroy
+fi
+
+if [ $? -eq 0 ]; then
+    echo "✅ ECS cluster destroyed successfully!"
+    echo ""
+    echo "🧹 Cleanup completed. All resources have been removed."
+    echo ""
+    echo "💡 Note: You may want to clean up any remaining:"
+    echo "   - ECR repositories (if any were created manually)"
+    echo "   - CloudWatch alarms (if any were created outside this stack)"
+    echo "   - Route53 records (if any were pointing to the load balancer)"
+else
+    echo "❌ ECS cluster destruction failed!"
+    echo "Please check the error messages above and try again."
+    exit 1
+fi

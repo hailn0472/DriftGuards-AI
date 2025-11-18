@@ -6,5 +6,8 @@ pulumi>=3.0.0,<4.0.0
 # Pulumi AWS provider
 pulumi-aws>=6.0.0,<7.0.0
 
+# Pulumi AWSX provider (for EKS and advanced AWS resources)
+pulumi-awsx>=2.0.0,<3.0.0
+
 # Pulumi TLS provider (for EC2 key pairs)
 pulumi-tls>=5.0.0,<6.0.0

@@ -1,9 +1,25 @@
 {
   "account_id": "961639320333",
   "region": "ap-southeast-1",
-  "timestamp": "2025-11-08T23:55:09.772500",
+  "timestamp": "2025-11-19T00:36:46.553793",
   "resources": {
     "vpcs": [
+      {
+        "id": "vpc-0581a6ee2556b60bb",
+        "cidr": "10.0.0.0/16",
+        "is_default": false,
+        "state": "available",
+        "tags": [
+          {
+            "Key": "Name",
+            "Value": "driftguards-eks-dev-fsz5ae-vpc"
+          },
+          {
+            "Key": "Environment",
+            "Value": "dev"
+          }
+        ]
+      },
       {
         "id": "vpc-0ec1a20fc68892527",
         "cidr": "10.0.0.0/16",
@@ -45,9 +61,9 @@
       {
         "id": "i-0fdc5695a661c70d8",
         "type": "t2.nano",
-        "state": "running",
-        "state_transition_reason": "",
-        "launch_time": "2025-11-08 15:45:22+00:00",
+        "state": "stopped",
+        "state_transition_reason": "User initiated (2025-11-18 14:39:44 GMT)",
+        "launch_time": "2025-11-08 17:02:56+00:00",
         "availability_zone": "ap-southeast-1a",
         "tenancy": "default",
         "host_id": null,
@@ -55,14 +71,14 @@
         "subnet_id": "subnet-0d9007c604d7ac6c2",
         "private_ip": "10.0.1.58",
         "private_dns": "ip-10-0-1-58.ap-southeast-1.compute.internal",
-        "public_ip": "13.229.89.176",
-        "public_dns": "ec2-13-229-89-176.ap-southeast-1.compute.amazonaws.com",
+        "public_ip": null,
+        "public_dns": "",
         "network_interfaces": [
           {
             "id": "eni-0fcc09b6d58096ae8",
             "subnet_id": "subnet-0d9007c604d7ac6c2",
             "private_ip": "10.0.1.58",
-            "public_ip": "13.229.89.176",
+            "public_ip": null,
             "security_groups": [
               {
                 "id": "sg-04f1dc491794423df",
@@ -109,13 +125,7 @@
         "capacity_reservation_specification": {
           "CapacityReservationPreference": "open"
         },
-        "elastic_ip_associations": [
-          {
-            "public_ip": "13.229.89.176",
-            "allocation_id": null,
-            "ip_owner_id": "amazon"
-          }
-        ],
+        "elastic_ip_associations": [],
         "metadata_options": {
           "http_tokens": "required",
           "http_put_response_hop_limit": 2,
@@ -132,27 +142,203 @@
         ],
         "metrics_baseline": {
           "cpuutilization": {
-            "average": 2.961010567242656,
-            "maximum": 11.459409040940738,
-            "minimum": 0.0026897309300766,
+            "average": 3.404776420033574,
+            "maximum": 19.516666666666666,
+            "minimum": 0.0,
             "period_hours": 24,
-            "captured_at": "2025-11-08T16:56:33.138754"
+            "captured_at": "2025-11-18T17:36:55.355807"
           },
           "networkin": {
-            "average": 30401.366071428572,
-            "maximum": 1822831.0,
+            "average": 6744.833333333333,
+            "maximum": 6176183.0,
             "minimum": 0.0,
             "period_hours": 24,
-            "captured_at": "2025-11-08T16:56:33.205962"
+            "captured_at": "2025-11-18T17:36:55.415317"
           },
           "networkout": {
-            "average": 1934.4017857142858,
-            "maximum": 31726.0,
+            "average": 421.4007936507936,
+            "maximum": 47109.0,
             "minimum": 0.0,
             "period_hours": 24,
-            "captured_at": "2025-11-08T16:56:33.273618"
+            "captured_at": "2025-11-18T17:36:55.482454"
           }
         }
+      },
+      {
+        "id": "i-06a0d51fe2d55ae03",
+        "type": "t3.medium",
+        "state": "terminated",
+        "state_transition_reason": "User initiated (2025-11-18 16:57:45 GMT)",
+        "launch_time": "2025-11-18 16:50:03+00:00",
+        "availability_zone": "ap-southeast-1a",
+        "tenancy": "default",
+        "host_id": null,
+        "vpc_id": null,
+        "subnet_id": null,
+        "private_ip": null,
+        "private_dns": "",
+        "public_ip": null,
+        "public_dns": "",
+        "network_interfaces": [],
+        "security_groups": [],
+        "key_name": null,
+        "iam_instance_profile": null,
+        "root_device_type": "ebs",
+        "root_device_name": "/dev/xvda",
+        "block_device_mappings": [],
+        "platform": null,
+        "platform_details": "Linux/UNIX",
+        "image_id": "ami-0d91a705b54119727",
+        "architecture": "x86_64",
+        "virtualization_type": "hvm",
+        "hypervisor": "xen",
+        "cpu_options": {
+          "core_count": 1,
+          "threads_per_core": 2
+        },
+        "ena_support": true,
+        "ebs_optimized": false,
+        "monitoring_state": "disabled",
+        "instance_lifecycle": null,
+        "capacity_reservation_id": null,
+        "capacity_reservation_specification": {
+          "CapacityReservationPreference": "open"
+        },
+        "elastic_ip_associations": [],
+        "metadata_options": {
+          "http_tokens": "optional",
+          "http_put_response_hop_limit": 2,
+          "http_endpoint": "enabled"
+        },
+        "hibernation_configured": false,
+        "usage_operation": "RunInstances",
+        "usage_operation_update_time": "2025-11-18 16:50:03+00:00",
+        "tags": [
+          {
+            "Key": "aws:ec2launchtemplate:version",
+            "Value": "1"
+          },
+          {
+            "Key": "k8s.io/cluster-autoscaler/enabled",
+            "Value": "true"
+          },
+          {
+            "Key": "kubernetes.io/cluster/driftguards-eks-dev-fsz5ae",
+            "Value": "owned"
+          },
+          {
+            "Key": "eks:cluster-name",
+            "Value": "driftguards-eks-dev-fsz5ae"
+          },
+          {
+            "Key": "eks:nodegroup-name",
+            "Value": "driftguards-eks-dev-fsz5ae-nodes"
+          },
+          {
+            "Key": "k8s.io/cluster-autoscaler/driftguards-eks-dev-fsz5ae",
+            "Value": "owned"
+          },
+          {
+            "Key": "aws:autoscaling:groupName",
+            "Value": "eks-driftguards-eks-dev-fsz5ae-nodes-fccd4bef-2ff6-2f94-a341-c5551f4cbdff"
+          },
+          {
+            "Key": "aws:ec2:fleet-id",
+            "Value": "fleet-b5165304-c70c-ce1e-ae1a-a52a218784c2"
+          },
+          {
+            "Key": "aws:ec2launchtemplate:id",
+            "Value": "lt-0883200491d084152"
+          }
+        ]
+      },
+      {
+        "id": "i-040fbce77a9910672",
+        "type": "t3.medium",
+        "state": "terminated",
+        "state_transition_reason": "User initiated (2025-11-18 16:52:41 GMT)",
+        "launch_time": "2025-11-18 16:50:03+00:00",
+        "availability_zone": "ap-southeast-1b",
+        "tenancy": "default",
+        "host_id": null,
+        "vpc_id": null,
+        "subnet_id": null,
+        "private_ip": null,
+        "private_dns": "",
+        "public_ip": null,
+        "public_dns": "",
+        "network_interfaces": [],
+        "security_groups": [],
+        "key_name": null,
+        "iam_instance_profile": null,
+        "root_device_type": "ebs",
+        "root_device_name": "/dev/xvda",
+        "block_device_mappings": [],
+        "platform": null,
+        "platform_details": "Linux/UNIX",
+        "image_id": "ami-0d91a705b54119727",
+        "architecture": "x86_64",
+        "virtualization_type": "hvm",
+        "hypervisor": "xen",
+        "cpu_options": {
+          "core_count": 1,
+          "threads_per_core": 2
+        },
+        "ena_support": true,
+        "ebs_optimized": false,
+        "monitoring_state": "disabled",
+        "instance_lifecycle": null,
+        "capacity_reservation_id": null,
+        "capacity_reservation_specification": {
+          "CapacityReservationPreference": "open"
+        },
+        "elastic_ip_associations": [],
+        "metadata_options": {
+          "http_tokens": "optional",
+          "http_put_response_hop_limit": 2,
+          "http_endpoint": "enabled"
+        },
+        "hibernation_configured": false,
+        "usage_operation": "RunInstances",
+        "usage_operation_update_time": "2025-11-18 16:50:03+00:00",
+        "tags": [
+          {
+            "Key": "k8s.io/cluster-autoscaler/enabled",
+            "Value": "true"
+          },
+          {
+            "Key": "aws:autoscaling:groupName",
+            "Value": "eks-driftguards-eks-dev-fsz5ae-nodes-fccd4bef-2ff6-2f94-a341-c5551f4cbdff"
+          },
+          {
+            "Key": "aws:ec2launchtemplate:id",
+            "Value": "lt-0883200491d084152"
+          },
+          {
+            "Key": "aws:ec2:fleet-id",
+            "Value": "fleet-3f16f306-6d84-4eb4-8632-0d2a9ee8beb4"
+          },
+          {
+            "Key": "k8s.io/cluster-autoscaler/driftguards-eks-dev-fsz5ae",
+            "Value": "owned"
+          },
+          {
+            "Key": "eks:cluster-name",
+            "Value": "driftguards-eks-dev-fsz5ae"
+          },
+          {
+            "Key": "aws:ec2launchtemplate:version",
+            "Value": "1"
+          },
+          {
+            "Key": "eks:nodegroup-name",
+            "Value": "driftguards-eks-dev-fsz5ae-nodes"
+          },
+          {
+            "Key": "kubernetes.io/cluster/driftguards-eks-dev-fsz5ae",
+            "Value": "owned"
+          }
+        ]
       }
     ],
     "eks_clusters": [],
@@ -161,7 +347,38 @@
     "rds_clusters": [],
     "s3_buckets": [],
     "dynamodb_tables": [],
-    "sqs_queues": [],
+    "sqs_queues": [
+      {
+        "url": "https://sqs.ap-southeast-1.amazonaws.com/961639320333/dead-letter-queue-2wzxqbty",
+        "name": "dead-letter-queue-2wzxqbty",
+        "arn": "arn:aws:sqs:ap-southeast-1:961639320333:dead-letter-queue-2wzxqbty"
+      },
+      {
+        "url": "https://sqs.ap-southeast-1.amazonaws.com/961639320333/delayed-queue-2wzxqbty",
+        "name": "delayed-queue-2wzxqbty",
+        "arn": "arn:aws:sqs:ap-southeast-1:961639320333:delayed-queue-2wzxqbty"
+      },
+      {
+        "url": "https://sqs.ap-southeast-1.amazonaws.com/961639320333/fifo-queue-2wzxqbty.fifo",
+        "name": "fifo-queue-2wzxqbty.fifo",
+        "arn": "arn:aws:sqs:ap-southeast-1:961639320333:fifo-queue-2wzxqbty.fifo"
+      },
+      {
+        "url": "https://sqs.ap-southeast-1.amazonaws.com/961639320333/high-throughput-queue-2wzxqbty",
+        "name": "high-throughput-queue-2wzxqbty",
+        "arn": "arn:aws:sqs:ap-southeast-1:961639320333:high-throughput-queue-2wzxqbty"
+      },
+      {
+        "url": "https://sqs.ap-southeast-1.amazonaws.com/961639320333/main-queue-with-dlq-2wzxqbty",
+        "name": "main-queue-with-dlq-2wzxqbty",
+        "arn": "arn:aws:sqs:ap-southeast-1:961639320333:main-queue-with-dlq-2wzxqbty"
+      },
+      {
+        "url": "https://sqs.ap-southeast-1.amazonaws.com/961639320333/standard-queue-2wzxqbty",
+        "name": "standard-queue-2wzxqbty",
+        "arn": "arn:aws:sqs:ap-southeast-1:961639320333:standard-queue-2wzxqbty"
+      }
+    ],
     "lambda_functions": [
       {
         "name": "driftguards-lambda-function",
@@ -201,6 +418,20 @@
       }
     ],
     "security_groups": [
+      {
+        "id": "sg-0f769e0547aef3953",
+        "name": "default",
+        "vpc_id": "vpc-0581a6ee2556b60bb",
+        "ingress_rules": 1,
+        "egress_rules": 1
+      },
+      {
+        "id": "sg-04a134052393b9e4d",
+        "name": "driftguards-eks-dev-fsz5ae-additional-sg",
+        "vpc_id": "vpc-0581a6ee2556b60bb",
+        "ingress_rules": 1,
+        "egress_rules": 1
+      },
       {
         "id": "sg-062f9fde1b4e44e6d",
         "name": "default",

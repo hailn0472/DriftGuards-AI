@@ -1,0 +1,11 @@
+name: create-s3
+description: This project is used for creating new S3 bucket
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-python

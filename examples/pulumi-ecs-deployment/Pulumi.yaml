@@ -1,0 +1,8 @@
+name: create-ecs
+runtime: python
+description: A simple ECS cluster deployment using Pulumi
+template:
+  config:
+    aws:region:
+      description: The AWS region to deploy into
+      default: ap-southeast-1

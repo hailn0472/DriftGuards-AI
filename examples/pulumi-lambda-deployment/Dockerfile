@@ -25,12 +25,15 @@ ENV PATH="/root/.pulumi/bin:${PATH}"
 # Install dos2unix for line ending conversion
 RUN apt-get update && apt-get install -y dos2unix && rm -rf /var/lib/apt/lists/*
 
-# Copy project files first to get requirements
-COPY . .
+# Copy shared requirements file
+COPY requirements.txt .
 
-# Install Python dependencies from parent directory requirements
+# Install Python dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir pulumi>=3.0.0 pulumi-aws>=6.0.0 pulumi-tls>=5.0.0
+    pip install --no-cache-dir -r requirements.txt
+
+# Copy project files
+COPY ./pulumi-lambda-deployment .
 
 # Convert line endings and make plugin scripts executable
 RUN dos2unix pulumi-plugins/pulumi-lambda && \

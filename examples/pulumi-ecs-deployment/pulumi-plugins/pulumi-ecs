@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# ECS Cluster Deployment Script
+echo "🚀 Starting ECS cluster deployment..."
+
+# Initialize Pulumi stack if needed
+if ! pulumi stack ls | grep -q "dev"; then
+    echo "📋 Creating Pulumi stack..."
+    pulumi stack init dev
+fi
+
+# Select the dev stack
+pulumi stack select dev
+
+# Set AWS region if not set
+if [ -z "$AWS_REGION" ]; then
+    export AWS_REGION="ap-southeast-1"
+fi
+
+echo "🌍 Using AWS region: $AWS_REGION"
+
+# Configure AWS region in Pulumi
+pulumi config set aws:region $AWS_REGION
+
+# Deploy the ECS cluster
+echo "⚡ Deploying ECS cluster..."
+if [ "$1" = "--yes" ]; then
+    pulumi up --yes
+else
+    pulumi up
+fi
+
+if [ $? -eq 0 ]; then
+    echo "✅ ECS cluster deployment completed successfully!"
+    echo ""
+    echo "📊 Cluster Information:"
+    echo "Cluster Name: $(pulumi stack output cluster_name)"
+    echo "Service Name: $(pulumi stack output service_name)"
+    echo "Load Balancer URL: $(pulumi stack output load_balancer_url)"
+    echo ""
+    echo "🌐 Test your application:"
+    echo "curl $(pulumi stack output load_balancer_url)"
+    echo ""
+    echo "📋 Service status:"
+    echo "$(pulumi stack output service_status_command)"
+    echo ""
+    echo "📝 View logs:"
+    echo "$(pulumi stack output task_logs_command)"
+    echo ""
+    echo "📈 Scale service:"
+    echo "$(pulumi stack output scale_service_command)"
+    echo ""
+    echo "🗑️  To destroy cluster:"
+    echo "pulumi-ecs-down"
+else
+    echo "❌ ECS cluster deployment failed!"
+    exit 1
+fi

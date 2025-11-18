@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN curl -fsSL https://get.pulumi.com | sh
 ENV PATH="/root/.pulumi/bin:${PATH}"
 
-# Copy requirements file
+# Copy shared requirements file
 COPY requirements.txt .
 
 # Install Python dependencies
@@ -32,7 +32,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 # Copy project files
-COPY . .
+COPY ./pulumi-ec2-deployment .
 
 # Convert line endings and make plugin scripts executable
 RUN dos2unix pulumi-plugins/pulumi-ec2 && \

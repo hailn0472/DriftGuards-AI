@@ -32,6 +32,15 @@ def main():
         print("Error: Not in a Pulumi project directory!")
         sys.exit(1)
     
+    # Initialize stack if it doesn't exist
+    stdout, stderr, exit_code = run_command("pulumi stack ls", capture_output=True)
+    if exit_code != 0 or "dev" not in stdout:
+        print("Initializing Pulumi stack...")
+        exit_code = run_command("pulumi stack init dev")
+        if exit_code != 0:
+            print("Failed to initialize Pulumi stack!")
+            sys.exit(1)
+    
     print_section("🚀 Deploying Lambda Function")
     
     # Run pulumi up
