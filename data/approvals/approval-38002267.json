@@ -1,0 +1,19 @@
+{
+  "approval_id": "approval-38002267",
+  "drift_id": "drift-boto3-20251119-a531d8a6",
+  "resource_id": "driftguards-eks-dev-wny27s",
+  "resource_type": "eks_clusters",
+  "approved_by": "a",
+  "approved_at": "2025-11-19T15:46:05.030465",
+  "approval_reason": null,
+  "previous_baseline": {},
+  "new_baseline": {
+    "name": "driftguards-eks-dev-wny27s",
+    "arn": "arn:aws:eks:ap-southeast-1:961639320333:cluster/driftguards-eks-dev-wny27s",
+    "version": "1.28",
+    "status": "ACTIVE",
+    "endpoint": "https://D13A952C91C48A05C801BD3E12D6652E.gr7.ap-southeast-1.eks.amazonaws.com"
+  },
+  "environment": null,
+  "tags": {}
+}

@@ -1,0 +1,19 @@
+{
+  "approval_id": "approval-df4464ad",
+  "drift_id": "drift-boto3-20251120-102abd66",
+  "resource_id": "minimal-eks",
+  "resource_type": "eks_clusters",
+  "approved_by": "a",
+  "approved_at": "2025-11-20T09:18:24.190435",
+  "approval_reason": null,
+  "previous_baseline": {},
+  "new_baseline": {
+    "name": "minimal-eks",
+    "arn": "arn:aws:eks:ap-southeast-1:961639320333:cluster/minimal-eks",
+    "version": "1.34",
+    "status": "ACTIVE",
+    "endpoint": "https://D0D6D903F874F8F772737DB51D9D762C.gr7.ap-southeast-1.eks.amazonaws.com"
+  },
+  "environment": null,
+  "tags": {}
+}

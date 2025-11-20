@@ -231,15 +231,7 @@
         "arn": "arn:aws:ecs:ap-southeast-1:961639320333:cluster/minimal-ecs",
         "status": "ACTIVE",
         "running_tasks": 0,
-        "active_services": 0,
-        "running_tasks_count": 0,
-        "pending_tasks_count": 0,
-        "active_services_count": 0,
-        "registered_container_instances_count": 0,
-        "settings": [],
-        "services": [],
-        "tasks_count": 0,
-        "tags": []
+        "active_services": 0
       }
     ],
     "rds_instances": [],

@@ -128,6 +128,68 @@ class AWSResourceDiscovery:
         for cluster_name in cluster_names:
             cluster_info = eks_client.describe_cluster(name=cluster_name)
             cluster = cluster_info["cluster"]
+            
+            # Get node groups
+            node_groups = []
+            try:
+                ng_response = eks_client.list_nodegroups(clusterName=cluster_name)
+                for ng_name in ng_response.get("nodegroups", []):
+                    ng_info = eks_client.describe_nodegroup(clusterName=cluster_name, nodegroupName=ng_name)
+                    ng = ng_info["nodegroup"]
+                    node_groups.append({
+                        "name": ng_name,
+                        "status": ng.get("status"),
+                        "instance_types": ng.get("instanceTypes", []),
+                        "desired_size": ng.get("scalingConfig", {}).get("desiredSize"),
+                        "min_size": ng.get("scalingConfig", {}).get("minSize"),
+                        "max_size": ng.get("scalingConfig", {}).get("maxSize"),
+                        "ami_type": ng.get("amiType"),
+                        "capacity_type": ng.get("capacityType"),
+                        "disk_size": ng.get("diskSize"),
+                        "subnets": ng.get("subnets", []),
+                        "remote_access": ng.get("remoteAccess", {}),
+                        "labels": ng.get("labels", {}),
+                        "taints": ng.get("taints", []),
+                        "tags": ng.get("tags", {}),
+                    })
+            except Exception as e:
+                logger.warning(f"Could not get node groups for {cluster_name}: {e}")
+            
+            # Get Fargate profiles
+            fargate_profiles = []
+            try:
+                fp_response = eks_client.list_fargate_profiles(clusterName=cluster_name)
+                for fp_name in fp_response.get("fargateProfileNames", []):
+                    fp_info = eks_client.describe_fargate_profile(clusterName=cluster_name, fargateProfileName=fp_name)
+                    fp = fp_info["fargateProfile"]
+                    fargate_profiles.append({
+                        "name": fp_name,
+                        "status": fp.get("status"),
+                        "pod_execution_role_arn": fp.get("podExecutionRoleArn"),
+                        "subnets": fp.get("subnets", []),
+                        "selectors": fp.get("selectors", []),
+                        "tags": fp.get("tags", {}),
+                    })
+            except Exception as e:
+                logger.warning(f"Could not get Fargate profiles for {cluster_name}: {e}")
+            
+            # Get addons
+            addons = []
+            try:
+                addon_response = eks_client.list_addons(clusterName=cluster_name)
+                for addon_name in addon_response.get("addons", []):
+                    addon_info = eks_client.describe_addon(clusterName=cluster_name, addonName=addon_name)
+                    addon = addon_info["addon"]
+                    addons.append({
+                        "name": addon_name,
+                        "version": addon.get("addonVersion"),
+                        "status": addon.get("status"),
+                        "service_account_role_arn": addon.get("serviceAccountRoleArn"),
+                        "configuration_values": addon.get("configurationValues"),
+                        "tags": addon.get("tags", {}),
+                    })
+            except Exception as e:
+                logger.warning(f"Could not get addons for {cluster_name}: {e}")
 
             cluster_details.append(
                 {
@@ -136,16 +198,32 @@ class AWSResourceDiscovery:
                     "version": cluster.get("version"),
                     "status": cluster.get("status"),
                     "endpoint": cluster.get("endpoint"),
-                    "created_at": str(cluster.get("createdAt")),
-                    "vpc_config": cluster.get("vpcConfig", {}),
+                    "platform_version": cluster.get("platformVersion"),
+                    "role_arn": cluster.get("roleArn"),
+                    "vpc_config": {
+                        "subnet_ids": cluster.get("resourcesVpcConfig", {}).get("subnetIds", []),
+                        "security_group_ids": cluster.get("resourcesVpcConfig", {}).get("securityGroupIds", []),
+                        "cluster_security_group_id": cluster.get("resourcesVpcConfig", {}).get("clusterSecurityGroupId"),
+                        "vpc_id": cluster.get("resourcesVpcConfig", {}).get("vpcId"),
+                        "endpoint_public_access": cluster.get("resourcesVpcConfig", {}).get("endpointPublicAccess"),
+                        "endpoint_private_access": cluster.get("resourcesVpcConfig", {}).get("endpointPrivateAccess"),
+                        "public_access_cidrs": cluster.get("resourcesVpcConfig", {}).get("publicAccessCidrs", []),
+                    },
+                    "logging": cluster.get("logging", {}),
+                    "identity": cluster.get("identity", {}),
+                    "encryption_config": cluster.get("encryptionConfig", []),
+                    "node_groups": node_groups,
+                    "fargate_profiles": fargate_profiles,
+                    "addons": addons,
                     "tags": cluster.get("tags", {}),
+                    "created_at": str(cluster.get("createdAt")),
                 }
             )
 
         return {"count": len(cluster_names), "names": cluster_names, "details": cluster_details}
 
     def discover_ecs_clusters(self) -> dict[str, Any]:
-        """Discover all ECS clusters - TERRAFORM CAN'T DO THIS!"""
+        """Discover all ECS clusters with services, tasks, and task definitions."""
         print("🐳 Discovering ECS clusters...")
         ecs_client = self.factory.get_client("ecs")
 
@@ -156,15 +234,134 @@ class AWSResourceDiscovery:
         if cluster_arns:
             clusters_response = ecs_client.describe_clusters(clusters=cluster_arns)
             for cluster in clusters_response.get("clusters", []):
+                cluster_name = cluster.get("clusterName")
+                cluster_arn = cluster.get("clusterArn")
+                
+                # Get services in this cluster
+                services = []
+                try:
+                    services_response = ecs_client.list_services(cluster=cluster_arn)
+                    service_arns = services_response.get("serviceArns", [])
+                    
+                    if service_arns:
+                        services_desc = ecs_client.describe_services(
+                            cluster=cluster_arn,
+                            services=service_arns
+                        )
+                        for svc in services_desc.get("services", []):
+                            services.append({
+                                "name": svc.get("serviceName"),
+                                "arn": svc.get("serviceArn"),
+                                "status": svc.get("status"),
+                                "desired_count": svc.get("desiredCount"),
+                                "running_count": svc.get("runningCount"),
+                                "pending_count": svc.get("pendingCount"),
+                                "launch_type": svc.get("launchType"),
+                                "platform_version": svc.get("platformVersion"),
+                                "task_definition": svc.get("taskDefinition"),
+                                "load_balancers": svc.get("loadBalancers", []),
+                                "network_configuration": svc.get("networkConfiguration", {}),
+                                "deployment_configuration": svc.get("deploymentConfiguration", {}),
+                                "tags": svc.get("tags", []),
+                            })
+                except Exception as e:
+                    logger.warning(f"Could not get services for {cluster_name}: {e}")
+                
+                # Get tasks in this cluster
+                tasks = []
+                try:
+                    tasks_response = ecs_client.list_tasks(cluster=cluster_arn)
+                    task_arns = tasks_response.get("taskArns", [])
+                    
+                    if task_arns:
+                        tasks_desc = ecs_client.describe_tasks(
+                            cluster=cluster_arn,
+                            tasks=task_arns
+                        )
+                        for task in tasks_desc.get("tasks", []):
+                            tasks.append({
+                                "task_arn": task.get("taskArn"),
+                                "task_definition_arn": task.get("taskDefinitionArn"),
+                                "cluster_arn": task.get("clusterArn"),
+                                "last_status": task.get("lastStatus"),
+                                "desired_status": task.get("desiredStatus"),
+                                "launch_type": task.get("launchType"),
+                                "platform_version": task.get("platformVersion"),
+                                "cpu": task.get("cpu"),
+                                "memory": task.get("memory"),
+                                "connectivity": task.get("connectivity"),
+                                "connectivity_at": str(task.get("connectivityAt", "")),
+                                "started_at": str(task.get("startedAt", "")),
+                                "created_at": str(task.get("createdAt", "")),
+                            })
+                except Exception as e:
+                    logger.warning(f"Could not get tasks for {cluster_name}: {e}")
+                
+                # Get task definitions used in this cluster
+                task_definitions = []
+                try:
+                    # Get unique task definition ARNs from services
+                    td_arns = set()
+                    for svc in services:
+                        if svc.get("task_definition"):
+                            td_arns.add(svc["task_definition"])
+                    
+                    for td_arn in td_arns:
+                        try:
+                            td_desc = ecs_client.describe_task_definition(taskDefinition=td_arn)
+                            td = td_desc.get("taskDefinition", {})
+                            task_definitions.append({
+                                "family": td.get("family"),
+                                "task_definition_arn": td.get("taskDefinitionArn"),
+                                "revision": td.get("revision"),
+                                "status": td.get("status"),
+                                "network_mode": td.get("networkMode"),
+                                "requires_compatibilities": td.get("requiresCompatibilities", []),
+                                "cpu": td.get("cpu"),
+                                "memory": td.get("memory"),
+                                "execution_role_arn": td.get("executionRoleArn"),
+                                "task_role_arn": td.get("taskRoleArn"),
+                                "container_definitions_count": len(td.get("containerDefinitions", [])),
+                                "volumes": td.get("volumes", []),
+                                "tags": td.get("tags", []),
+                            })
+                        except Exception as e:
+                            logger.warning(f"Could not describe task definition {td_arn}: {e}")
+                except Exception as e:
+                    logger.warning(f"Could not get task definitions for {cluster_name}: {e}")
+                
+                # Get capacity providers
+                capacity_providers = []
+                try:
+                    cp_response = ecs_client.describe_capacity_providers(
+                        capacityProviders=cluster.get("capacityProviders", [])
+                    )
+                    for cp in cp_response.get("capacityProviders", []):
+                        capacity_providers.append({
+                            "name": cp.get("name"),
+                            "arn": cp.get("capacityProviderArn"),
+                            "status": cp.get("status"),
+                            "auto_scaling_group_provider": cp.get("autoScalingGroupProvider", {}),
+                        })
+                except Exception as e:
+                    logger.warning(f"Could not get capacity providers for {cluster_name}: {e}")
+
                 cluster_details.append(
                     {
-                        "name": cluster.get("clusterName"),
-                        "arn": cluster.get("clusterArn"),
+                        "name": cluster_name,
+                        "arn": cluster_arn,
                         "status": cluster.get("status"),
-                        "running_tasks": cluster.get("runningTasksCount", 0),
-                        "pending_tasks": cluster.get("pendingTasksCount", 0),
-                        "active_services": cluster.get("activeServicesCount", 0),
-                        "registered_instances": cluster.get("registeredContainerInstancesCount", 0),
+                        "running_tasks_count": cluster.get("runningTasksCount", 0),
+                        "pending_tasks_count": cluster.get("pendingTasksCount", 0),
+                        "active_services_count": cluster.get("activeServicesCount", 0),
+                        "registered_container_instances_count": cluster.get("registeredContainerInstancesCount", 0),
+                        "statistics": cluster.get("statistics", []),
+                        "settings": cluster.get("settings", []),
+                        "capacity_providers": capacity_providers,
+                        "default_capacity_provider_strategy": cluster.get("defaultCapacityProviderStrategy", []),
+                        "services": services,
+                        "tasks": tasks,
+                        "task_definitions": task_definitions,
                         "tags": cluster.get("tags", []),
                     }
                 )

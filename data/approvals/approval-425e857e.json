@@ -1,0 +1,101 @@
+{
+  "approval_id": "approval-425e857e",
+  "drift_id": "drift-boto3-20251119-812e8f6f",
+  "resource_id": "i-03862517814cc3d20",
+  "resource_type": "ec2_instances",
+  "approved_by": "a",
+  "approved_at": "2025-11-19T07:44:40.666024",
+  "approval_reason": null,
+  "previous_baseline": {},
+  "new_baseline": {
+    "id": "i-03862517814cc3d20",
+    "type": "t2.micro",
+    "state": "running",
+    "state_transition_reason": "",
+    "launch_time": "2025-11-19 07:42:47+00:00",
+    "availability_zone": "ap-southeast-1a",
+    "tenancy": "default",
+    "host_id": null,
+    "vpc_id": "vpc-0b7e4507303131a7c",
+    "subnet_id": "subnet-0e29d87a4d6c7b1f1",
+    "private_ip": "10.0.1.158",
+    "private_dns": "ip-10-0-1-158.ap-southeast-1.compute.internal",
+    "public_ip": "13.229.55.244",
+    "public_dns": "ec2-13-229-55-244.ap-southeast-1.compute.amazonaws.com",
+    "network_interfaces": [
+      {
+        "id": "eni-064e1043cf89efcd3",
+        "subnet_id": "subnet-0e29d87a4d6c7b1f1",
+        "private_ip": "10.0.1.158",
+        "public_ip": "13.229.55.244",
+        "security_groups": [
+          {
+            "id": "sg-03e704f60b0285068",
+            "name": "my-security-group-6c9c9e5"
+          }
+        ],
+        "source_dest_check": true,
+        "device_index": 0
+      }
+    ],
+    "security_groups": [
+      {
+        "id": "sg-03e704f60b0285068",
+        "name": "my-security-group-6c9c9e5"
+      }
+    ],
+    "key_name": "my-key-pair-4952860",
+    "iam_instance_profile": null,
+    "root_device_type": "ebs",
+    "root_device_name": "/dev/xvda",
+    "block_device_mappings": [
+      {
+        "device_name": "/dev/xvda",
+        "volume_id": "vol-0438661a3a6a336fa",
+        "status": "attached",
+        "delete_on_termination": true
+      }
+    ],
+    "platform": null,
+    "platform_details": "Linux/UNIX",
+    "image_id": "ami-0ca143b172aae70b7",
+    "architecture": "x86_64",
+    "virtualization_type": "hvm",
+    "hypervisor": "xen",
+    "cpu_options": {
+      "core_count": 1,
+      "threads_per_core": 1
+    },
+    "ena_support": true,
+    "ebs_optimized": false,
+    "monitoring_state": "disabled",
+    "instance_lifecycle": null,
+    "capacity_reservation_id": null,
+    "capacity_reservation_specification": {
+      "CapacityReservationPreference": "open"
+    },
+    "elastic_ip_associations": [
+      {
+        "public_ip": "13.229.55.244",
+        "allocation_id": null,
+        "ip_owner_id": "amazon"
+      }
+    ],
+    "metadata_options": {
+      "http_tokens": "optional",
+      "http_put_response_hop_limit": 1,
+      "http_endpoint": "enabled"
+    },
+    "hibernation_configured": false,
+    "usage_operation": "RunInstances",
+    "usage_operation_update_time": "2025-11-19 07:42:47+00:00",
+    "tags": [
+      {
+        "Key": "Name",
+        "Value": "my-ec2-instance"
+      }
+    ]
+  },
+  "environment": null,
+  "tags": {}
+}

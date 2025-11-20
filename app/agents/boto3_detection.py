@@ -275,6 +275,50 @@ class Boto3DriftDetector:
         for name in cluster_names:
             cluster_info = eks_client.describe_cluster(name=name)
             cluster = cluster_info["cluster"]
+            
+            # Get node groups
+            node_groups = []
+            try:
+                ng_response = eks_client.list_nodegroups(clusterName=name)
+                for ng_name in ng_response.get("nodegroups", []):
+                    ng_info = eks_client.describe_nodegroup(clusterName=name, nodegroupName=ng_name)
+                    ng = ng_info["nodegroup"]
+                    node_groups.append({
+                        "name": ng_name,
+                        "status": ng.get("status"),
+                        "instance_types": ng.get("instanceTypes", []),
+                        "desired_size": ng.get("scalingConfig", {}).get("desiredSize"),
+                        "min_size": ng.get("scalingConfig", {}).get("minSize"),
+                        "max_size": ng.get("scalingConfig", {}).get("maxSize"),
+                        "ami_type": ng.get("amiType"),
+                        "capacity_type": ng.get("capacityType"),
+                    })
+            except Exception as e:
+                logger.warning(f"Failed to get node groups for {name}: {e}")
+            
+            # Get Fargate profiles
+            fargate_profiles = []
+            try:
+                fp_response = eks_client.list_fargate_profiles(clusterName=name)
+                fargate_profiles = fp_response.get("fargateProfileNames", [])
+            except Exception as e:
+                logger.warning(f"Failed to get Fargate profiles for {name}: {e}")
+            
+            # Get addons
+            addons = []
+            try:
+                addon_response = eks_client.list_addons(clusterName=name)
+                for addon_name in addon_response.get("addons", []):
+                    addon_info = eks_client.describe_addon(clusterName=name, addonName=addon_name)
+                    addon = addon_info["addon"]
+                    addons.append({
+                        "name": addon_name,
+                        "version": addon.get("addonVersion"),
+                        "status": addon.get("status"),
+                    })
+            except Exception as e:
+                logger.warning(f"Failed to get addons for {name}: {e}")
+            
             clusters.append(
                 {
                     "name": name,
@@ -282,12 +326,31 @@ class Boto3DriftDetector:
                     "version": cluster.get("version"),
                     "status": cluster.get("status"),
                     "endpoint": cluster.get("endpoint"),
+                    "platform_version": cluster.get("platformVersion"),
+                    "role_arn": cluster.get("roleArn"),
+                    "vpc_config": {
+                        "subnet_ids": cluster.get("resourcesVpcConfig", {}).get("subnetIds", []),
+                        "security_group_ids": cluster.get("resourcesVpcConfig", {}).get("securityGroupIds", []),
+                        "cluster_security_group_id": cluster.get("resourcesVpcConfig", {}).get("clusterSecurityGroupId"),
+                        "vpc_id": cluster.get("resourcesVpcConfig", {}).get("vpcId"),
+                        "endpoint_public_access": cluster.get("resourcesVpcConfig", {}).get("endpointPublicAccess"),
+                        "endpoint_private_access": cluster.get("resourcesVpcConfig", {}).get("endpointPrivateAccess"),
+                        "public_access_cidrs": cluster.get("resourcesVpcConfig", {}).get("publicAccessCidrs", []),
+                    },
+                    "logging": cluster.get("logging", {}),
+                    "identity": cluster.get("identity", {}),
+                    "encryption_config": cluster.get("encryptionConfig", []),
+                    "node_groups": node_groups,
+                    "fargate_profiles": fargate_profiles,
+                    "addons": addons,
+                    "tags": cluster.get("tags", {}),
+                    "created_at": str(cluster.get("createdAt", "")),
                 }
             )
         return clusters
 
     async def _discover_ecs_clusters(self) -> list[dict[str, Any]]:
-        """Discover ECS clusters."""
+        """Discover ECS clusters with services and tasks."""
         ecs_client = self.factory.get_client("ecs")
         response = ecs_client.list_clusters()
         cluster_arns = response.get("clusterArns", [])
@@ -296,16 +359,54 @@ class Boto3DriftDetector:
             return []
 
         clusters_response = ecs_client.describe_clusters(clusters=cluster_arns)
-        return [
-            {
-                "name": c.get("clusterName"),
-                "arn": c.get("clusterArn"),
+        clusters = []
+        
+        for c in clusters_response.get("clusters", []):
+            cluster_name = c.get("clusterName")
+            cluster_arn = c.get("clusterArn")
+            
+            # Get services
+            services = []
+            try:
+                svc_response = ecs_client.list_services(cluster=cluster_arn)
+                service_arns = svc_response.get("serviceArns", [])
+                if service_arns:
+                    svc_desc = ecs_client.describe_services(cluster=cluster_arn, services=service_arns)
+                    for svc in svc_desc.get("services", []):
+                        services.append({
+                            "name": svc.get("serviceName"),
+                            "status": svc.get("status"),
+                            "desired_count": svc.get("desiredCount"),
+                            "running_count": svc.get("runningCount"),
+                            "launch_type": svc.get("launchType"),
+                            "task_definition": svc.get("taskDefinition"),
+                        })
+            except Exception as e:
+                logger.warning(f"Failed to get services for {cluster_name}: {e}")
+            
+            # Get tasks count
+            tasks_count = 0
+            try:
+                tasks_response = ecs_client.list_tasks(cluster=cluster_arn)
+                tasks_count = len(tasks_response.get("taskArns", []))
+            except Exception as e:
+                logger.warning(f"Failed to get tasks for {cluster_name}: {e}")
+            
+            clusters.append({
+                "name": cluster_name,
+                "arn": cluster_arn,
                 "status": c.get("status"),
-                "running_tasks": c.get("runningTasksCount", 0),
-                "active_services": c.get("activeServicesCount", 0),
-            }
-            for c in clusters_response.get("clusters", [])
-        ]
+                "running_tasks_count": c.get("runningTasksCount", 0),
+                "pending_tasks_count": c.get("pendingTasksCount", 0),
+                "active_services_count": c.get("activeServicesCount", 0),
+                "registered_container_instances_count": c.get("registeredContainerInstancesCount", 0),
+                "settings": c.get("settings", []),
+                "services": services,
+                "tasks_count": tasks_count,
+                "tags": c.get("tags", []),
+            })
+        
+        return clusters
 
     async def _discover_rds_instances(self) -> list[dict[str, Any]]:
         """Discover RDS instances with comprehensive configuration."""

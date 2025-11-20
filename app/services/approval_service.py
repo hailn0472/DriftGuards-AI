@@ -152,7 +152,8 @@ class ApprovalService:
         resources = baseline.get(key, [])
 
         for resource in resources:
-            if resource.get("id") == resource_id:
+            # Match by id or name
+            if resource.get("id") == resource_id or resource.get("name") == resource_id:
                 return resource
 
         logger.warning(f"Resource {resource_id} not found in baseline")
@@ -222,11 +223,11 @@ class ApprovalService:
         logger.info(f"  Using {location} for updates")
         logger.info(f"  Current baseline has {len(resources)} {key}")
 
-        # Find and update resource
+        # Find and update resource (match by id or name)
         updated = False
         for i, resource in enumerate(resources):
-            if resource.get("id") == resource_id:
-                # Merge actual_value into baseline
+            if resource.get("id") == resource_id or resource.get("name") == resource_id:
+                # Merge actual_value into baseline (don't add 'id' if not present)
                 resources[i] = {**resource, **actual_value}
                 updated = True
                 logger.info(f"✅ Updated existing resource in baseline: {resource_id}")
@@ -234,7 +235,8 @@ class ApprovalService:
 
         # Add if not exists
         if not updated:
-            new_resource = {"id": resource_id, **actual_value}
+            # Use actual_value as-is, don't force 'id' field
+            new_resource = {**actual_value}
             resources.append(new_resource)
             logger.info(f"✅ Added new resource to baseline: {resource_id}")
             logger.info(f"  Resource data: {json.dumps(new_resource, indent=2)}")

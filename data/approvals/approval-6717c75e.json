@@ -1,0 +1,68 @@
+{
+  "approval_id": "approval-6717c75e",
+  "drift_id": "drift-boto3-20251119-26236e29",
+  "resource_id": "i-03862517814cc3d20",
+  "resource_type": "ec2_instances",
+  "approved_by": "a",
+  "approved_at": "2025-11-19T08:20:13.903672",
+  "approval_reason": null,
+  "previous_baseline": {},
+  "new_baseline": {
+    "id": "i-03862517814cc3d20",
+    "type": "t2.micro",
+    "state": "terminated",
+    "state_transition_reason": "User initiated (2025-11-19 08:17:10 GMT)",
+    "launch_time": "2025-11-19 07:42:47+00:00",
+    "availability_zone": "ap-southeast-1a",
+    "tenancy": "default",
+    "host_id": null,
+    "vpc_id": null,
+    "subnet_id": null,
+    "private_ip": null,
+    "private_dns": "",
+    "public_ip": null,
+    "public_dns": "",
+    "network_interfaces": [],
+    "security_groups": [],
+    "key_name": "my-key-pair-4952860",
+    "iam_instance_profile": null,
+    "root_device_type": "ebs",
+    "root_device_name": "/dev/xvda",
+    "block_device_mappings": [],
+    "platform": null,
+    "platform_details": "Linux/UNIX",
+    "image_id": "ami-0ca143b172aae70b7",
+    "architecture": "x86_64",
+    "virtualization_type": "hvm",
+    "hypervisor": "xen",
+    "cpu_options": {
+      "core_count": 1,
+      "threads_per_core": 1
+    },
+    "ena_support": true,
+    "ebs_optimized": false,
+    "monitoring_state": "disabled",
+    "instance_lifecycle": null,
+    "capacity_reservation_id": null,
+    "capacity_reservation_specification": {
+      "CapacityReservationPreference": "open"
+    },
+    "elastic_ip_associations": [],
+    "metadata_options": {
+      "http_tokens": "optional",
+      "http_put_response_hop_limit": 1,
+      "http_endpoint": "enabled"
+    },
+    "hibernation_configured": false,
+    "usage_operation": "RunInstances",
+    "usage_operation_update_time": "2025-11-19 07:42:47+00:00",
+    "tags": [
+      {
+        "Key": "Name",
+        "Value": "my-ec2-instance-test-drift"
+      }
+    ]
+  },
+  "environment": null,
+  "tags": {}
+}
