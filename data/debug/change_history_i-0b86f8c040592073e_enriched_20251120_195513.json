@@ -1,0 +1,234 @@
+{
+  "resource_id": "i-0b86f8c040592073e",
+  "resource_type": "ec2_instances",
+  "region": "ap-southeast-1",
+  "enriched_at": "2025-11-20T19:55:13.912790",
+  "diff_provided": {
+    "cpu_options": {
+      "baseline": {
+        "core_count": 1,
+        "threads_per_core": 2
+      },
+      "current": {
+        "core_count": 1,
+        "threads_per_core": 1
+      }
+    },
+    "_baseline_context": {
+      "created_by": "cloud_drift_AI",
+      "created_by_arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+      "created_by_type": "user",
+      "created_at": "2025-11-21T02:10:25.064216"
+    }
+  },
+  "enriched_history": {
+    "resource_id": "i-0b86f8c040592073e",
+    "resource_type": "ec2_instances",
+    "cloudtrail_event_count": 6,
+    "config_change_count": 0,
+    "timeline": [
+      {
+        "source": "cloudtrail",
+        "timestamp": "2025-11-21T01:45:37+07:00",
+        "event_name": "CreateTags",
+        "user": "quy",
+        "user_identity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+          "arn": "arn:aws:iam::961639320333:user/quy",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMGW7VCK5E7",
+          "userName": "quy",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:40:06Z",
+              "mfaAuthenticated": "false"
+            }
+          }
+        },
+        "source_ip": "27.70.185.199",
+        "changes": {
+          "resourcesSet": {
+            "items": [
+              {
+                "resourceId": "i-0b86f8c040592073e"
+              }
+            ]
+          },
+          "tagSet": {
+            "items": [
+              {
+                "key": "Name",
+                "value": "my-ec2-instance-dam"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "source": "cloudtrail",
+        "timestamp": "2025-11-21T01:17:31+07:00",
+        "event_name": "CreateTags",
+        "user": "quy",
+        "user_identity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+          "arn": "arn:aws:iam::961639320333:user/quy",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG33WPLPHZ",
+          "userName": "quy",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:40:06Z",
+              "mfaAuthenticated": "false"
+            }
+          }
+        },
+        "source_ip": "14.224.176.224",
+        "changes": {
+          "resourcesSet": {
+            "items": [
+              {
+                "resourceId": "i-0b86f8c040592073e"
+              }
+            ]
+          },
+          "tagSet": {
+            "items": [
+              {
+                "key": "Name",
+                "value": "my-ec2-instance-da"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "source": "cloudtrail",
+        "timestamp": "2025-11-21T01:11:04+07:00",
+        "event_name": "CreateTags",
+        "user": "quy",
+        "user_identity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+          "arn": "arn:aws:iam::961639320333:user/quy",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMGUG54XOXI",
+          "userName": "quy",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:40:06Z",
+              "mfaAuthenticated": "false"
+            }
+          }
+        },
+        "source_ip": "14.224.176.224",
+        "changes": {
+          "resourcesSet": {
+            "items": [
+              {
+                "resourceId": "i-0b86f8c040592073e"
+              }
+            ]
+          },
+          "tagSet": {
+            "items": [
+              {
+                "key": "Name",
+                "value": "my-ec2-instance-d"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "source": "cloudtrail",
+        "timestamp": "2025-11-21T00:43:13+07:00",
+        "event_name": "ModifyInstanceAttribute",
+        "user": "quy",
+        "user_identity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+          "arn": "arn:aws:iam::961639320333:user/quy",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG6XZHOI6E",
+          "userName": "quy",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:40:06Z",
+              "mfaAuthenticated": "false"
+            }
+          }
+        },
+        "source_ip": "14.224.176.224",
+        "changes": {
+          "instanceId": "i-0b86f8c040592073e",
+          "ebsOptimized": {
+            "value": true
+          }
+        }
+      },
+      {
+        "source": "cloudtrail",
+        "timestamp": "2025-11-21T00:43:12+07:00",
+        "event_name": "ModifyInstanceAttribute",
+        "user": "quy",
+        "user_identity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+          "arn": "arn:aws:iam::961639320333:user/quy",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG6XZHOI6E",
+          "userName": "quy",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:40:06Z",
+              "mfaAuthenticated": "false"
+            }
+          }
+        },
+        "source_ip": "14.224.176.224",
+        "changes": {
+          "instanceId": "i-0b86f8c040592073e",
+          "instanceType": {
+            "value": "t3a.medium"
+          }
+        }
+      },
+      {
+        "source": "cloudtrail",
+        "timestamp": "2025-11-20T22:06:58+07:00",
+        "event_name": "StopInstances",
+        "user": "root",
+        "user_identity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4L5LCGBS",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T04:56:22Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "source_ip": "14.162.176.123",
+        "changes": {
+          "instancesSet": {
+            "items": [
+              {
+                "instanceId": "i-0b86f8c040592073e"
+              }
+            ]
+          },
+          "force": false,
+          "skipOsShutdown": false
+        }
+      }
+    ],
+    "last_modified_by": "quy",
+    "last_modified_at": "2025-11-21T01:45:37+07:00",
+    "drift_causing_event": null
+  }
+}

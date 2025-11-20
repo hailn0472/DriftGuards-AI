@@ -1,0 +1,4910 @@
+{
+  "resource_id": "i-0b86f8c040592073e",
+  "resource_type": "ec2_instances",
+  "region": "ap-southeast-1",
+  "lookback_hours": 24,
+  "search_started_at": "2025-11-20T18:45:35.435369",
+  "event_names_searched": [
+    "RunInstances",
+    "StartInstances",
+    "StopInstances",
+    "TerminateInstances",
+    "ModifyInstanceAttribute",
+    "CreateTags",
+    "DeleteTags",
+    "AttachVolume",
+    "DetachVolume",
+    "AssociateAddress",
+    "DisassociateAddress"
+  ],
+  "time_range": {
+    "start": "2025-11-19T18:45:35.587568",
+    "end": "2025-11-20T18:45:35.587568"
+  },
+  "pages_fetched": 111,
+  "total_events_scanned": 5531,
+  "matched_events_count": 5,
+  "all_raw_events": [
+    {
+      "event_name": "GetCallerIdentity",
+      "event_time": "2025-11-21T01:42:03+07:00",
+      "username": "eks-event-service-01a58e04d490504593a6",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.08",
+        "userIdentity": {
+          "type": "AssumedRole",
+          "principalId": "AROA57ZRLRMGVCQNX4J6Y:eks-event-service-01a58e04d490504593a6",
+          "arn": "arn:aws:sts::961639320333:assumed-role/AWSServiceRoleForAmazonEKS/eks-event-service-01a58e04d490504593a6",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMGXXEVAH32",
+          "sessionContext": {
+            "sessionIssuer": {
+              "type": "Role",
+              "principalId": "AROA57ZRLRMGVCQNX4J6Y",
+              "arn": "arn:aws:iam::961639320333:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS",
+              "accountId": "961639320333",
+              "userName": "AWSServiceRoleForAmazonEKS"
+            },
+            "webIdFederationData": {},
+            "attributes": {
+              "creationDate": "2025-11-20T18:29:05Z",
+              "mfaAuthenticated": "false"
+            }
+          },
+          "invokedBy": "eks.amazonaws.com"
+        },
+        "eventTime": "2025-11-20T18:42:03Z",
+        "eventSource": "sts.amazonaws.com",
+        "eventName": "GetCallerIdentity",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "eks.amazonaws.com",
+        "userAgent": "eks.amazonaws.com",
+        "requestParameters": null,
+        "responseElements": null,
+        "additionalEventData": {
+          "ExtendedRequestId": "MTphcC1zb3V0aGVhc3QtMTpTOjE3NjM2NjQxMjM3Mjc6Ujo1aU5ieU5yNg=="
+        },
+        "requestID": "ef072252-c5ad-434e-85cb-1aa9a4d2f482",
+        "eventID": "f051777c-5c04-4bed-9d22-88e0a76f840e",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management"
+      }
+    },
+    {
+      "event_name": "DescribeMetricFilters",
+      "event_time": "2025-11-21T01:41:27+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG6UD33ADN",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:41:27Z",
+        "eventSource": "logs.amazonaws.com",
+        "eventName": "DescribeMetricFilters",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "limit": 50
+        },
+        "responseElements": null,
+        "requestID": "ae567b11-6ac5-4c92-a380-f6c4aec7a7e2",
+        "eventID": "b72ff986-b874-46d6-99bf-d8436c5b5914",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "apiVersion": "20140328",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeMetricFilters",
+      "event_time": "2025-11-21T01:41:25+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG6UD33ADN",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:41:25Z",
+        "eventSource": "logs.amazonaws.com",
+        "eventName": "DescribeMetricFilters",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "limit": 50
+        },
+        "responseElements": null,
+        "requestID": "3ca75417-2fd1-439e-9360-7bbf098caad5",
+        "eventID": "1b5ef6f7-ffc0-4c23-a794-f87e996a3601",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "apiVersion": "20140328",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeMetricFilters",
+      "event_time": "2025-11-21T01:41:25+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG6UD33ADN",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:41:25Z",
+        "eventSource": "logs.amazonaws.com",
+        "eventName": "DescribeMetricFilters",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "limit": 50
+        },
+        "responseElements": null,
+        "requestID": "821562fe-72dd-4a85-910f-f6548e751339",
+        "eventID": "9dd09350-fe08-476d-b974-a75a73abbf81",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "apiVersion": "20140328",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeMetricFilters",
+      "event_time": "2025-11-21T01:41:25+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG6UD33ADN",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:41:25Z",
+        "eventSource": "logs.amazonaws.com",
+        "eventName": "DescribeMetricFilters",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "limit": 50
+        },
+        "responseElements": null,
+        "requestID": "5abf3f4a-ce5d-4d33-8c81-d85aa8620dc6",
+        "eventID": "a1749f49-4a94-48d1-a3d1-9e123bd87ced",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "apiVersion": "20140328",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "GetCallerIdentity",
+      "event_time": "2025-11-21T01:40:20+07:00",
+      "username": "eks-event-service-01a58e04d490504593a6",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.08",
+        "userIdentity": {
+          "type": "AssumedRole",
+          "principalId": "AROA57ZRLRMGVCQNX4J6Y:eks-event-service-01a58e04d490504593a6",
+          "arn": "arn:aws:sts::961639320333:assumed-role/AWSServiceRoleForAmazonEKS/eks-event-service-01a58e04d490504593a6",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMGXXEVAH32",
+          "sessionContext": {
+            "sessionIssuer": {
+              "type": "Role",
+              "principalId": "AROA57ZRLRMGVCQNX4J6Y",
+              "arn": "arn:aws:iam::961639320333:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS",
+              "accountId": "961639320333",
+              "userName": "AWSServiceRoleForAmazonEKS"
+            },
+            "webIdFederationData": {},
+            "attributes": {
+              "creationDate": "2025-11-20T18:29:05Z",
+              "mfaAuthenticated": "false"
+            }
+          },
+          "invokedBy": "eks.amazonaws.com"
+        },
+        "eventTime": "2025-11-20T18:40:20Z",
+        "eventSource": "sts.amazonaws.com",
+        "eventName": "GetCallerIdentity",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "eks.amazonaws.com",
+        "userAgent": "eks.amazonaws.com",
+        "requestParameters": null,
+        "responseElements": null,
+        "additionalEventData": {
+          "ExtendedRequestId": "MTphcC1zb3V0aGVhc3QtMTpTOjE3NjM2NjQwMjA4MDc6UjpvanNvWEtlcQ=="
+        },
+        "requestID": "1d3f9ffd-40ec-4d86-924d-c69da05d6845",
+        "eventID": "ff3ab532-b4a3-4b99-99b1-4fd99e06a08b",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management"
+      }
+    },
+    {
+      "event_name": "DescribeMetricFilters",
+      "event_time": "2025-11-21T01:39:29+07:00",
+      "username": "quy",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+          "arn": "arn:aws:iam::961639320333:user/quy",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG2S7VTYHF",
+          "userName": "quy",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:40:06Z",
+              "mfaAuthenticated": "false"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:39:29Z",
+        "eventSource": "logs.amazonaws.com",
+        "eventName": "DescribeMetricFilters",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "27.70.185.199",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "limit": 50
+        },
+        "responseElements": null,
+        "requestID": "719f90e6-2123-4b46-b61c-0d26e1810125",
+        "eventID": "33f3bd68-5eca-4090-9609-50a67f286bd8",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "apiVersion": "20140328",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeMetricFilters",
+      "event_time": "2025-11-21T01:39:29+07:00",
+      "username": "quy",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+          "arn": "arn:aws:iam::961639320333:user/quy",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG2S7VTYHF",
+          "userName": "quy",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:40:06Z",
+              "mfaAuthenticated": "false"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:39:29Z",
+        "eventSource": "logs.amazonaws.com",
+        "eventName": "DescribeMetricFilters",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "27.70.185.199",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "limit": 50
+        },
+        "responseElements": null,
+        "requestID": "e3fda4fe-cfbd-47a1-a10f-b0363bbc083f",
+        "eventID": "e191b169-3e9d-47fd-b86b-a28b6c050c47",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "apiVersion": "20140328",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeMetricFilters",
+      "event_time": "2025-11-21T01:39:29+07:00",
+      "username": "quy",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+          "arn": "arn:aws:iam::961639320333:user/quy",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG2S7VTYHF",
+          "userName": "quy",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:40:06Z",
+              "mfaAuthenticated": "false"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:39:29Z",
+        "eventSource": "logs.amazonaws.com",
+        "eventName": "DescribeMetricFilters",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "27.70.185.199",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "limit": 50
+        },
+        "responseElements": null,
+        "requestID": "8d96994a-10c8-4eb1-8965-246793b6e6ed",
+        "eventID": "e9504609-c41c-4b65-83aa-7cd425d78e5f",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "apiVersion": "20140328",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeMetricFilters",
+      "event_time": "2025-11-21T01:39:29+07:00",
+      "username": "quy",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+          "arn": "arn:aws:iam::961639320333:user/quy",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG2S7VTYHF",
+          "userName": "quy",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:40:06Z",
+              "mfaAuthenticated": "false"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:39:29Z",
+        "eventSource": "logs.amazonaws.com",
+        "eventName": "DescribeMetricFilters",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "27.70.185.199",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "limit": 50
+        },
+        "responseElements": null,
+        "requestID": "396982b2-72bd-463c-8c66-bf782c4d66a2",
+        "eventID": "f9e38907-b38d-4e63-942d-fa4f893427a9",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "apiVersion": "20140328",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "CreateNetworkInterface",
+      "event_time": "2025-11-21T01:37:18+07:00",
+      "username": "AmazonEKS",
+      "resources": [
+        {
+          "ResourceType": "AWS::EC2::SecurityGroup",
+          "ResourceName": "sg-087c4d338621dc532"
+        },
+        {
+          "ResourceType": "AWS::EC2::Subnet",
+          "ResourceName": "subnet-03241d83f05699d76"
+        }
+      ],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "AssumedRole",
+          "principalId": "AROA57ZRLRMGVCQNX4J6Y:AmazonEKS",
+          "arn": "arn:aws:sts::961639320333:assumed-role/AWSServiceRoleForAmazonEKS/AmazonEKS",
+          "accountId": "961639320333",
+          "sessionContext": {
+            "sessionIssuer": {
+              "type": "Role",
+              "principalId": "AROA57ZRLRMGVCQNX4J6Y",
+              "arn": "arn:aws:iam::961639320333:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS",
+              "accountId": "961639320333",
+              "userName": "AWSServiceRoleForAmazonEKS"
+            },
+            "attributes": {
+              "creationDate": "2025-11-20T18:37:17Z",
+              "mfaAuthenticated": "false"
+            }
+          },
+          "invokedBy": "eks.amazonaws.com"
+        },
+        "eventTime": "2025-11-20T18:37:18Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "CreateNetworkInterface",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "eks.amazonaws.com",
+        "userAgent": "eks.amazonaws.com",
+        "errorCode": "Client.DryRunOperation",
+        "errorMessage": "Request would have succeeded, but DryRun flag is set.",
+        "requestParameters": {
+          "subnetId": "subnet-03241d83f05699d76",
+          "groupSet": {
+            "items": [
+              {
+                "groupId": "sg-087c4d338621dc532"
+              }
+            ]
+          },
+          "privateIpAddressesSet": {},
+          "clientToken": "4c3bfb81-8cff-4170-a74b-c935edbd19f0"
+        },
+        "responseElements": null,
+        "requestID": "218d3edf-3d99-41fb-84e7-e191dc0a9b25",
+        "eventID": "7115150a-df30-44ec-a2da-14427dc8d9a5",
+        "readOnly": false,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management"
+      }
+    },
+    {
+      "event_name": "CreateNetworkInterface",
+      "event_time": "2025-11-21T01:37:18+07:00",
+      "username": "AmazonEKS",
+      "resources": [
+        {
+          "ResourceType": "AWS::EC2::SecurityGroup",
+          "ResourceName": "sg-087c4d338621dc532"
+        },
+        {
+          "ResourceType": "AWS::EC2::Subnet",
+          "ResourceName": "subnet-0741850025184d2ae"
+        }
+      ],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "AssumedRole",
+          "principalId": "AROA57ZRLRMGVCQNX4J6Y:AmazonEKS",
+          "arn": "arn:aws:sts::961639320333:assumed-role/AWSServiceRoleForAmazonEKS/AmazonEKS",
+          "accountId": "961639320333",
+          "sessionContext": {
+            "sessionIssuer": {
+              "type": "Role",
+              "principalId": "AROA57ZRLRMGVCQNX4J6Y",
+              "arn": "arn:aws:iam::961639320333:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS",
+              "accountId": "961639320333",
+              "userName": "AWSServiceRoleForAmazonEKS"
+            },
+            "attributes": {
+              "creationDate": "2025-11-20T18:37:17Z",
+              "mfaAuthenticated": "false"
+            }
+          },
+          "invokedBy": "eks.amazonaws.com"
+        },
+        "eventTime": "2025-11-20T18:37:18Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "CreateNetworkInterface",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "eks.amazonaws.com",
+        "userAgent": "eks.amazonaws.com",
+        "errorCode": "Client.DryRunOperation",
+        "errorMessage": "Request would have succeeded, but DryRun flag is set.",
+        "requestParameters": {
+          "subnetId": "subnet-0741850025184d2ae",
+          "groupSet": {
+            "items": [
+              {
+                "groupId": "sg-087c4d338621dc532"
+              }
+            ]
+          },
+          "privateIpAddressesSet": {},
+          "clientToken": "b7eaebe1-76c9-4d16-8160-d189a29c5148"
+        },
+        "responseElements": null,
+        "requestID": "4a2b3176-0ed2-49ff-a7fb-5eecfe5a7390",
+        "eventID": "8bf37dc7-072a-4941-8acb-0404b31dc1bf",
+        "readOnly": false,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management"
+      }
+    },
+    {
+      "event_name": "CreateNetworkInterfacePermission",
+      "event_time": "2025-11-21T01:37:18+07:00",
+      "username": "AmazonEKS",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "AssumedRole",
+          "principalId": "AROA57ZRLRMGVCQNX4J6Y:AmazonEKS",
+          "arn": "arn:aws:sts::961639320333:assumed-role/AWSServiceRoleForAmazonEKS/AmazonEKS",
+          "accountId": "961639320333",
+          "sessionContext": {
+            "sessionIssuer": {
+              "type": "Role",
+              "principalId": "AROA57ZRLRMGVCQNX4J6Y",
+              "arn": "arn:aws:iam::961639320333:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS",
+              "accountId": "961639320333",
+              "userName": "AWSServiceRoleForAmazonEKS"
+            },
+            "attributes": {
+              "creationDate": "2025-11-20T18:37:17Z",
+              "mfaAuthenticated": "false"
+            }
+          },
+          "invokedBy": "eks.amazonaws.com"
+        },
+        "eventTime": "2025-11-20T18:37:18Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "CreateNetworkInterfacePermission",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "eks.amazonaws.com",
+        "userAgent": "eks.amazonaws.com",
+        "errorCode": "Client.DryRunOperation",
+        "errorMessage": "Request would have succeeded, but DryRun flag is set.",
+        "requestParameters": {
+          "CreateNetworkInterfacePermissionRequest": {
+            "AwsAccountId": "928706974114",
+            "Permission": "INSTANCE-ATTACH",
+            "NetworkInterfaceId": "eni-03034e481fd7d6e95"
+          }
+        },
+        "responseElements": null,
+        "requestID": "decb8e85-b42f-4cb7-8117-633707a09760",
+        "eventID": "997128b0-1396-48f5-8cc4-958bb659415a",
+        "readOnly": false,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management"
+      }
+    },
+    {
+      "event_name": "DescribeNetworkInterfaces",
+      "event_time": "2025-11-21T01:37:18+07:00",
+      "username": "AmazonEKS",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "AssumedRole",
+          "principalId": "AROA57ZRLRMGVCQNX4J6Y:AmazonEKS",
+          "arn": "arn:aws:sts::961639320333:assumed-role/AWSServiceRoleForAmazonEKS/AmazonEKS",
+          "accountId": "961639320333",
+          "sessionContext": {
+            "sessionIssuer": {
+              "type": "Role",
+              "principalId": "AROA57ZRLRMGVCQNX4J6Y",
+              "arn": "arn:aws:iam::961639320333:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS",
+              "accountId": "961639320333",
+              "userName": "AWSServiceRoleForAmazonEKS"
+            },
+            "attributes": {
+              "creationDate": "2025-11-20T18:37:17Z",
+              "mfaAuthenticated": "false"
+            }
+          },
+          "invokedBy": "eks.amazonaws.com"
+        },
+        "eventTime": "2025-11-20T18:37:18Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeNetworkInterfaces",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "eks.amazonaws.com",
+        "userAgent": "eks.amazonaws.com",
+        "errorCode": "Client.DryRunOperation",
+        "errorMessage": "Request would have succeeded, but DryRun flag is set.",
+        "requestParameters": {
+          "networkInterfaceIdSet": {
+            "items": [
+              {
+                "networkInterfaceId": "eni-0f19320db3595e99c"
+              }
+            ]
+          },
+          "filterSet": {}
+        },
+        "responseElements": null,
+        "requestID": "bc072ac6-c939-4254-b2ef-8d7f7cd1e3b5",
+        "eventID": "b34bd58a-6f09-468c-ace0-01cd29ec0e6e",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management"
+      }
+    },
+    {
+      "event_name": "CreateNetworkInterfacePermission",
+      "event_time": "2025-11-21T01:37:18+07:00",
+      "username": "AmazonEKS",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "AssumedRole",
+          "principalId": "AROA57ZRLRMGVCQNX4J6Y:AmazonEKS",
+          "arn": "arn:aws:sts::961639320333:assumed-role/AWSServiceRoleForAmazonEKS/AmazonEKS",
+          "accountId": "961639320333",
+          "sessionContext": {
+            "sessionIssuer": {
+              "type": "Role",
+              "principalId": "AROA57ZRLRMGVCQNX4J6Y",
+              "arn": "arn:aws:iam::961639320333:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS",
+              "accountId": "961639320333",
+              "userName": "AWSServiceRoleForAmazonEKS"
+            },
+            "attributes": {
+              "creationDate": "2025-11-20T18:37:17Z",
+              "mfaAuthenticated": "false"
+            }
+          },
+          "invokedBy": "eks.amazonaws.com"
+        },
+        "eventTime": "2025-11-20T18:37:18Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "CreateNetworkInterfacePermission",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "eks.amazonaws.com",
+        "userAgent": "eks.amazonaws.com",
+        "errorCode": "Client.DryRunOperation",
+        "errorMessage": "Request would have succeeded, but DryRun flag is set.",
+        "requestParameters": {
+          "CreateNetworkInterfacePermissionRequest": {
+            "AwsAccountId": "928706974114",
+            "Permission": "INSTANCE-ATTACH",
+            "NetworkInterfaceId": "eni-0f19320db3595e99c"
+          }
+        },
+        "responseElements": null,
+        "requestID": "14de34e1-13d7-492e-9b02-41097aeca84b",
+        "eventID": "b7f2e2f2-f1b3-42b7-8183-4e807d1a8658",
+        "readOnly": false,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management"
+      }
+    },
+    {
+      "event_name": "DescribeNetworkInterfaces",
+      "event_time": "2025-11-21T01:37:18+07:00",
+      "username": "AmazonEKS",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "AssumedRole",
+          "principalId": "AROA57ZRLRMGVCQNX4J6Y:AmazonEKS",
+          "arn": "arn:aws:sts::961639320333:assumed-role/AWSServiceRoleForAmazonEKS/AmazonEKS",
+          "accountId": "961639320333",
+          "sessionContext": {
+            "sessionIssuer": {
+              "type": "Role",
+              "principalId": "AROA57ZRLRMGVCQNX4J6Y",
+              "arn": "arn:aws:iam::961639320333:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS",
+              "accountId": "961639320333",
+              "userName": "AWSServiceRoleForAmazonEKS"
+            },
+            "attributes": {
+              "creationDate": "2025-11-20T18:37:17Z",
+              "mfaAuthenticated": "false"
+            }
+          },
+          "invokedBy": "eks.amazonaws.com"
+        },
+        "eventTime": "2025-11-20T18:37:18Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeNetworkInterfaces",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "eks.amazonaws.com",
+        "userAgent": "eks.amazonaws.com",
+        "errorCode": "Client.DryRunOperation",
+        "errorMessage": "Request would have succeeded, but DryRun flag is set.",
+        "requestParameters": {
+          "networkInterfaceIdSet": {
+            "items": [
+              {
+                "networkInterfaceId": "eni-03034e481fd7d6e95"
+              }
+            ]
+          },
+          "filterSet": {}
+        },
+        "responseElements": null,
+        "requestID": "ea354622-e88d-4e43-a24c-3572a8b8ae5f",
+        "eventID": "c7152e8c-12ff-4806-ad95-700837fce381",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management"
+      }
+    },
+    {
+      "event_name": "DescribeVpcs",
+      "event_time": "2025-11-21T01:37:17+07:00",
+      "username": "AmazonEKS",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "AssumedRole",
+          "principalId": "AROA57ZRLRMGVCQNX4J6Y:AmazonEKS",
+          "arn": "arn:aws:sts::961639320333:assumed-role/AWSServiceRoleForAmazonEKS/AmazonEKS",
+          "accountId": "961639320333",
+          "sessionContext": {
+            "sessionIssuer": {
+              "type": "Role",
+              "principalId": "AROA57ZRLRMGVCQNX4J6Y",
+              "arn": "arn:aws:iam::961639320333:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS",
+              "accountId": "961639320333",
+              "userName": "AWSServiceRoleForAmazonEKS"
+            },
+            "attributes": {
+              "creationDate": "2025-11-20T18:37:17Z",
+              "mfaAuthenticated": "false"
+            }
+          },
+          "invokedBy": "eks.amazonaws.com"
+        },
+        "eventTime": "2025-11-20T18:37:17Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeVpcs",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "eks.amazonaws.com",
+        "userAgent": "eks.amazonaws.com",
+        "requestParameters": {
+          "vpcSet": {
+            "items": [
+              {
+                "vpcId": "vpc-04157f87e1e9a2006"
+              }
+            ]
+          },
+          "filterSet": {}
+        },
+        "responseElements": null,
+        "requestID": "eb5707b7-5152-4302-94b9-439778d36f7f",
+        "eventID": "2c228a4e-9c7d-41ea-97b9-4aae6a2e7d41",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management"
+      }
+    },
+    {
+      "event_name": "DescribeSecurityGroups",
+      "event_time": "2025-11-21T01:37:17+07:00",
+      "username": "AmazonEKS",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "AssumedRole",
+          "principalId": "AROA57ZRLRMGVCQNX4J6Y:AmazonEKS",
+          "arn": "arn:aws:sts::961639320333:assumed-role/AWSServiceRoleForAmazonEKS/AmazonEKS",
+          "accountId": "961639320333",
+          "sessionContext": {
+            "sessionIssuer": {
+              "type": "Role",
+              "principalId": "AROA57ZRLRMGVCQNX4J6Y",
+              "arn": "arn:aws:iam::961639320333:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS",
+              "accountId": "961639320333",
+              "userName": "AWSServiceRoleForAmazonEKS"
+            },
+            "attributes": {
+              "creationDate": "2025-11-20T18:37:17Z",
+              "mfaAuthenticated": "false"
+            }
+          },
+          "invokedBy": "eks.amazonaws.com"
+        },
+        "eventTime": "2025-11-20T18:37:17Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeSecurityGroups",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "eks.amazonaws.com",
+        "userAgent": "eks.amazonaws.com",
+        "requestParameters": {
+          "securityGroupSet": {},
+          "securityGroupIdSet": {
+            "items": [
+              {
+                "groupId": "sg-087c4d338621dc532"
+              }
+            ]
+          },
+          "filterSet": {}
+        },
+        "responseElements": null,
+        "requestID": "1bdf7d7c-7961-46af-9c64-9ded35451392",
+        "eventID": "3645d0b2-c8e9-4830-a72b-03a9bf85385c",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management"
+      }
+    },
+    {
+      "event_name": "AssumeRole",
+      "event_time": "2025-11-21T01:37:17+07:00",
+      "username": null,
+      "resources": [
+        {
+          "ResourceType": "AWS::IAM::AccessKey",
+          "ResourceName": "ASIA57ZRLRMGT6J6TYB4"
+        },
+        {
+          "ResourceType": "AWS::STS::AssumedRole",
+          "ResourceName": "AROA57ZRLRMGVCQNX4J6Y:AmazonEKS"
+        },
+        {
+          "ResourceType": "AWS::STS::AssumedRole",
+          "ResourceName": "AmazonEKS"
+        },
+        {
+          "ResourceType": "AWS::STS::AssumedRole",
+          "ResourceName": "arn:aws:sts::961639320333:assumed-role/AWSServiceRoleForAmazonEKS/AmazonEKS"
+        },
+        {
+          "ResourceType": "AWS::IAM::Role",
+          "ResourceName": "arn:aws:iam::961639320333:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS"
+        }
+      ],
+      "cloud_trail_event": {
+        "eventVersion": "1.08",
+        "userIdentity": {
+          "type": "AWSService",
+          "invokedBy": "AWS Internal"
+        },
+        "eventTime": "2025-11-20T18:37:17Z",
+        "eventSource": "sts.amazonaws.com",
+        "eventName": "AssumeRole",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "AWS Internal",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "roleArn": "arn:aws:iam::961639320333:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS",
+          "roleSessionName": "AmazonEKS",
+          "durationSeconds": 900
+        },
+        "responseElements": {
+          "credentials": {
+            "accessKeyId": "ASIA57ZRLRMGT6J6TYB4",
+            "sessionToken": "IQoJb3JpZ2luX2VjEDMaDmFwLXNvdXRoZWFzdC0xIkgwRgIhAM3TMRJZxBOU6LVdu2knym7MDPmZBfBuwDdmOjW0vWRxAiEA5AxOyAcLuJMIlm0knLH17DmD7SY0wqSazKX6g9C62Tsq0QII/P//////////ARACGgw5NjE2MzkzMjAzMzMiDFy9OGgUBu9dLJ+ATiqlAg+dfJSLa/oy9hztbRrrnfZ1BDmYzZcCs0wBdaktNdqsICdz5aC6b9vSmYQTS6GFl3sZivh/nzoSwYCrS7z6Y/7vDiPAL617GKWpH6qiL/BsZs1DhyX/GclQ4eAbP28IHg+Bd4oHnp0dYt7fziMpJXWcM6CMtx3tsKKvcDRxBotEIlz0i2cJBzT8kbWF7v4aPCQ48e0NR2TUwR6G5EQdTa22jA7jspeHFAIvG9RhCP1qhSNPdF/dn/AWrs+Q3qmhvGmCGb6o+x/JSulTckaHNDuMslGg88+ocdmEMhNWe3f3qks7Q6yBoCJKik/ny91E3AKLz5ZYm4BVBci55jQrlx5Y8WBG802oS816+4nTXGwF7wsrNRn5Dj5keAAE4kM3S4sm9zUOMN2//cgGOrwB/yTWHPPmFAiSbBQb+cr8rVS1aHBxbx2lzlbahJhzmCkVKt2Md1EgO/kHbCnJTM4j3w4Vofg6BFHcXUQQUPtnl2A+q5VpzJwfzh/jmYyM7Y05RAGQvrf/5TqfnHNQsZCCPTPZnBChI//QhGiiNzaW1/bpcbUR9ZgVpSND6vi8tBsQSBJZ+p89c/ImkZutuocd0oemzrVVuFmK7opEQqjUs8saXljxu+yRIV17OKZzNXzqum8RU2Z0imEq8vE=",
+            "expiration": "Nov 20, 2025, 6:52:17 PM"
+          },
+          "assumedRoleUser": {
+            "assumedRoleId": "AROA57ZRLRMGVCQNX4J6Y:AmazonEKS",
+            "arn": "arn:aws:sts::961639320333:assumed-role/AWSServiceRoleForAmazonEKS/AmazonEKS"
+          }
+        },
+        "additionalEventData": {
+          "ExtendedRequestId": "MTphcC1zb3V0aGVhc3QtMTpTOjE3NjM2NjM4Mzc3MTA6UjplWE1zakJFdw=="
+        },
+        "requestID": "0f2b83ed-ac8b-4dc7-87aa-6d5404f44528",
+        "eventID": "496f7519-1d4b-3348-b701-700550098dc6",
+        "readOnly": true,
+        "resources": [
+          {
+            "accountId": "961639320333",
+            "type": "AWS::IAM::Role",
+            "ARN": "arn:aws:iam::961639320333:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS"
+          }
+        ],
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "sharedEventID": "7e0bb1a1-f338-4fc5-a92a-94a284535548",
+        "eventCategory": "Management"
+      }
+    },
+    {
+      "event_name": "DescribeSubnets",
+      "event_time": "2025-11-21T01:37:17+07:00",
+      "username": "AmazonEKS",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "AssumedRole",
+          "principalId": "AROA57ZRLRMGVCQNX4J6Y:AmazonEKS",
+          "arn": "arn:aws:sts::961639320333:assumed-role/AWSServiceRoleForAmazonEKS/AmazonEKS",
+          "accountId": "961639320333",
+          "sessionContext": {
+            "sessionIssuer": {
+              "type": "Role",
+              "principalId": "AROA57ZRLRMGVCQNX4J6Y",
+              "arn": "arn:aws:iam::961639320333:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS",
+              "accountId": "961639320333",
+              "userName": "AWSServiceRoleForAmazonEKS"
+            },
+            "attributes": {
+              "creationDate": "2025-11-20T18:37:17Z",
+              "mfaAuthenticated": "false"
+            }
+          },
+          "invokedBy": "eks.amazonaws.com"
+        },
+        "eventTime": "2025-11-20T18:37:17Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeSubnets",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "eks.amazonaws.com",
+        "userAgent": "eks.amazonaws.com",
+        "requestParameters": {
+          "subnetSet": {
+            "items": [
+              {
+                "subnetId": "subnet-03241d83f05699d76"
+              },
+              {
+                "subnetId": "subnet-0741850025184d2ae"
+              }
+            ]
+          },
+          "filterSet": {}
+        },
+        "responseElements": null,
+        "requestID": "354b32a6-5b04-4b5c-a09f-02fd7fb1b934",
+        "eventID": "cf4730d8-2a6d-4b27-9c64-af1783f5b6b5",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management"
+      }
+    },
+    {
+      "event_name": "GetCallerIdentity",
+      "event_time": "2025-11-21T01:37:01+07:00",
+      "username": "eks-event-service-01a58e04d490504593a6",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.08",
+        "userIdentity": {
+          "type": "AssumedRole",
+          "principalId": "AROA57ZRLRMGVCQNX4J6Y:eks-event-service-01a58e04d490504593a6",
+          "arn": "arn:aws:sts::961639320333:assumed-role/AWSServiceRoleForAmazonEKS/eks-event-service-01a58e04d490504593a6",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMGXXEVAH32",
+          "sessionContext": {
+            "sessionIssuer": {
+              "type": "Role",
+              "principalId": "AROA57ZRLRMGVCQNX4J6Y",
+              "arn": "arn:aws:iam::961639320333:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS",
+              "accountId": "961639320333",
+              "userName": "AWSServiceRoleForAmazonEKS"
+            },
+            "webIdFederationData": {},
+            "attributes": {
+              "creationDate": "2025-11-20T18:29:05Z",
+              "mfaAuthenticated": "false"
+            }
+          },
+          "invokedBy": "eks.amazonaws.com"
+        },
+        "eventTime": "2025-11-20T18:37:01Z",
+        "eventSource": "sts.amazonaws.com",
+        "eventName": "GetCallerIdentity",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "eks.amazonaws.com",
+        "userAgent": "eks.amazonaws.com",
+        "requestParameters": null,
+        "responseElements": null,
+        "additionalEventData": {
+          "ExtendedRequestId": "MTphcC1zb3V0aGVhc3QtMTpTOjE3NjM2NjM4MjE3OTc6Ujp3ZFV3ZVF3Rw=="
+        },
+        "requestID": "725ee10d-dfde-4fec-8974-26fa49247ab6",
+        "eventID": "62f6eed7-7cd0-44dd-85d8-89094e1ab6d5",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management"
+      }
+    },
+    {
+      "event_name": "GetCallerIdentity",
+      "event_time": "2025-11-21T01:36:38+07:00",
+      "username": "eks-event-service-01a58e04d490504593a6",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.08",
+        "userIdentity": {
+          "type": "AssumedRole",
+          "principalId": "AROA57ZRLRMGVCQNX4J6Y:eks-event-service-01a58e04d490504593a6",
+          "arn": "arn:aws:sts::961639320333:assumed-role/AWSServiceRoleForAmazonEKS/eks-event-service-01a58e04d490504593a6",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMGXXEVAH32",
+          "sessionContext": {
+            "sessionIssuer": {
+              "type": "Role",
+              "principalId": "AROA57ZRLRMGVCQNX4J6Y",
+              "arn": "arn:aws:iam::961639320333:role/aws-service-role/eks.amazonaws.com/AWSServiceRoleForAmazonEKS",
+              "accountId": "961639320333",
+              "userName": "AWSServiceRoleForAmazonEKS"
+            },
+            "webIdFederationData": {},
+            "attributes": {
+              "creationDate": "2025-11-20T18:29:05Z",
+              "mfaAuthenticated": "false"
+            }
+          },
+          "invokedBy": "eks.amazonaws.com"
+        },
+        "eventTime": "2025-11-20T18:36:38Z",
+        "eventSource": "sts.amazonaws.com",
+        "eventName": "GetCallerIdentity",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "eks.amazonaws.com",
+        "userAgent": "eks.amazonaws.com",
+        "requestParameters": null,
+        "responseElements": null,
+        "additionalEventData": {
+          "ExtendedRequestId": "MTphcC1zb3V0aGVhc3QtMTpTOjE3NjM2NjM3OTg3Mjc6UjpJNFNmajI5Sw=="
+        },
+        "requestID": "6b425ba9-937f-472b-8cc6-442a3e90c9bf",
+        "eventID": "b182e437-4a90-48c6-ac72-8f5e82f89b35",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management"
+      }
+    },
+    {
+      "event_name": "DescribeMetricFilters",
+      "event_time": "2025-11-21T01:36:26+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG6UD33ADN",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:26Z",
+        "eventSource": "logs.amazonaws.com",
+        "eventName": "DescribeMetricFilters",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "limit": 50
+        },
+        "responseElements": null,
+        "requestID": "063207e4-f62a-4349-ab6f-796fb5038c54",
+        "eventID": "9d2ae2ff-f39f-4d1a-b2b5-4b46c058a2dc",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "apiVersion": "20140328",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeMetricFilters",
+      "event_time": "2025-11-21T01:36:24+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG6UD33ADN",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:24Z",
+        "eventSource": "logs.amazonaws.com",
+        "eventName": "DescribeMetricFilters",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "limit": 50
+        },
+        "responseElements": null,
+        "requestID": "dd93df8e-beb2-4831-bbca-0d34d26a9729",
+        "eventID": "1c528155-d81d-403e-a7b0-73a5635bc6d0",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "apiVersion": "20140328",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeMetricFilters",
+      "event_time": "2025-11-21T01:36:24+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG6UD33ADN",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:24Z",
+        "eventSource": "logs.amazonaws.com",
+        "eventName": "DescribeMetricFilters",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "limit": 50
+        },
+        "responseElements": null,
+        "requestID": "0a033d13-40d6-4aba-a2bd-304bd298d87e",
+        "eventID": "9221c8c9-e1c2-4f60-af33-7cf5e75c01bc",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "apiVersion": "20140328",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeMetricFilters",
+      "event_time": "2025-11-21T01:36:24+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG6UD33ADN",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:24Z",
+        "eventSource": "logs.amazonaws.com",
+        "eventName": "DescribeMetricFilters",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "limit": 50
+        },
+        "responseElements": null,
+        "requestID": "fa491041-1304-4ade-8792-3a273c308b77",
+        "eventID": "9c822db8-b3a8-4990-85e4-a9314d66f5bb",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "apiVersion": "20140328",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceTypes",
+      "event_time": "2025-11-21T01:36:22+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:22Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstanceTypes",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "DescribeInstanceTypesRequest": {
+            "NextToken": "AAIAAXLe4xXGLQGfPOJwlfg_b-TMfvS7LyMjisY4q5hpkWt9b-FlKJDPvC7Y4pSMIljK6dIJ0-aGtofhTPBdVX36SYSwxFxDQAdKlyyCQg3u21Pc8wA6uJuz-Gu6GMSDQl_xspaW7mFC-YpZsNLG8UNFvAr9K2AcHCuTeS1KPQ0Nf_OfA5Yz6a2_7gWZo_JEIvzznhVNfbZUcyB5FC0=",
+            "MaxResults": 100
+          }
+        },
+        "responseElements": null,
+        "requestID": "5d98fd2c-65e6-4623-aefe-e634c8a9b2c8",
+        "eventID": "01a6a936-5fa7-4606-ac31-a909524cba94",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceTypes",
+      "event_time": "2025-11-21T01:36:22+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:22Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstanceTypes",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "DescribeInstanceTypesRequest": {
+            "NextToken": "AAIAAWbzi9BKQ7orMMP7MhIUZoj2AVdSxKzOombcpeu2AfL-bGYNrBau-KpG6mNT8g-TSLg5nLJHUrF8dZj51IXEinWBZvIifphkRwWxyhNkityiZHESk0ZPio1Ub-0eQ8HwBnK2pDtLP3FF06FWVO-j8g3Icux3DQl1nBtYqRuU61CT81E-72rF7mAa7q5_M8nB7IimOWPidfvnGw==",
+            "MaxResults": 100
+          }
+        },
+        "responseElements": null,
+        "requestID": "8c39526f-b6fb-46a4-8d4e-ac69a92721ec",
+        "eventID": "0c36eed4-ce17-49f4-b423-69f520c2a807",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceTypes",
+      "event_time": "2025-11-21T01:36:22+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:22Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstanceTypes",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "DescribeInstanceTypesRequest": {
+            "NextToken": "AAIAASzOq_fND0HU3G5D0ANB8TwGjkIOVOfiBN_EFdsl4H6h1X73diHjfo0b4vsXxJDxBtcHUQ9MwuWe9jW_RWanCopcZr7UgLeiWfCV8OyUJRYG0TmuG7ZFIB-hIDd_3kKN0OQ0TJ5_0RIaxMVHsVkzFwZasrymUeDh7UyWqqmNHQNV7mw2TSlZH6syZK30ehDNJNHIZ21L-O5DKUeS",
+            "MaxResults": 100
+          }
+        },
+        "responseElements": null,
+        "requestID": "3e26d9cf-8648-4800-bbb6-a2435bd10ec1",
+        "eventID": "6f9a0c49-464f-4b55-8e99-18fbc2217acd",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "GetEC2InstanceRecommendations",
+      "event_time": "2025-11-21T01:36:22+07:00",
+      "username": "root",
+      "resources": [
+        {
+          "ResourceType": "AWS::EC2::Instance",
+          "ResourceName": "arn:aws:ec2:ap-southeast-1:961639320333:instance/i-0b86f8c040592073e"
+        }
+      ],
+      "cloud_trail_event": {
+        "eventVersion": "1.08",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "sessionIssuer": {},
+            "webIdFederationData": {},
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:22Z",
+        "eventSource": "compute-optimizer.amazonaws.com",
+        "eventName": "GetEC2InstanceRecommendations",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "instanceArns": [
+            "arn:aws:ec2:ap-southeast-1:961639320333:instance/i-0b86f8c040592073e"
+          ],
+          "maxResults": 0,
+          "accountIds": [
+            "961639320333"
+          ]
+        },
+        "responseElements": null,
+        "requestID": "6c4007f7-7946-40a2-9224-468f7d075677",
+        "eventID": "b68f067e-27b0-4d9a-9b75-5cd4976599dd",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "compute-optimizer.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeReplaceRootVolumeTasks",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeReplaceRootVolumeTasks",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "DescribeReplaceRootVolumeTasksRequest": {
+            "Filter": {
+              "Value": {
+                "tag": 1,
+                "content": "i-0b86f8c040592073e"
+              },
+              "tag": 1,
+              "Name": "instance-id"
+            },
+            "MaxResults": 50
+          }
+        },
+        "responseElements": null,
+        "requestID": "4b0d9e32-8432-46eb-aa6a-ed4d209f2f7e",
+        "eventID": "04b12e60-ef6b-402f-9b67-e9ebb0d3e761",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeNetworkInterfaces",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeNetworkInterfaces",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "networkInterfaceIdSet": {},
+          "filterSet": {
+            "items": [
+              {
+                "name": "attachment.instance-id",
+                "valueSet": {
+                  "items": [
+                    {
+                      "value": "i-0b86f8c040592073e"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "responseElements": null,
+        "requestID": "93ae5d4e-8c5c-4bc4-b063-b18e133f35f5",
+        "eventID": "0a16bc92-323b-4be6-8bb3-b5f847e27eae",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceStatus",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstanceStatus",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "instancesSet": {
+            "items": [
+              {
+                "instanceId": "i-0b86f8c040592073e"
+              }
+            ]
+          },
+          "filterSet": {},
+          "includeAllInstances": false,
+          "ignoreManagedInstancesVisibilityConfiguration": false
+        },
+        "responseElements": null,
+        "requestID": "a547a013-c266-4cfc-8959-5144ffb6e75e",
+        "eventID": "2009c84b-e2e6-4106-b4ea-982283f38721",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeImages",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeImages",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "executableBySet": {},
+          "imagesSet": {
+            "items": [
+              {
+                "imageId": "ami-0ca143b172aae70b7"
+              }
+            ]
+          },
+          "ownersSet": {},
+          "filterSet": {}
+        },
+        "responseElements": null,
+        "requestID": "fce6d9d8-a29b-494a-87f3-7e4589a2fe7f",
+        "eventID": "311d6dc3-df5f-4eb9-93b4-5cd5dcbc525d",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceInformation",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ssm.amazonaws.com",
+        "eventName": "DescribeInstanceInformation",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "filters": [
+            {
+              "key": "InstanceIds",
+              "values": [
+                "i-0b86f8c040592073e"
+              ]
+            }
+          ]
+        },
+        "responseElements": null,
+        "requestID": "35d08e96-765e-4c18-ad04-8d3531385313",
+        "eventID": "4e1bb147-62bd-4456-b530-7ae0c4e10383",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.2",
+          "cipherSuite": "ECDHE-RSA-AES128-GCM-SHA256",
+          "clientProvidedHostHeader": "ssm.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeSubnets",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeSubnets",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "subnetSet": {
+            "items": [
+              {
+                "subnetId": "subnet-0e83c2d5492c57e70"
+              }
+            ]
+          },
+          "filterSet": {}
+        },
+        "responseElements": null,
+        "requestID": "be15f1fd-7d1d-41d8-acda-d60668ffdb56",
+        "eventID": "56f22835-3122-4567-8ff9-aadc4ab83a52",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeVolumes",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeVolumes",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "volumeSet": {
+            "items": [
+              {
+                "volumeId": "vol-066debfd06eb201ee"
+              }
+            ]
+          },
+          "filterSet": {}
+        },
+        "responseElements": null,
+        "requestID": "356a4aeb-b628-4e07-b501-890e0ccc1ad4",
+        "eventID": "7124bf63-f97e-454f-a678-e0550a287b65",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceTypes",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstanceTypes",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "DescribeInstanceTypesRequest": {
+            "NextToken": "AAIAAaqF8W3rbOHr6mBH_C8XBwwtLWO2ql5oYODc13qxiwT65fbCWkz0HQwkl2m3ZXURwbH5gWHNMqKCZwMyEugY-wQSa8I_ruu9PjN57B9NsRi6MIT9UfvF3WbzTYdFtDmF_39aDkM86jW5KbJ_5FvWE2SPJNaAbbb0zWDgH5NICIrGzJRfBinkC2fz34dFbp7Wy7_Lpu1tPZ0ymsw=",
+            "MaxResults": 100
+          }
+        },
+        "responseElements": null,
+        "requestID": "81a52f33-d8ec-4bd4-8ba3-48f1754eae7a",
+        "eventID": "7b179b32-7b98-42eb-9fa7-e258d7d6738c",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeNetworkInterfaces",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeNetworkInterfaces",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "networkInterfaceIdSet": {},
+          "filterSet": {
+            "items": [
+              {
+                "name": "attachment.instance-id",
+                "valueSet": {
+                  "items": [
+                    {
+                      "value": "i-0b86f8c040592073e"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "responseElements": null,
+        "requestID": "cdbfb454-7ac2-42c0-b3b3-ed74c66be88b",
+        "eventID": "83e08640-b1b7-437b-abd4-a13018258c5e",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceCreditSpecifications",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstanceCreditSpecifications",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "DescribeInstanceCreditSpecificationsRequest": {
+            "InstanceId": {
+              "tag": 1,
+              "content": "i-0b86f8c040592073e"
+            }
+          }
+        },
+        "responseElements": null,
+        "requestID": "37e4ad38-ff3b-47c2-aeb5-362cfb357a60",
+        "eventID": "8546bcba-2376-4bc8-a8b5-bf60489e300c",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "GetEnrollmentStatus",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.08",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "sessionIssuer": {},
+            "webIdFederationData": {},
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "compute-optimizer.amazonaws.com",
+        "eventName": "GetEnrollmentStatus",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": null,
+        "responseElements": null,
+        "requestID": "49f862bd-6791-4b77-9e5f-6bcf62a94551",
+        "eventID": "9ded79e8-89a9-4418-b24e-277aeecaf24f",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "compute-optimizer.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceImageMetadata",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstanceImageMetadata",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "DescribeInstanceImageMetadataRequest": {
+            "InstanceId": {
+              "tag": 1,
+              "content": "i-0b86f8c040592073e"
+            }
+          }
+        },
+        "responseElements": null,
+        "requestID": "5cb6ea32-79d2-43ae-bb99-50a599fb93f6",
+        "eventID": "a8666c71-1448-4eea-8246-09a62ffc1c11",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceAttribute",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstanceAttribute",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "instanceId": "i-0b86f8c040592073e",
+          "attribute": "disableApiStop"
+        },
+        "responseElements": null,
+        "requestID": "7dc2844f-32bd-4cd8-abd5-974c829f2c2e",
+        "eventID": "a9c08451-3e9e-4efb-98e5-51b5c7dac101",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeVpcs",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeVpcs",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "vpcSet": {
+            "items": [
+              {
+                "vpcId": "vpc-04bf8abab8f95f681"
+              }
+            ]
+          },
+          "filterSet": {}
+        },
+        "responseElements": null,
+        "requestID": "c5943d71-93ce-48f1-a01c-d284d6e6abb2",
+        "eventID": "b0f32ca7-b749-48f3-bff4-ce86d2917b2d",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceStatus",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstanceStatus",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "instancesSet": {
+            "items": [
+              {
+                "instanceId": "i-0b86f8c040592073e"
+              }
+            ]
+          },
+          "filterSet": {},
+          "includeAllInstances": false,
+          "ignoreManagedInstancesVisibilityConfiguration": false
+        },
+        "responseElements": null,
+        "requestID": "4c2453c5-b0b4-467f-92be-7f4014cfdb90",
+        "eventID": "c05a2aa2-75f2-4441-8160-830b01beac8b",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceAttribute",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstanceAttribute",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "instanceId": "i-0b86f8c040592073e",
+          "attribute": "disableApiTermination"
+        },
+        "responseElements": null,
+        "requestID": "bdd6ed02-6557-4175-bb7d-44506ef3478a",
+        "eventID": "c621816c-5a44-423d-a221-0c8c772b1ec0",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstances",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstances",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "instancesSet": {
+            "items": [
+              {
+                "instanceId": "i-0b86f8c040592073e"
+              }
+            ]
+          },
+          "filterSet": {}
+        },
+        "responseElements": null,
+        "requestID": "a8627db7-b640-4452-9dcd-a723caf42a30",
+        "eventID": "d73d80f6-5c42-45ad-9f7d-3e3a885f3bdc",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeAddresses",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeAddresses",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "publicIpsSet": {},
+          "filterSet": {
+            "items": [
+              {
+                "name": "instance-id",
+                "valueSet": {
+                  "items": [
+                    {
+                      "value": "i-0b86f8c040592073e"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "allocationIdsSet": {}
+        },
+        "responseElements": null,
+        "requestID": "b2c784b6-fab8-497f-be50-6dd265dd9673",
+        "eventID": "ea5e6c8d-535a-4df5-b14e-810326b96e01",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceTypes",
+      "event_time": "2025-11-21T01:36:21+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:21Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstanceTypes",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "DescribeInstanceTypesRequest": {
+            "NextToken": "AAIAAbxadKMtmnrC258FiZe9EZAT7MD3WP5-Jvdh5Br0vBDF8QUZk-xYFIcE5mMtR9LhzlzpRit9L2855ZooLef_qYgyzkVmU_m9BzUfmEccyNXrJh_8q3tvioZtj08CJXJRCqSAc9d26w8K4o0NnWM9JmmtHHgzBDJBol8FpdKztzWbhC7Ud69yfQNb_dr1TVRyEXA8xjhuLYdJTQhQ",
+            "MaxResults": 100
+          }
+        },
+        "responseElements": null,
+        "requestID": "3067afef-fec1-48f9-9504-6a4a8528604e",
+        "eventID": "ff14cdf0-d61c-493d-a3d4-19d50dfb6a84",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeAlarms",
+      "event_time": "2025-11-21T01:36:20+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:20Z",
+        "eventSource": "monitoring.amazonaws.com",
+        "eventName": "DescribeAlarms",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "stateValue": "ALARM",
+          "maxRecords": 1000
+        },
+        "responseElements": null,
+        "requestID": "876414f9-e02f-4798-b85d-49c429132822",
+        "eventID": "20fa9317-b06d-48f5-bb41-242744ddee7d",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "monitoring.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceStatus",
+      "event_time": "2025-11-21T01:36:20+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:20Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstanceStatus",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "instancesSet": {
+            "items": [
+              {
+                "instanceId": "i-0b86f8c040592073e"
+              }
+            ]
+          },
+          "filterSet": {},
+          "includeAllInstances": false,
+          "ignoreManagedInstancesVisibilityConfiguration": false
+        },
+        "responseElements": null,
+        "requestID": "49559238-f096-48de-8726-23980ad7f611",
+        "eventID": "2286c439-01af-4919-8629-2fa1621bb9a7",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceTypes",
+      "event_time": "2025-11-21T01:36:20+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:20Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstanceTypes",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "DescribeInstanceTypesRequest": {
+            "MaxResults": 100
+          }
+        },
+        "responseElements": null,
+        "requestID": "b825b201-dbff-48d3-a8f1-822765b49452",
+        "eventID": "685db27f-1793-43df-9b68-fb8fc04c24c9",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstances",
+      "event_time": "2025-11-21T01:36:20+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:20Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstances",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "maxResults": 100,
+          "instancesSet": {},
+          "filterSet": {}
+        },
+        "responseElements": null,
+        "requestID": "ead5c80b-f7cd-4de0-ac0f-b238663bd877",
+        "eventID": "8f52fd60-96e5-43dd-8275-29694839841c",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceTypes",
+      "event_time": "2025-11-21T01:36:20+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:20Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstanceTypes",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "DescribeInstanceTypesRequest": {
+            "NextToken": "AAIAAXDRfiSKhDUzx-FvhfyIgzslD0Bz9eMystMslvDiWx0qGb9m1jNYL3aWmTCJrs32D1FCmYGKFZo6UaRmXsLASquBjuweT9q0WhEisacOKSwtnWmWMBzmaTRPDaUuZll3eq5NbbOcIqX7IXtkCOiQtE8RveWBGv5-Bd0r3f_VCcrzP0zvp5Ys44kypTYPZvslIC5tMKzkMOywryiVQw==",
+            "MaxResults": 100
+          }
+        },
+        "responseElements": null,
+        "requestID": "d61e2a52-3e89-4732-84d5-c8e3d6a1f4b6",
+        "eventID": "a7a169bc-90b7-4917-8cfc-1c8dba42cea3",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeAccountAttributes",
+      "event_time": "2025-11-21T01:36:20+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:20Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeAccountAttributes",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "accountAttributeNameSet": {},
+          "filterSet": {}
+        },
+        "responseElements": null,
+        "requestID": "eff11d39-b8de-458a-85c6-bd39976e9368",
+        "eventID": "abd49a1d-d38f-4288-808d-055dbc4639e1",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeTags",
+      "event_time": "2025-11-21T01:36:20+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:20Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeTags",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "maxResults": 1000,
+          "filterSet": {
+            "items": [
+              {
+                "name": "resource-type",
+                "valueSet": {
+                  "items": [
+                    {
+                      "value": "instance"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "responseElements": null,
+        "requestID": "680d12b8-a82f-4f21-9992-99f9afa0382b",
+        "eventID": "c905c81e-e646-4d71-b60e-4694ff431a08",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeAddresses",
+      "event_time": "2025-11-21T01:36:20+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:20Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeAddresses",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "publicIpsSet": {},
+          "filterSet": {
+            "items": [
+              {
+                "name": "instance-id",
+                "valueSet": {
+                  "items": [
+                    {
+                      "value": "i-0b86f8c040592073e"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "allocationIdsSet": {}
+        },
+        "responseElements": null,
+        "requestID": "677c178e-485e-4ac3-819f-ff4f4efa5866",
+        "eventID": "cf08ff18-caac-48ea-8e73-fe4e58247390",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceTypes",
+      "event_time": "2025-11-21T01:36:20+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:20Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstanceTypes",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "DescribeInstanceTypesRequest": {
+            "MaxResults": 100
+          }
+        },
+        "responseElements": null,
+        "requestID": "693861e2-417d-4a5e-a9aa-8a4ecfc38995",
+        "eventID": "d1f3275c-2650-4df1-b833-f1700a2fbe32",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeInstanceTypes",
+      "event_time": "2025-11-21T01:36:20+07:00",
+      "username": "root",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "Root",
+          "principalId": "961639320333",
+          "arn": "arn:aws:iam::961639320333:root",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG4ZIFPAF4",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:02:52Z",
+              "mfaAuthenticated": "true"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:36:20Z",
+        "eventSource": "ec2.amazonaws.com",
+        "eventName": "DescribeInstanceTypes",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "requestParameters": {
+          "DescribeInstanceTypesRequest": {
+            "NextToken": "AAIAAUE5Mbhkz0mRUyKgQ2UHCiJgCDjojjzHyxyHvPLnpjGx6EwAc1HzH4WQUzHHJbv42zeu3RnVy3CAwVeCfE3X-6_0cgvXqzw--HlaiHG4er85IFI0ok1Fe-9AfyjpKqkYC4RbV2Bq2nCLaGEQoZDpARdosTXnZLXjTNldyUrr7ez6u4Hig9piWmqHGGQRqbA2ZRGzxJaMSHGOpw==",
+            "MaxResults": 100
+          }
+        },
+        "responseElements": null,
+        "requestID": "3079835b-2bac-4706-be82-4b8e795fbfb1",
+        "eventID": "fa7015b2-d937-4d41-973d-bee39829e09f",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "ec2.ap-southeast-1.amazonaws.com"
+        },
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeMetricFilters",
+      "event_time": "2025-11-21T01:34:27+07:00",
+      "username": "quy",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+          "arn": "arn:aws:iam::961639320333:user/quy",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG2S7VTYHF",
+          "userName": "quy",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:40:06Z",
+              "mfaAuthenticated": "false"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:34:27Z",
+        "eventSource": "logs.amazonaws.com",
+        "eventName": "DescribeMetricFilters",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "27.70.185.199",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "limit": 50
+        },
+        "responseElements": null,
+        "requestID": "756b1112-3974-43a2-8ccf-3095f9e6965f",
+        "eventID": "2b66450e-e6a5-4f19-b8e7-1fcb69dd5845",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "apiVersion": "20140328",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeMetricFilters",
+      "event_time": "2025-11-21T01:34:27+07:00",
+      "username": "quy",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+          "arn": "arn:aws:iam::961639320333:user/quy",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG2S7VTYHF",
+          "userName": "quy",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:40:06Z",
+              "mfaAuthenticated": "false"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:34:27Z",
+        "eventSource": "logs.amazonaws.com",
+        "eventName": "DescribeMetricFilters",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "27.70.185.199",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "limit": 50
+        },
+        "responseElements": null,
+        "requestID": "d0bdf06d-1b9c-4069-887f-0f8968532147",
+        "eventID": "309de5c4-1d6e-48cd-8fc4-ab4ce2314281",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "apiVersion": "20140328",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeMetricFilters",
+      "event_time": "2025-11-21T01:34:27+07:00",
+      "username": "quy",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+          "arn": "arn:aws:iam::961639320333:user/quy",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG2S7VTYHF",
+          "userName": "quy",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:40:06Z",
+              "mfaAuthenticated": "false"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:34:27Z",
+        "eventSource": "logs.amazonaws.com",
+        "eventName": "DescribeMetricFilters",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "27.70.185.199",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "limit": 50
+        },
+        "responseElements": null,
+        "requestID": "8c4d5ee8-b1f8-4cb9-acac-3cf52b8d74fd",
+        "eventID": "76eaf542-eb8c-40bc-9273-3a285e0616e0",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "apiVersion": "20140328",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "DescribeMetricFilters",
+      "event_time": "2025-11-21T01:34:27+07:00",
+      "username": "quy",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+          "arn": "arn:aws:iam::961639320333:user/quy",
+          "accountId": "961639320333",
+          "accessKeyId": "ASIA57ZRLRMG2S7VTYHF",
+          "userName": "quy",
+          "sessionContext": {
+            "attributes": {
+              "creationDate": "2025-11-20T17:40:06Z",
+              "mfaAuthenticated": "false"
+            }
+          }
+        },
+        "eventTime": "2025-11-20T18:34:27Z",
+        "eventSource": "logs.amazonaws.com",
+        "eventName": "DescribeMetricFilters",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "27.70.185.199",
+        "userAgent": "AWS Internal",
+        "requestParameters": {
+          "limit": 50
+        },
+        "responseElements": null,
+        "requestID": "ffd6b9ee-8935-4d68-a63f-77152bdf216a",
+        "eventID": "a8d88a95-756c-4ea5-b6b8-af628a622b4f",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "apiVersion": "20140328",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "sessionCredentialFromConsole": "true"
+      }
+    },
+    {
+      "event_name": "GetResourceConfigHistory",
+      "event_time": "2025-11-21T01:31:49+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:49Z",
+        "eventSource": "config.amazonaws.com",
+        "eventName": "GetResourceConfigHistory",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "errorCode": "ResourceNotDiscoveredException",
+        "errorMessage": "Resource i-0b86f8c040592073e of resourceType:AWS::EC2::Instance is unknown or has not been discovered",
+        "requestParameters": {
+          "resourceType": "AWS::EC2::Instance",
+          "resourceId": "i-0b86f8c040592073e",
+          "limit": 100,
+          "laterTime": "Nov 20, 2025 6:31:31 PM",
+          "earlierTime": "Oct 21, 2025 6:31:31 PM"
+        },
+        "responseElements": null,
+        "requestID": "945c7710-64d4-451a-a42a-5ccec02b394d",
+        "eventID": "357d19e9-36ea-4415-980f-5b3a799651ab",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "config.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:48+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:48Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "I/T6jshAeb8Tz22gbOJH1JsC5HFSqwD6xDrjSWLamFrB8ua/ZhIdGS4RTX0x6/Ig6b8BHN/tmyFADfanf3baZg=="
+        },
+        "responseElements": null,
+        "requestID": "4a21eb9e-95f6-4c92-9269-297d4c3b2990",
+        "eventID": "048e47fa-abd6-4b52-bea3-0e191aa1cba1",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:48+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:48Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "RNGKmA03BMD5svD727fxTjXnwtr+743WS1ZCHDQunqHRQrBdmk6PG+vKlHn94+Qre6K3IV1hrDk7beGr9l6B3A=="
+        },
+        "responseElements": null,
+        "requestID": "1d433197-7a31-415f-bbf8-3a10f7883ad7",
+        "eventID": "55f7625b-983f-4ca3-a400-f3173c23dcf2",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:48+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:48Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "rOp9iYBpxgG0GzqHowjGd7QVCEIbeENv7Rc5AbiXCDBWeHf8lrWYugvBU1Nk+HmKMHxYu2KMeg1Nh17YjskuYQ=="
+        },
+        "responseElements": null,
+        "requestID": "c91eba3d-76a5-4b15-8c0e-13dba3e9fbcb",
+        "eventID": "f818f1a8-093a-4646-8258-c1334f32625a",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:46+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:46Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "RVLV+uLb9SZsBOv/njk46ibX8girfXgM9CcvNhP8OhDjPC3RN5OfHPyLfBEncvTOKP8i/nhkSUr5dKNMLXYJyw=="
+        },
+        "responseElements": null,
+        "requestID": "1c3e4e76-a544-4407-bc63-13286a6d718e",
+        "eventID": "3060a0cf-5ae1-426d-ab55-4eb599e26bbd",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:46+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:46Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "PfUxlJlWHHghJz2byrxeJleW0fcz+XSoosOcWg6JWR91KEGjZtyz2uR734od1mx7Oz27IohfoROPnG8fSYu3/w=="
+        },
+        "responseElements": null,
+        "requestID": "7538d7d7-22c8-4319-b065-1c816c992cd4",
+        "eventID": "32bb5939-1705-481b-98b6-20cf5a2b5b99",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:46+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:46Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "v1aBMnPs9WXrqIxesm5m17JZ+Qer3ZAXu4mCQD7ZfX992Jz3ppd2ZYe3K0okCZ+r8pOseHAv6YRRma7G6W+sHA=="
+        },
+        "responseElements": null,
+        "requestID": "bad9cb76-e084-4968-bd46-edbb901b276c",
+        "eventID": "36b66481-b39c-429b-a23d-df986cd8ec06",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:46+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:46Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "errorCode": "ThrottlingException",
+        "errorMessage": "Rate exceeded",
+        "requestParameters": null,
+        "responseElements": null,
+        "requestID": "7f3943ae-b497-42f6-bd56-55f1d32e211a",
+        "eventID": "cd8512d6-472a-4fe3-a829-2dc9ca015324",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:46+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:46Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "YH3E8iIu/ovuhlM478nwYB1Hh7h8qSfMizUusCiMUBvEtJIiGiMivp3i1zeIJEnYV4+E8AjoESSoB60DhNSb+w=="
+        },
+        "responseElements": null,
+        "requestID": "0c0a7e60-409b-4bac-b058-35624dccc40d",
+        "eventID": "ded48163-2f9f-478b-892f-508a367f8eac",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:45+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:45Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "ZoyAhXNp10Rm+6DcjNg2ZBAiipLEkHSBtlQtObEpTxudsLqxhDuyg+2Sh3OuHy9QfivALN6fecb6dpVzCAFG1g=="
+        },
+        "responseElements": null,
+        "requestID": "82922520-7b58-43c1-b07a-f7035c02eacc",
+        "eventID": "6d7efaf9-60de-472d-bfc7-02039c7d7a62",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:45+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:45Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "95ofFYAk7mYDw6W583MGa/RomeVfdomA0zmLHnb67i6K3xjfYRb7IQl7KG9eK/9/XwNLPf88kc7D8vl9RRoMHA=="
+        },
+        "responseElements": null,
+        "requestID": "3450fffb-d102-465b-86d6-b659f49f6ba6",
+        "eventID": "c6087c05-5885-4d84-9347-1f16e0264ca4",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:45+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:45Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "8nYEgWJExXFumSzi1OFbEzlWHd6uw6FHLcflcqPyaE+EuK2Lx5i92ny5juNyDhSXFz4w2nYb+xyBOZTYoI7hFw=="
+        },
+        "responseElements": null,
+        "requestID": "9860422a-a812-4fbe-8019-558d9062c90d",
+        "eventID": "caeca537-ff57-4bac-a4aa-be49f8e24b48",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:45+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:45Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "LQE81CZvPEmQds57Ox/RRuh2pSkgWeG+39ojOO9emg5KbMD42tdvIOkqXfQsu7QvBQskNev2Tx5Lv/WNkff2QA=="
+        },
+        "responseElements": null,
+        "requestID": "2f7d119b-edd3-40b4-a19a-e132006d913b",
+        "eventID": "d1896f76-9c66-466b-9647-26aa7bd9cc34",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:43+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:43Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "9J2OtanWdJM0B8987KN/+IFjwAi7BlZ9lqndje6ckvJkrqasNx57QuohiG/Q6DGArxOCTFPvlOEaRGlqbeVq7w=="
+        },
+        "responseElements": null,
+        "requestID": "29189965-cc5c-4150-9eb1-222831acf8bc",
+        "eventID": "8a1c8f2b-cdd8-4f84-ac20-c05a0700112c",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:43+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:43Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "Hi9FwapC/D5svTTXjA5ERRgQgq/oaoiYcNvQLhoRix+Qf55ecpOHgTx/DIAORHomGOxYY1nU4uGOrdTEEDIbpw=="
+        },
+        "responseElements": null,
+        "requestID": "60d69992-6853-499c-9fea-6e61f71ff3b1",
+        "eventID": "a435b6b5-e19f-4580-9b31-8b2ed4e3f875",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:43+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:43Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "errorCode": "ThrottlingException",
+        "errorMessage": "Rate exceeded",
+        "requestParameters": null,
+        "responseElements": null,
+        "requestID": "04c10689-5738-418d-bfa3-7d433f89ad9e",
+        "eventID": "e70cbe8c-210d-4068-be72-f161df6eaa76",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:42+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:42Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "IYgi4oWpNhqtCf5JsV9xM+B55WYn4+z1xzH2kIwVMp0Kl5YovClXDh/URJXCXTpZaMljl/dM1QWpGweg+NCc2Q=="
+        },
+        "responseElements": null,
+        "requestID": "991a92e8-c48b-4378-9c08-13206e86befd",
+        "eventID": "1acff9e9-0f93-4d4c-8df0-a7d024b985b7",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:42+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:42Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "Wt38amkjaUu6vkTNpZlNnQSb+l6gWoXbRFMhlgy1uOFIB2vDB5tBq2dSvwsfx3JfcgP2PKl0Vlc4APkmJKZ92Q=="
+        },
+        "responseElements": null,
+        "requestID": "febbf80e-0577-4735-8e5e-6d02d8f8e42d",
+        "eventID": "50b4df91-1b13-4a99-9d72-5f8db96705ba",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:42+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:42Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "ieDLCDYlJBxgRKVTunLy8YvMAvnMxEi/PCPvA1gTsLHpdO5XuHvVq8NAttX42x5PyPMQlDiGd3FelJsoo+91Sw=="
+        },
+        "responseElements": null,
+        "requestID": "eb52f249-080c-43a5-8389-1292c2e41932",
+        "eventID": "9feb030e-e70f-4fd2-bcd8-fbe631aa975d",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:41+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:41Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "9lOUI/wuiBH/AuRUeza8qBMFhxy/S3UiYtk96NCebM0n1dOZR8Q2nE/kqZhA+JonIfVR7J1QVEk34BV9NcnRyw=="
+        },
+        "responseElements": null,
+        "requestID": "b2f13144-4b81-49bc-b6f1-3563cc9060a5",
+        "eventID": "2897e7b6-ea55-4aaf-acbf-25315a67bcb6",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:41+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:41Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "b7cyGPg9bWus9nVVsN1khIZH4V+swpUcdctwm1rFClqkq5ZW1Y9xBJ4BFKzAnP+gkUx30XEXtZqnVcWxqq5EmA=="
+        },
+        "responseElements": null,
+        "requestID": "2608cb29-13fb-4958-8c9e-24a91a7fd7e8",
+        "eventID": "3dc9629c-e72e-4f29-b3f3-31da85a4d91b",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:40+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:40Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "SG/bIDPeMTPm4xht0vPaURlgsbc+hFjlac4ygaiM9F4UnAESTPeKBPdUmz8cTGvFiGGaQAPNldNEvyfm1GdiDA=="
+        },
+        "responseElements": null,
+        "requestID": "b9f8b456-f2aa-4b5e-872c-57260a4ae224",
+        "eventID": "2a83ce0f-2e6d-4f02-b49c-81d47e1dda10",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:40+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:40Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "errorCode": "ThrottlingException",
+        "errorMessage": "Rate exceeded",
+        "requestParameters": null,
+        "responseElements": null,
+        "requestID": "c0933642-7809-48c8-bbe2-23b85ec20285",
+        "eventID": "8b547a6c-7dda-4fae-b4ec-e6e6db53bfbd",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:39+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:39Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "5S/oQXIu/ER8GqOCciuTFoijThSdrSN88tPMmQR3O6CmB+0d7DCGsY37EOlr+2OMCcxeZPReV/UEBxGpUXEFDQ=="
+        },
+        "responseElements": null,
+        "requestID": "3eb7abdb-d325-42d8-bf6f-1a7300318b85",
+        "eventID": "2004ebf0-5bfe-48a7-adaf-672bfa125868",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:39+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:39Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "dDM8CMc7Se/zvlyuDSyVDvt43h/omEs6ujq8kU64dRF/UC+T83lGzbcs8r6PyagJQiyU59xAtJG6RnXiaMjLmA=="
+        },
+        "responseElements": null,
+        "requestID": "05faff8a-6c45-4c90-8643-41d79ffc4b28",
+        "eventID": "50c8fbac-21c4-4e72-8b87-ffc6bc12095f",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:39+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:39Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "MYEptsM1gDKfg7KsLrKxNDzIIjtytZIdraa6wXyyL0wx769NlXYUIO0MnXINAhkOxw85WlsrP/GN34TUB2b0cw=="
+        },
+        "responseElements": null,
+        "requestID": "63a82c3e-1cbd-4392-b1ad-e013332dc600",
+        "eventID": "87e04068-e579-4da7-b33b-011a191c664c",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:37+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:37Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "errorCode": "ThrottlingException",
+        "errorMessage": "Rate exceeded",
+        "requestParameters": null,
+        "responseElements": null,
+        "requestID": "f80590fd-90c0-4cf8-82fc-ec40e306a8c2",
+        "eventID": "196e0df3-5002-4ed0-baf2-64a4e7ed76f6",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:37+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:37Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "KA7oLOnMDBpkFtL76awR4MPKRJf+2o8t/OaNsE7tDIatCTFPM3zgrVMUyZ6c+rG+mGvxofJlejFkjrH96AAeBw=="
+        },
+        "responseElements": null,
+        "requestID": "1ce5b4f1-fefe-4108-a011-e95d3c605fb6",
+        "eventID": "228e0ab9-33d5-4ba8-a6cd-08959de12cd3",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:37+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:37Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "KRDPFIuSnNuNSwmAf2ZAFdjlFQ+rSLo6BbV/Br1pO115xQuMmdLrH8JQKJi9/UEi5DETfVuj8f3zLEbdgUrPWQ=="
+        },
+        "responseElements": null,
+        "requestID": "7fb9c6a1-355d-46fc-a9c3-caba3ce1120c",
+        "eventID": "64199e52-ab5c-45cd-a4eb-e000d41d728f",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:37+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:37Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "FSyftLLCOlCzA/m2KwLsLzF/jzAEcegsZ59zQlheISdnKuZ4H4XMQYTgz+MOhM7ld5MFGly8y/dgXkhdc6vfHw=="
+        },
+        "responseElements": null,
+        "requestID": "515b62df-43dd-41b4-9a58-6db5a659af3e",
+        "eventID": "647f4964-f822-4bea-9af3-eb4da5e0f60a",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:36+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:36Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "u8rnQJhfXYqR9iUwcedSPbEKVAz7sX71uc3Y/dZsSXgXPDW1W8aNZSuQB3192KERHEDlR1zQVZBggr+F6z5p9w=="
+        },
+        "responseElements": null,
+        "requestID": "3307c456-47d5-48bf-866a-b27730caac0c",
+        "eventID": "3ee150df-0565-48a5-93a8-27feab13faa8",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:36+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:36Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "errorCode": "ThrottlingException",
+        "errorMessage": "Rate exceeded",
+        "requestParameters": null,
+        "responseElements": null,
+        "requestID": "bd5d8cd6-00d4-4d1c-9414-5646776a93f7",
+        "eventID": "9ec706f2-a921-4fe4-8e27-8168f42aa66e",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:35+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:35Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "3oh5pwtXPQ5j3i6d1NtfJ+m2rqm3a3I0HLBriuZCYCnm2UpxbqB33eGT21V/wMq1K3Z1StaUxnzZdDoQKeDnIA=="
+        },
+        "responseElements": null,
+        "requestID": "9d860dd8-3071-4bd3-a841-fd64e5a3453e",
+        "eventID": "216e7130-b667-4b43-b317-355ad5d290c6",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:35+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:35Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "errorCode": "ThrottlingException",
+        "errorMessage": "Rate exceeded",
+        "requestParameters": null,
+        "responseElements": null,
+        "requestID": "25895f4b-a270-4e75-8eca-6bc31c029635",
+        "eventID": "c66d60ff-eaeb-4602-ba72-d54bd191f753",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:34+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:34Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "2LSG9+8RlTmtdNUceflgz7Npyt81TrwG72Vz73thD3M+5WidqV5loYSmORVLq86pPn9Hp8ZeIUO/srP62iyVAg=="
+        },
+        "responseElements": null,
+        "requestID": "2a11209a-123b-4bdd-aee6-d43ddfa71575",
+        "eventID": "56297f3f-ef07-4393-bd10-8676ef3d7d18",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:34+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:34Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "yWH2UcPjaOh0x3RoQhEc+o9sknM+rLoEVQ44JZa0WvPA206MU06zDQ5PC5FoJc3wYGbFqPOlcqNciRayuPiLFA=="
+        },
+        "responseElements": null,
+        "requestID": "3e14fafc-823e-4888-95bb-dde54cccf2e4",
+        "eventID": "56f48413-649d-49dc-a1ef-8a610f24937a",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "event_name": "LookupEvents",
+      "event_time": "2025-11-21T01:31:34+07:00",
+      "username": "cloud_drift_AI",
+      "resources": [],
+      "cloud_trail_event": {
+        "eventVersion": "1.11",
+        "userIdentity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "eventTime": "2025-11-20T18:31:34Z",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "LookupEvents",
+        "awsRegion": "ap-southeast-1",
+        "sourceIPAddress": "14.224.176.224",
+        "userAgent": "Boto3/1.40.68 md/Botocore#1.40.68 ua/2.1 os/windows#11 md/arch#amd64 lang/python#3.13.1 md/pyimpl#CPython m/b,e,Z,F cfg/retry-mode#adaptive Botocore/1.40.68",
+        "requestParameters": {
+          "startTime": "Nov 13, 2025, 6:29:59 PM",
+          "endTime": "Nov 20, 2025, 6:29:59 PM",
+          "maxResults": 50,
+          "nextToken": "N5LlALHLpIuC9iRNx6HLjo34rJzgSswNcs6ZHnM3kECPjJ/L4ZVOJAzuoU5+u5htP/A/VRq3Vo56Mir2iy5Scw=="
+        },
+        "responseElements": null,
+        "requestID": "fb46dd2d-4acc-4bca-8c70-0cf2aba7e16d",
+        "eventID": "66397abb-8261-4508-b00d-86220cab5b6f",
+        "readOnly": true,
+        "eventType": "AwsApiCall",
+        "managementEvent": true,
+        "recipientAccountId": "961639320333",
+        "eventCategory": "Management",
+        "tlsDetails": {
+          "tlsVersion": "TLSv1.3",
+          "cipherSuite": "TLS_AES_128_GCM_SHA256",
+          "clientProvidedHostHeader": "cloudtrail.ap-southeast-1.amazonaws.com"
+        }
+      }
+    }
+  ],
+  "matched_events": [
+    {
+      "event_name": "CreateTags",
+      "event_time": "2025-11-21T01:17:31+07:00",
+      "username": "quy",
+      "user_identity": {
+        "type": "IAMUser",
+        "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+        "arn": "arn:aws:iam::961639320333:user/quy",
+        "accountId": "961639320333",
+        "accessKeyId": "ASIA57ZRLRMG33WPLPHZ",
+        "userName": "quy",
+        "sessionContext": {
+          "attributes": {
+            "creationDate": "2025-11-20T17:40:06Z",
+            "mfaAuthenticated": "false"
+          }
+        }
+      },
+      "source_ip": "14.224.176.224",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+      "request_parameters": {
+        "resourcesSet": {
+          "items": [
+            {
+              "resourceId": "i-0b86f8c040592073e"
+            }
+          ]
+        },
+        "tagSet": {
+          "items": [
+            {
+              "key": "Name",
+              "value": "my-ec2-instance-da"
+            }
+          ]
+        }
+      },
+      "response_elements": {
+        "requestId": "53f4e30c-6710-4552-a644-a91269b0e607",
+        "_return": true
+      },
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "event_name": "CreateTags",
+      "event_time": "2025-11-21T01:11:04+07:00",
+      "username": "quy",
+      "user_identity": {
+        "type": "IAMUser",
+        "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+        "arn": "arn:aws:iam::961639320333:user/quy",
+        "accountId": "961639320333",
+        "accessKeyId": "ASIA57ZRLRMGUG54XOXI",
+        "userName": "quy",
+        "sessionContext": {
+          "attributes": {
+            "creationDate": "2025-11-20T17:40:06Z",
+            "mfaAuthenticated": "false"
+          }
+        }
+      },
+      "source_ip": "14.224.176.224",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+      "request_parameters": {
+        "resourcesSet": {
+          "items": [
+            {
+              "resourceId": "i-0b86f8c040592073e"
+            }
+          ]
+        },
+        "tagSet": {
+          "items": [
+            {
+              "key": "Name",
+              "value": "my-ec2-instance-d"
+            }
+          ]
+        }
+      },
+      "response_elements": {
+        "requestId": "ecaebc6d-fdf8-4a1b-908f-5d6a144b66a6",
+        "_return": true
+      },
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "event_name": "ModifyInstanceAttribute",
+      "event_time": "2025-11-21T00:43:13+07:00",
+      "username": "quy",
+      "user_identity": {
+        "type": "IAMUser",
+        "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+        "arn": "arn:aws:iam::961639320333:user/quy",
+        "accountId": "961639320333",
+        "accessKeyId": "ASIA57ZRLRMG6XZHOI6E",
+        "userName": "quy",
+        "sessionContext": {
+          "attributes": {
+            "creationDate": "2025-11-20T17:40:06Z",
+            "mfaAuthenticated": "false"
+          }
+        }
+      },
+      "source_ip": "14.224.176.224",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+      "request_parameters": {
+        "instanceId": "i-0b86f8c040592073e",
+        "ebsOptimized": {
+          "value": true
+        }
+      },
+      "response_elements": {
+        "requestId": "6e833a45-140c-4ffc-b6aa-c5d1e22e5c5a",
+        "_return": true
+      },
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "event_name": "ModifyInstanceAttribute",
+      "event_time": "2025-11-21T00:43:12+07:00",
+      "username": "quy",
+      "user_identity": {
+        "type": "IAMUser",
+        "principalId": "AIDA57ZRLRMG2L2PHM2KC",
+        "arn": "arn:aws:iam::961639320333:user/quy",
+        "accountId": "961639320333",
+        "accessKeyId": "ASIA57ZRLRMG6XZHOI6E",
+        "userName": "quy",
+        "sessionContext": {
+          "attributes": {
+            "creationDate": "2025-11-20T17:40:06Z",
+            "mfaAuthenticated": "false"
+          }
+        }
+      },
+      "source_ip": "14.224.176.224",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+      "request_parameters": {
+        "instanceId": "i-0b86f8c040592073e",
+        "instanceType": {
+          "value": "t3a.medium"
+        }
+      },
+      "response_elements": {
+        "requestId": "9f8e6c9d-ef05-4099-ab2b-062a3b4d8822",
+        "_return": true
+      },
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "event_name": "StopInstances",
+      "event_time": "2025-11-20T22:06:58+07:00",
+      "username": "root",
+      "user_identity": {
+        "type": "Root",
+        "principalId": "961639320333",
+        "arn": "arn:aws:iam::961639320333:root",
+        "accountId": "961639320333",
+        "accessKeyId": "ASIA57ZRLRMG4L5LCGBS",
+        "sessionContext": {
+          "attributes": {
+            "creationDate": "2025-11-20T04:56:22Z",
+            "mfaAuthenticated": "true"
+          }
+        }
+      },
+      "source_ip": "14.162.176.123",
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+      "request_parameters": {
+        "instancesSet": {
+          "items": [
+            {
+              "instanceId": "i-0b86f8c040592073e"
+            }
+          ]
+        },
+        "force": false,
+        "skipOsShutdown": false
+      },
+      "response_elements": {
+        "requestId": "fa30f37e-62dc-47e4-9b52-819b5429476d",
+        "instancesSet": {
+          "items": [
+            {
+              "instanceId": "i-0b86f8c040592073e",
+              "currentState": {
+                "code": 64,
+                "name": "stopping"
+              },
+              "previousState": {
+                "code": 16,
+                "name": "running"
+              }
+            }
+          ]
+        }
+      },
+      "error_code": null,
+      "error_message": null
+    }
+  ]
+}

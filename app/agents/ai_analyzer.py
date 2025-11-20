@@ -146,6 +146,28 @@ class AIAnalyzerAgent:
         if drift.change_history:
             change_history_summary = self._format_change_history(drift.change_history)
 
+        # Extract drift metadata for better context
+        drift_metadata = drift.diff.get("_drift_metadata", {})
+        updated_by = drift_metadata.get("updated_by") or drift.updated_by
+        updated_at = drift_metadata.get("updated_at") or drift.updated_at
+        drift_event = drift_metadata.get("drift_causing_event")
+
+        # Build WHO section with appropriate messaging
+        if updated_by:
+            who_section = f"""WHO MADE THE CHANGE:
+Changed By: {updated_by} (IAM User/Role)
+Changed At: {updated_at}
+AWS Action: {drift_event or 'Not specified'}
+Source: CloudTrail event logs"""
+        else:
+            who_section = """WHO MADE THE CHANGE:
+Changed By: Unknown
+Reason: No CloudTrail events found in the last 24 hours. The change may have occurred:
+  - More than 24 hours ago (outside CloudTrail lookback window)
+  - Before CloudTrail logging was enabled
+  - By an AWS service (system-initiated change)
+Note: Consider increasing CloudTrail lookback period if recent changes are not being captured."""
+
         prompt = f"""You are a cloud infrastructure expert specializing in AWS infrastructure drift detection.
 Analyze the following infrastructure drift with full context and provide actionable insights.
 
@@ -156,6 +178,8 @@ Drift Type: {drift.drift_type.value}
 Account: {drift.account_id}
 Region: {drift.region}
 Detected At: {drift.detected_at.isoformat()}
+
+{who_section}
 
 CHANGES DETECTED:
 Baseline (Expected) State:
@@ -178,7 +202,7 @@ Please provide a comprehensive analysis in the following JSON format:
 
 {{
     "explanation": "Clear, human-readable explanation of what changed and when",
-    "root_cause": "Why this drift occurred (e.g., manual change, automation, auto-scaling)",
+    "root_cause": "Specific root cause including WHO made the change (use the actual IAM user/role name from 'Changed By' field), WHAT action they performed (from 'AWS Action' field), and WHEN (from 'Changed At' field). Be specific, not generic.",
     "business_impact": "Impact on operations, performance, security, and costs",
     "recommended_action": "ONE OF THE FOLLOWING (exactly as written):
         - 'update_baseline': Update baseline to accept this change (authorized drift)
@@ -214,10 +238,16 @@ Please provide a comprehensive analysis in the following JSON format:
 }}
 
 Focus on:
-1. Root cause identification (check metrics for performance issues, costs, etc.)
+1. Root cause identification - Use specific details from "WHO MADE THE CHANGE" section above
 2. Business and operational impact assessment
 3. Safe remediation paths with risk mitigation
 4. Confidence scoring based on available evidence
+
+CRITICAL: For root_cause field, you MUST:
+- Reference the specific IAM user/role name from "Changed By" field (not generic terms like "an authorized user")
+- Include the AWS action from "AWS Action" field
+- Include the timestamp from "Changed At" field
+- If "Changed By" is "Unknown", state that explicitly and explain why (e.g., change older than 24h, CloudTrail not enabled)
 
 Respond ONLY with the JSON object, no additional text."""
 
@@ -274,11 +304,15 @@ Respond ONLY with the JSON object, no additional text."""
 
         summary_parts = []
 
-        # Last modified info
+        # Last modified info - EMPHASIZE the user
         if change_history.get("last_modified_by"):
-            summary_parts.append(f"Last Modified By: {change_history['last_modified_by']}")
-            summary_parts.append(f"Last Modified At: {change_history['last_modified_at']}")
-            summary_parts.append(f"Total Change Events: {change_history.get('total_events', 0)}")
+            summary_parts.append("=" * 60)
+            summary_parts.append(
+                f"⚠️  DRIFT CAUSED BY: {change_history['last_modified_by']} (IAM User/Role)"
+            )
+            summary_parts.append(f"⏰  TIME: {change_history['last_modified_at']}")
+            summary_parts.append(f"📊  Total Change Events: {change_history.get('total_events', 0)}")
+            summary_parts.append("=" * 60)
             summary_parts.append("")
 
         # Recent events
@@ -294,12 +328,16 @@ Respond ONLY with the JSON object, no additional text."""
                     user = event.get("user", "Unknown")
                     source_ip = event.get("source_ip", "Unknown")
                     summary_parts.append(f"  [{timestamp}] {event_name}")
-                    summary_parts.append(f"    User: {user} from IP {source_ip}")
+                    summary_parts.append(f"    👤 IAM User/Role: {user}")
+                    summary_parts.append(f"    🌐 Source IP: {source_ip}")
 
                     # Add user identity details if available
                     user_identity = event.get("user_identity", {})
                     if user_identity.get("type"):
-                        summary_parts.append(f"    Type: {user_identity.get('type')}")
+                        identity_type = user_identity.get("type")
+                        summary_parts.append(f"    🔑 Identity Type: {identity_type}")
+                        if user_identity.get("arn"):
+                            summary_parts.append(f"    📋 ARN: {user_identity.get('arn')}")
                 else:  # CONFIG
                     summary_parts.append(f"  [{timestamp}] Configuration Change")
                     changes = event.get("changes", {})

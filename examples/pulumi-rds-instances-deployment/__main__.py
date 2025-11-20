@@ -14,23 +14,76 @@ def generate_random_suffix(length=8):
 
 random_suffix = generate_random_suffix()
 
-# Get default VPC
-default_vpc = aws.ec2.get_vpc(default=True)
-
-# Get default subnets
-default_subnets = aws.ec2.get_subnets(
-    filters=[
-        aws.ec2.GetSubnetsFilterArgs(
-            name="vpc-id",
-            values=[default_vpc.id]
+# Try to get default VPC, if not found, get any VPC or create one
+try:
+    default_vpc = aws.ec2.get_vpc(default=True)
+    vpc_id = default_vpc.id
+except:
+    # Try to get any existing VPC
+    vpcs = aws.ec2.get_vpcs()
+    if vpcs.ids:
+        vpc_id = vpcs.ids[0]
+        pulumi.log.info(f"Using existing VPC: {vpc_id}")
+    else:
+        # Create a new VPC if none exists
+        new_vpc = aws.ec2.Vpc(
+            f"rds-vpc-{random_suffix}",
+            cidr_block="10.0.0.0/16",
+            enable_dns_hostnames=True,
+            enable_dns_support=True,
+            tags={
+                "Name": f"rds-vpc-{random_suffix}",
+                "Environment": "dev",
+                "Service": "rds-instances"
+            }
         )
-    ]
-)
+        vpc_id = new_vpc.id
+        pulumi.log.info("Created new VPC for RDS")
+
+# Get subnets in the VPC
+try:
+    subnets = aws.ec2.get_subnets(
+        filters=[
+            aws.ec2.GetSubnetsFilterArgs(
+                name="vpc-id",
+                values=[vpc_id]
+            )
+        ]
+    )
+    subnet_ids = subnets.ids
+except:
+    # Create subnets if none exist
+    availability_zones = aws.get_availability_zones(state="available")
+    
+    subnet_1 = aws.ec2.Subnet(
+        f"rds-subnet-1-{random_suffix}",
+        vpc_id=vpc_id,
+        cidr_block="10.0.1.0/24",
+        availability_zone=availability_zones.names[0],
+        tags={
+            "Name": f"rds-subnet-1-{random_suffix}",
+            "Environment": "dev"
+        }
+    )
+    
+    subnet_2 = aws.ec2.Subnet(
+        f"rds-subnet-2-{random_suffix}",
+        vpc_id=vpc_id,
+        cidr_block="10.0.2.0/24",
+        availability_zone=availability_zones.names[1] if len(availability_zones.names) > 1 else availability_zones.names[0],
+        tags={
+            "Name": f"rds-subnet-2-{random_suffix}",
+            "Environment": "dev"
+        }
+    )
+    
+    subnet_ids = [subnet_1.id, subnet_2.id]
+    pulumi.log.info("Created new subnets for RDS")
 
 # Create DB subnet group
 db_subnet_group = aws.rds.SubnetGroup(
     f"rds-subnet-group-{random_suffix}",
-    subnet_ids=default_subnets.ids,
+    subnet_ids=subnet_ids,
     tags={
         "Name": f"rds-subnet-group-{random_suffix}",
         "Environment": "dev",
@@ -42,7 +95,7 @@ db_subnet_group = aws.rds.SubnetGroup(
 rds_security_group = aws.ec2.SecurityGroup(
     f"rds-sg-{random_suffix}",
     description="Security group for RDS instances",
-    vpc_id=default_vpc.id,
+    vpc_id=vpc_id,
     ingress=[
         aws.ec2.SecurityGroupIngressArgs(
             description="MySQL/Aurora",
@@ -112,7 +165,7 @@ postgres_instance = aws.rds.Instance(
     f"postgres-db-{random_suffix}",
     identifier=f"postgres-db-{random_suffix}",
     engine="postgres",
-    engine_version="15.4",
+    engine_version="15",  # Use major version, AWS will use latest minor version
     instance_class="db.t3.micro",
     allocated_storage=20,
     storage_type="gp2",

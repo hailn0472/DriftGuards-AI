@@ -1,0 +1,8 @@
+{
+  "resource_id": "sg-0c6147b6096d9e1ae",
+  "resource_type": "security_groups",
+  "region": "ap-southeast-1",
+  "lookback_hours": 24,
+  "search_started_at": "2025-11-20T19:58:44.076686",
+  "error": "No event names mapped for security_groups"
+}

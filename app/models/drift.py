@@ -71,6 +71,16 @@ class DriftRecord(BaseModel):
         description="CloudTrail/Config history showing who made changes and when",
     )
 
+    # Quick access to who caused the drift
+    updated_by: Optional[str] = Field(
+        default=None,
+        description="IAM user/role who made the change that caused this drift (from CloudTrail)",
+    )
+    updated_at: Optional[str] = Field(
+        default=None,
+        description="Timestamp when the drift-causing change was made",
+    )
+
     # Approval tracking
     approved: bool = Field(default=False, description="Whether drift is approved")
     approved_by: Optional[str] = Field(default=None, description="User who approved")

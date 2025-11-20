@@ -1,0 +1,262 @@
+{
+  "resource_id": "mysql-db-cml46lfy",
+  "resource_type": "rds_instances",
+  "region": "ap-southeast-1",
+  "enriched_at": "2025-11-20T19:56:21.192441",
+  "diff_provided": {
+    "endpoint": {
+      "baseline": null,
+      "current": "mysql-db-cml46lfy.cjqouwq6omoq.ap-southeast-1.rds.amazonaws.com"
+    },
+    "vpc_security_groups": {
+      "baseline": null,
+      "current": [
+        {
+          "id": "sg-0b92e170b5ff85cc6",
+          "status": "active"
+        }
+      ]
+    },
+    "preferred_maintenance_window": {
+      "baseline": null,
+      "current": "sun:04:00-sun:05:00"
+    },
+    "preferred_backup_window": {
+      "baseline": null,
+      "current": "03:00-04:00"
+    },
+    "license_model": {
+      "baseline": null,
+      "current": "general-public-license"
+    },
+    "engine_version": {
+      "baseline": null,
+      "current": "8.0.43"
+    },
+    "storage_encrypted": {
+      "baseline": null,
+      "current": true
+    },
+    "port": {
+      "baseline": null,
+      "current": 3306
+    },
+    "instance_create_time": {
+      "baseline": null,
+      "current": "2025-11-20 19:50:09.155000+00:00"
+    },
+    "iam_database_authentication_enabled": {
+      "baseline": null,
+      "current": false
+    },
+    "option_group_memberships": {
+      "baseline": null,
+      "current": [
+        {
+          "name": "default:mysql-8-0",
+          "status": "in-sync"
+        }
+      ]
+    },
+    "tags": {
+      "baseline": null,
+      "current": [
+        {
+          "Key": "Environment",
+          "Value": "dev"
+        },
+        {
+          "Key": "Service",
+          "Value": "rds-instances"
+        },
+        {
+          "Key": "Engine",
+          "Value": "mysql"
+        },
+        {
+          "Key": "Name",
+          "Value": "mysql-db-cml46lfy"
+        }
+      ]
+    },
+    "instance_class": {
+      "baseline": null,
+      "current": "db.t3.micro"
+    },
+    "performance_insights_enabled": {
+      "baseline": null,
+      "current": false
+    },
+    "read_replica_identifiers": {
+      "baseline": null,
+      "current": []
+    },
+    "multi_az": {
+      "baseline": null,
+      "current": false
+    },
+    "status": {
+      "baseline": null,
+      "current": "available"
+    },
+    "latest_restorable_time": {
+      "baseline": null,
+      "current": "2025-11-20 19:51:18.733000+00:00"
+    },
+    "deletion_protection": {
+      "baseline": null,
+      "current": false
+    },
+    "allocated_storage": {
+      "baseline": null,
+      "current": 20
+    },
+    "storage_type": {
+      "baseline": null,
+      "current": "gp2"
+    },
+    "db_parameter_groups": {
+      "baseline": null,
+      "current": [
+        {
+          "name": "default.mysql8.0",
+          "status": "in-sync"
+        }
+      ]
+    },
+    "publicly_accessible": {
+      "baseline": null,
+      "current": false
+    },
+    "availability_zone": {
+      "baseline": null,
+      "current": "ap-southeast-1a"
+    },
+    "auto_minor_version_upgrade": {
+      "baseline": null,
+      "current": true
+    },
+    "arn": {
+      "baseline": null,
+      "current": "arn:aws:rds:ap-southeast-1:961639320333:db:mysql-db-cml46lfy"
+    },
+    "db_subnet_group": {
+      "baseline": null,
+      "current": {
+        "name": "rds-subnet-group-cml46lfy-f672902",
+        "vpc_id": "vpc-04157f87e1e9a2006",
+        "subnets": [
+          {
+            "id": "subnet-0741850025184d2ae",
+            "az": "ap-southeast-1a"
+          },
+          {
+            "id": "subnet-03241d83f05699d76",
+            "az": "ap-southeast-1b"
+          }
+        ]
+      }
+    },
+    "id": {
+      "baseline": null,
+      "current": "mysql-db-cml46lfy"
+    },
+    "engine": {
+      "baseline": null,
+      "current": "mysql"
+    },
+    "backup_retention_period": {
+      "baseline": null,
+      "current": 7
+    },
+    "enabled_cloudwatch_logs_exports": {
+      "baseline": null,
+      "current": []
+    },
+    "kms_key_id": {
+      "baseline": null,
+      "current": "arn:aws:kms:ap-southeast-1:961639320333:key/c2fe6d28-89b8-43b7-8415-e8797d4bc58e"
+    },
+    "monitoring_interval": {
+      "baseline": null,
+      "current": 0
+    },
+    "db_name": {
+      "baseline": null,
+      "current": "testdb"
+    },
+    "_baseline_context": {
+      "created_by": "cloud_drift_AI",
+      "created_by_arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+      "created_by_type": "user",
+      "created_at": "2025-11-21T02:10:25.064216"
+    }
+  },
+  "enriched_history": {
+    "resource_id": "mysql-db-cml46lfy",
+    "resource_type": "rds_instances",
+    "cloudtrail_event_count": 1,
+    "config_change_count": 0,
+    "timeline": [
+      {
+        "source": "cloudtrail",
+        "timestamp": "2025-11-21T02:46:49+07:00",
+        "event_name": "CreateDBInstance",
+        "user": "cloud_drift_AI",
+        "user_identity": {
+          "type": "IAMUser",
+          "principalId": "AIDA57ZRLRMGQLVYTPT3D",
+          "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+          "accountId": "961639320333",
+          "accessKeyId": "AKIA57ZRLRMGYZOXCXHW",
+          "userName": "cloud_drift_AI"
+        },
+        "source_ip": "14.224.176.224",
+        "changes": {
+          "dBName": "testdb",
+          "dBInstanceIdentifier": "mysql-db-cml46lfy",
+          "allocatedStorage": 20,
+          "dBInstanceClass": "db.t3.micro",
+          "engine": "mysql",
+          "masterUsername": "admin",
+          "masterUserPassword": "HIDDEN_DUE_TO_SECURITY_REASONS",
+          "vpcSecurityGroupIds": [
+            "sg-0b92e170b5ff85cc6"
+          ],
+          "dBSubnetGroupName": "rds-subnet-group-cml46lfy-f672902",
+          "preferredMaintenanceWindow": "sun:04:00-sun:05:00",
+          "backupRetentionPeriod": 7,
+          "preferredBackupWindow": "03:00-04:00",
+          "engineVersion": "8.0",
+          "autoMinorVersionUpgrade": true,
+          "publiclyAccessible": false,
+          "tags": [
+            {
+              "key": "Environment",
+              "value": "dev"
+            },
+            {
+              "key": "Service",
+              "value": "rds-instances"
+            },
+            {
+              "key": "Engine",
+              "value": "mysql"
+            },
+            {
+              "key": "Name",
+              "value": "mysql-db-cml46lfy"
+            }
+          ],
+          "storageType": "gp2",
+          "storageEncrypted": true,
+          "copyTagsToSnapshot": false,
+          "deletionProtection": false
+        }
+      }
+    ],
+    "last_modified_by": "cloud_drift_AI",
+    "last_modified_at": "2025-11-21T02:46:49+07:00",
+    "drift_causing_event": null
+  }
+}

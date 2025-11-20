@@ -51,16 +51,19 @@ class Boto3DriftDetector:
             return None
 
     async def create_baseline(self, account_id: str, region: str) -> dict[str, Any]:
-        """Create baseline from current AWS state."""
+        """Create baseline from current AWS state with IAM identity info."""
         logger.info(f"Creating baseline for {account_id}/{region}")
 
+        # Get current state (already includes scanned_by from discover_current_state)
         current_state = await self.discover_current_state(account_id, region)
 
         # Save as baseline
         with open(self.baseline_file, "w") as f:
             json.dump(current_state, f, indent=2, default=str)
 
-        logger.info(f"Baseline saved to {self.baseline_file}")
+        logger.info(
+            f"Baseline saved to {self.baseline_file} by {current_state.get('scanned_by', {}).get('name', 'unknown')}"
+        )
         return current_state
 
     async def discover_current_state(
@@ -79,10 +82,14 @@ class Boto3DriftDetector:
         """
         logger.info(f"Discovering current state in {account_id}/{region}")
 
+        # Get IAM identity of who is performing the scan
+        iam_identity = await self._get_current_iam_identity()
+
         state = {
             "account_id": account_id,
             "region": region,
             "timestamp": datetime.now().isoformat(),
+            "scanned_by": iam_identity,  # Track who performed the scan
             "resources": {},
         }
 
@@ -127,7 +134,7 @@ class Boto3DriftDetector:
         return state
 
     async def _discover_vpcs(self) -> list[dict[str, Any]]:
-        """Discover VPCs."""
+        """Discover VPCs with basic info."""
         ec2_client = self.factory.get_client("ec2")
         response = ec2_client.describe_vpcs()
         return [
@@ -136,132 +143,222 @@ class Boto3DriftDetector:
                 "cidr": vpc.get("CidrBlock"),
                 "is_default": vpc.get("IsDefault", False),
                 "state": vpc.get("State"),
-                "tags": vpc.get("Tags", []),
+                "tags": {t["Key"]: t["Value"] for t in vpc.get("Tags", [])},
             }
             for vpc in response.get("Vpcs", [])
         ]
 
     async def _discover_ec2_instances(self) -> list[dict[str, Any]]:
-        """Discover EC2 instances with comprehensive configuration details."""
+        """
+        Discover EC2 instances with comprehensive configuration details + EBS Volumes.
+        Uses pagination to ensure no instances are missed.
+        Filters out terminated instances to reduce noise.
+        """
         ec2_client = self.factory.get_client("ec2")
-        response = ec2_client.describe_instances()
+        paginator = ec2_client.get_paginator("describe_instances")
 
         instances = []
-        for reservation in response.get("Reservations", []):
-            for instance in reservation.get("Instances", []):
-                # Get instance type details for CPU/Memory info
-                instance_type = instance.get("InstanceType")
+        # Use pagination to ensure we don't miss any instances
+        for page in paginator.paginate():
+            for reservation in page.get("Reservations", []):
+                for instance in reservation.get("Instances", []):
+                    # Skip terminated instances to reduce noise
+                    if instance.get("State", {}).get("Name") == "terminated":
+                        continue
 
-                # Build comprehensive instance configuration
-                instance_config = {
-                    # Basic Info
-                    "id": instance["InstanceId"],
-                    "type": instance_type,
-                    "state": instance.get("State", {}).get("Name"),
-                    "state_transition_reason": instance.get("StateTransitionReason"),
-                    "launch_time": str(instance.get("LaunchTime"))
-                    if instance.get("LaunchTime")
-                    else None,
-                    # Placement & Availability
-                    "availability_zone": instance.get("Placement", {}).get("AvailabilityZone"),
-                    "tenancy": instance.get("Placement", {}).get("Tenancy"),
-                    "host_id": instance.get("Placement", {}).get("HostId"),
-                    # Network Configuration
-                    "vpc_id": instance.get("VpcId"),
-                    "subnet_id": instance.get("SubnetId"),
-                    "private_ip": instance.get("PrivateIpAddress"),
-                    "private_dns": instance.get("PrivateDnsName"),
-                    "public_ip": instance.get("PublicIpAddress"),
-                    "public_dns": instance.get("PublicDnsName"),
-                    # Network Interfaces
-                    "network_interfaces": [
-                        {
-                            "id": ni.get("NetworkInterfaceId"),
-                            "subnet_id": ni.get("SubnetId"),
-                            "private_ip": ni.get("PrivateIpAddress"),
-                            "public_ip": ni.get("Association", {}).get("PublicIp"),
-                            "security_groups": [
-                                {"id": sg.get("GroupId"), "name": sg.get("GroupName")}
-                                for sg in ni.get("Groups", [])
-                            ],
-                            "source_dest_check": ni.get("SourceDestCheck"),
-                            "device_index": ni.get("Attachment", {}).get("DeviceIndex"),
-                        }
-                        for ni in instance.get("NetworkInterfaces", [])
-                    ],
-                    # Security
-                    "security_groups": [
-                        {"id": sg.get("GroupId"), "name": sg.get("GroupName")}
-                        for sg in instance.get("SecurityGroups", [])
-                    ],
-                    "key_name": instance.get("KeyName"),
-                    "iam_instance_profile": instance.get("IamInstanceProfile", {}).get("Arn"),
-                    # Storage
-                    "root_device_type": instance.get("RootDeviceType"),
-                    "root_device_name": instance.get("RootDeviceName"),
-                    "block_device_mappings": [
-                        {
-                            "device_name": bdm.get("DeviceName"),
-                            "volume_id": bdm.get("Ebs", {}).get("VolumeId"),
-                            "status": bdm.get("Ebs", {}).get("Status"),
-                            "delete_on_termination": bdm.get("Ebs", {}).get("DeleteOnTermination"),
-                        }
-                        for bdm in instance.get("BlockDeviceMappings", [])
-                    ],
-                    # Platform & AMI
-                    "platform": instance.get("Platform"),  # 'windows' or None for Linux
-                    "platform_details": instance.get("PlatformDetails"),
-                    "image_id": instance.get("ImageId"),
-                    "architecture": instance.get("Architecture"),
-                    "virtualization_type": instance.get("VirtualizationType"),
-                    "hypervisor": instance.get("Hypervisor"),
-                    # Capacity & Performance
-                    "cpu_options": {
-                        "core_count": instance.get("CpuOptions", {}).get("CoreCount"),
-                        "threads_per_core": instance.get("CpuOptions", {}).get("ThreadsPerCore"),
-                    },
-                    "ena_support": instance.get("EnaSupport"),  # Enhanced networking
-                    "ebs_optimized": instance.get("EbsOptimized"),
-                    # Monitoring & Logging
-                    "monitoring_state": instance.get("Monitoring", {}).get("State"),
-                    "instance_lifecycle": instance.get("InstanceLifecycle"),  # 'spot' or None
-                    # Auto-scaling & Capacity Reservations
-                    "capacity_reservation_id": instance.get("CapacityReservationId"),
-                    "capacity_reservation_specification": instance.get(
-                        "CapacityReservationSpecification"
-                    ),
-                    # Elastic IPs
-                    "elastic_ip_associations": [
-                        {
-                            "public_ip": ni.get("Association", {}).get("PublicIp"),
-                            "allocation_id": ni.get("Association", {}).get("AllocationId"),
-                            "ip_owner_id": ni.get("Association", {}).get("IpOwnerId"),
-                        }
-                        for ni in instance.get("NetworkInterfaces", [])
-                        if ni.get("Association")
-                    ],
-                    # Metadata & Options
-                    "metadata_options": {
-                        "http_tokens": instance.get("MetadataOptions", {}).get("HttpTokens"),
-                        "http_put_response_hop_limit": instance.get("MetadataOptions", {}).get(
-                            "HttpPutResponseHopLimit"
+                    # Get instance type details for CPU/Memory info
+                    instance_type = instance.get("InstanceType")
+
+                    # Process tags into dict for easier access
+                    tags = {t["Key"]: t["Value"] for t in instance.get("Tags", [])}
+
+                    # Sort security groups by ID to ensure consistent ordering for drift detection
+                    sg_list = sorted(
+                        [
+                            {"id": sg["GroupId"], "name": sg["GroupName"]}
+                            for sg in instance.get("SecurityGroups", [])
+                        ],
+                        key=lambda x: x["id"],
+                    )
+
+                    # Extract IAM role name from profile ARN
+                    iam_profile_arn = instance.get("IamInstanceProfile", {}).get("Arn", "")
+                    iam_profile = iam_profile_arn.split("/")[-1] if iam_profile_arn else None
+
+                    # --- START: Fetch EBS Volume Details ---
+                    # Get list of Volume IDs attached to this instance
+                    blk_mapping = instance.get("BlockDeviceMappings", [])
+                    volume_ids = [m["Ebs"]["VolumeId"] for m in blk_mapping if "Ebs" in m]
+
+                    volumes_info = []
+                    if volume_ids:
+                        try:
+                            # Call describe_volumes to get detailed info (Size, Type, Encryption)
+                            # Note: For SME scale this is fine. For >1000 instances, optimize with batch requests.
+                            vol_resp = ec2_client.describe_volumes(VolumeIds=volume_ids)
+
+                            for v in vol_resp.get("Volumes", []):
+                                # Find corresponding Device Name (e.g., /dev/xvda)
+                                device_name = next(
+                                    (
+                                        m["DeviceName"]
+                                        for m in blk_mapping
+                                        if m["Ebs"]["VolumeId"] == v["VolumeId"]
+                                    ),
+                                    "unknown",
+                                )
+
+                                volumes_info.append(
+                                    {
+                                        "device": device_name,
+                                        "id": v["VolumeId"],
+                                        "size": v["Size"],  # Critical: GB (Cost)
+                                        "type": v["VolumeType"],  # Critical: gp2/gp3/io1 (Cost + Performance)
+                                        "encrypted": v["Encrypted"],  # Critical: Security (Compliance)
+                                        "iops": v.get("Iops"),  # Performance metric
+                                        "throughput": v.get("Throughput"),  # gp3 throughput
+                                        "delete_on_termination": next(
+                                            (
+                                                m["Ebs"]["DeleteOnTermination"]
+                                                for m in blk_mapping
+                                                if m["Ebs"]["VolumeId"] == v["VolumeId"]
+                                            ),
+                                            False,
+                                        ),
+                                    }
+                                )
+                        except ClientError as e:
+                            logger.warning(
+                                f"Cannot fetch volumes for {instance['InstanceId']}: {e}"
+                            )
+
+                    # Sort volumes by device name for consistent comparison
+                    volumes_info.sort(key=lambda x: x["device"])
+                    # --- END: Fetch EBS Volume Details ---
+
+                    # Build comprehensive instance configuration
+                    instance_config = {
+                        # Identity
+                        "id": instance["InstanceId"],
+                        "name": tags.get("Name", "Unknown"),
+                        # Cost Drivers (Critical for SME)
+                        "type": instance_type,
+                        "state": instance.get("State", {}).get("Name"),
+                        # EBS Volumes (Critical for Cost & Security)
+                        "volumes": volumes_info,
+                        "state_transition_reason": instance.get("StateTransitionReason"),
+                        "launch_time": str(instance.get("LaunchTime"))
+                        if instance.get("LaunchTime")
+                        else None,
+                        # Security (Critical for SME)
+                        "public_ip": instance.get("PublicIpAddress"),  # Internet exposure risk
+                        "private_ip": instance.get("PrivateIpAddress"),
+                        "private_dns": instance.get("PrivateDnsName"),
+                        "public_dns": instance.get("PublicDnsName"),
+                        "vpc_id": instance.get("VpcId"),
+                        "subnet_id": instance.get("SubnetId"),
+                        "iam_profile": iam_profile,  # Role-based security
+                        "security_groups": sg_list,  # Firewall rules
+                        "key_name": instance.get("KeyName"),
+                        # Placement & Availability
+                        "availability_zone": instance.get("Placement", {}).get("AvailabilityZone"),
+                        "tenancy": instance.get("Placement", {}).get("Tenancy"),
+                        "host_id": instance.get("Placement", {}).get("HostId"),
+                        # Network Interfaces
+                        "network_interfaces": [
+                            {
+                                "id": ni.get("NetworkInterfaceId"),
+                                "subnet_id": ni.get("SubnetId"),
+                                "private_ip": ni.get("PrivateIpAddress"),
+                                "public_ip": ni.get("Association", {}).get("PublicIp"),
+                                "security_groups": sorted(
+                                    [
+                                        {"id": sg.get("GroupId"), "name": sg.get("GroupName")}
+                                        for sg in ni.get("Groups", [])
+                                    ],
+                                    key=lambda x: x["id"],
+                                ),
+                                "source_dest_check": ni.get("SourceDestCheck"),
+                                "device_index": ni.get("Attachment", {}).get("DeviceIndex"),
+                            }
+                            for ni in instance.get("NetworkInterfaces", [])
+                        ],
+                        # Storage
+                        "root_device_type": instance.get("RootDeviceType"),
+                        "root_device_name": instance.get("RootDeviceName"),
+                        "block_device_mappings": [
+                            {
+                                "device_name": bdm.get("DeviceName"),
+                                "volume_id": bdm.get("Ebs", {}).get("VolumeId"),
+                                "status": bdm.get("Ebs", {}).get("Status"),
+                                "delete_on_termination": bdm.get("Ebs", {}).get(
+                                    "DeleteOnTermination"
+                                ),
+                            }
+                            for bdm in instance.get("BlockDeviceMappings", [])
+                        ],
+                        # Platform & AMI
+                        "platform": instance.get("Platform"),  # 'windows' or None for Linux
+                        "platform_details": instance.get("PlatformDetails"),
+                        "image_id": instance.get("ImageId"),
+                        "architecture": instance.get("Architecture"),
+                        "virtualization_type": instance.get("VirtualizationType"),
+                        "hypervisor": instance.get("Hypervisor"),
+                        # Capacity & Performance
+                        "cpu_options": {
+                            "core_count": instance.get("CpuOptions", {}).get("CoreCount"),
+                            "threads_per_core": instance.get("CpuOptions", {}).get(
+                                "ThreadsPerCore"
+                            ),
+                        },
+                        "ena_support": instance.get("EnaSupport"),  # Enhanced networking
+                        "ebs_optimized": instance.get("EbsOptimized"),
+                        # Monitoring & Logging
+                        "monitoring_state": instance.get("Monitoring", {}).get("State"),
+                        "instance_lifecycle": instance.get(
+                            "InstanceLifecycle"
+                        ),  # 'spot' or None
+                        # Auto-scaling & Capacity Reservations
+                        "capacity_reservation_id": instance.get("CapacityReservationId"),
+                        "capacity_reservation_specification": instance.get(
+                            "CapacityReservationSpecification"
                         ),
-                        "http_endpoint": instance.get("MetadataOptions", {}).get("HttpEndpoint"),
-                    },
-                    # Hibernation
-                    "hibernation_configured": instance.get("HibernationOptions", {}).get(
-                        "Configured"
-                    ),
-                    # License & Usage
-                    "usage_operation": instance.get("UsageOperation"),
-                    "usage_operation_update_time": str(instance.get("UsageOperationUpdateTime"))
-                    if instance.get("UsageOperationUpdateTime")
-                    else None,
-                    # Tags
-                    "tags": instance.get("Tags", []),
-                }
+                        # Elastic IPs
+                        "elastic_ip_associations": [
+                            {
+                                "public_ip": ni.get("Association", {}).get("PublicIp"),
+                                "allocation_id": ni.get("Association", {}).get("AllocationId"),
+                                "ip_owner_id": ni.get("Association", {}).get("IpOwnerId"),
+                            }
+                            for ni in instance.get("NetworkInterfaces", [])
+                            if ni.get("Association")
+                        ],
+                        # Metadata & Options
+                        "metadata_options": {
+                            "http_tokens": instance.get("MetadataOptions", {}).get("HttpTokens"),
+                            "http_put_response_hop_limit": instance.get("MetadataOptions", {}).get(
+                                "HttpPutResponseHopLimit"
+                            ),
+                            "http_endpoint": instance.get("MetadataOptions", {}).get(
+                                "HttpEndpoint"
+                            ),
+                        },
+                        # Hibernation
+                        "hibernation_configured": instance.get("HibernationOptions", {}).get(
+                            "Configured"
+                        ),
+                        # License & Usage
+                        "usage_operation": instance.get("UsageOperation"),
+                        "usage_operation_update_time": str(
+                            instance.get("UsageOperationUpdateTime")
+                        )
+                        if instance.get("UsageOperationUpdateTime")
+                        else None,
+                        # Tags
+                        "tags": tags,
+                    }
 
-                instances.append(instance_config)
+                    instances.append(instance_config)
 
         return instances
 
@@ -409,41 +506,65 @@ class Boto3DriftDetector:
         return clusters
 
     async def _discover_rds_instances(self) -> list[dict[str, Any]]:
-        """Discover RDS instances with comprehensive configuration."""
+        """
+        Discover RDS instances (Paginated & Enhanced).
+        Focus: Standard RDS & Aurora Compute Nodes.
+        """
         rds_client = self.factory.get_client("rds")
-        response = rds_client.describe_db_instances()
+        paginator = rds_client.get_paginator("describe_db_instances")
 
         instances = []
-        for i in response.get("DBInstances", []):
-            instance_config = {
-                # Basic Info
+        # Pagination: Ensure no DB instances are missed
+        for page in paginator.paginate():
+            for i in page.get("DBInstances", []):
+                instance_config = {
+                # --- Identity & Engine ---
                 "id": i.get("DBInstanceIdentifier"),
                 "arn": i.get("DBInstanceArn"),
-                "db_name": i.get("DBName"),
-                # Engine Configuration
+                "cluster_id": i.get("DBClusterIdentifier"),  # Important to link with Cluster
                 "engine": i.get("Engine"),
                 "engine_version": i.get("EngineVersion"),
-                "license_model": i.get("LicenseModel"),
-                # Instance Configuration
-                "instance_class": i.get("DBInstanceClass"),
                 "status": i.get("DBInstanceStatus"),
-                # Storage Configuration
-                "allocated_storage": i.get("AllocatedStorage"),  # GB
-                "max_allocated_storage": i.get("MaxAllocatedStorage"),
-                "storage_type": i.get("StorageType"),  # gp2, gp3, io1, etc.
+                # --- Spec & Cost ---
+                "instance_class": i.get("DBInstanceClass"),  # Drift here costs money
+                "storage_type": i.get("StorageType"),
+                "allocated_storage": i.get("AllocatedStorage"),
                 "iops": i.get("Iops"),
+                "max_allocated_storage": i.get(
+                    "MaxAllocatedStorage"
+                ),  # Autoscaling storage
+                # --- Security & Network (Critical) ---
+                "publicly_accessible": i.get(
+                    "PubliclyAccessible"
+                ),  # FORBIDDEN in Enterprise
                 "storage_encrypted": i.get("StorageEncrypted"),
                 "kms_key_id": i.get("KmsKeyId"),
-                # Network Configuration
-                "endpoint": i.get("Endpoint", {}).get("Address"),
-                "port": i.get("Endpoint", {}).get("Port"),
+                "ca_certificate_id": i.get(
+                    "CACertificateIdentifier"
+                ),  # Drift here breaks App (SSL Error)
+                "vpc_security_groups": sorted(
+                    [
+                        {"id": sg["VpcSecurityGroupId"], "status": sg["Status"]}
+                        for sg in i.get("VpcSecurityGroups", [])
+                    ],
+                    key=lambda x: x["id"],
+                ),
                 "availability_zone": i.get("AvailabilityZone"),
                 "multi_az": i.get("MultiAZ"),
-                "publicly_accessible": i.get("PubliclyAccessible"),
-                "vpc_security_groups": [
-                    {"id": sg.get("VpcSecurityGroupId"), "status": sg.get("Status")}
-                    for sg in i.get("VpcSecurityGroups", [])
-                ],
+                # --- Maintenance ---
+                "auto_minor_version_upgrade": i.get("AutoMinorVersionUpgrade"),
+                "deletion_protection": i.get("DeletionProtection"),
+                # --- Parameter Groups ---
+                "parameter_groups": sorted(
+                    [
+                        {
+                            "name": pg["DBParameterGroupName"],
+                            "status": pg["ParameterApplyStatus"],
+                        }
+                        for pg in i.get("DBParameterGroups", [])
+                    ],
+                    key=lambda x: x["name"],
+                ),
                 "db_subnet_group": {
                     "name": i.get("DBSubnetGroup", {}).get("DBSubnetGroupName"),
                     "vpc_id": i.get("DBSubnetGroup", {}).get("VpcId"),
@@ -498,30 +619,67 @@ class Boto3DriftDetector:
                 # Tags
                 "tags": i.get("TagList", []),
                 # Timestamps
-                "instance_create_time": str(i.get("InstanceCreateTime"))
-                if i.get("InstanceCreateTime")
-                else None,
-            }
+                    "instance_create_time": str(i.get("InstanceCreateTime"))
+                    if i.get("InstanceCreateTime")
+                    else None,
+                }
 
-            instances.append(instance_config)
+                instances.append(instance_config)
 
         return instances
 
     async def _discover_rds_clusters(self) -> list[dict[str, Any]]:
-        """Discover RDS clusters."""
+        """
+        Discover RDS Clusters (Aurora).
+        IMPORTANT: Most Aurora configuration is here.
+        """
         rds_client = self.factory.get_client("rds")
-        response = rds_client.describe_db_clusters()
-        return [
-            {
-                "id": c.get("DBClusterIdentifier"),
-                "arn": c.get("DBClusterArn"),
-                "engine": c.get("Engine"),
-                "status": c.get("Status"),
-                "endpoint": c.get("Endpoint"),
-                "members": [m.get("DBInstanceIdentifier") for m in c.get("DBClusterMembers", [])],
-            }
-            for c in response.get("DBClusters", [])
-        ]
+        paginator = rds_client.get_paginator("describe_db_clusters")
+
+        clusters = []
+        for page in paginator.paginate():
+            for c in page.get("DBClusters", []):
+                cluster_config = {
+                    "id": c.get("DBClusterIdentifier"),
+                    "arn": c.get("DBClusterArn"),
+                    "status": c.get("Status"),
+                    # --- Engine & Version ---
+                    "engine": c.get("Engine"),
+                    "engine_mode": c.get("EngineMode"),  # provisioned / serverless
+                    "engine_version": c.get("EngineVersion"),
+                    # --- Security & Critical Configs ---
+                    "database_name": c.get("DatabaseName"),
+                    "master_username": c.get("MasterUsername"),
+                    "storage_encrypted": c.get("StorageEncrypted"),
+                    "deletion_protection": c.get(
+                        "DeletionProtection"
+                    ),  # Dev often disables this -> Risk
+                    "iam_auth_enabled": c.get("IAMDatabaseAuthenticationEnabled"),
+                    # --- Backup & Maintenance (RPO/RTO) ---
+                    "backup_retention_period": c.get("BackupRetentionPeriod"),  # 1-35 days
+                    "preferred_backup_window": c.get("PreferredBackupWindow"),
+                    "preferred_maintenance_window": c.get("PreferredMaintenanceWindow"),
+                    "copy_tags_to_snapshot": c.get("CopyTagsToSnapshot"),
+                    # --- Network ---
+                    "endpoint": c.get("Endpoint"),
+                    "reader_endpoint": c.get("ReaderEndpoint"),
+                    "port": c.get("Port"),
+                    "vpc_security_groups": sorted(
+                        [
+                            {"id": sg["VpcSecurityGroupId"], "status": sg["Status"]}
+                            for sg in c.get("VpcSecurityGroups", [])
+                        ],
+                        key=lambda x: x["id"],
+                    ),
+                    # --- Members ---
+                    "members": sorted(
+                        [m["DBInstanceIdentifier"] for m in c.get("DBClusterMembers", [])]
+                    ),
+                    "tags": {t["Key"]: t["Value"] for t in c.get("TagList", [])},
+                }
+                clusters.append(cluster_config)
+
+        return clusters
 
     async def _discover_s3_buckets(self) -> list[dict[str, Any]]:
         """Discover S3 buckets."""
@@ -717,36 +875,77 @@ class Boto3DriftDetector:
         return functions
 
     async def _discover_security_groups(self) -> list[dict[str, Any]]:
-        """Discover security groups."""
+        """
+        Discover security groups with pagination.
+        Fixes issue where SGs might be missed if list is too long.
+        """
         ec2_client = self.factory.get_client("ec2")
+        paginator = ec2_client.get_paginator("describe_security_groups")
 
-        # Get all VPCs first
-        vpcs_response = ec2_client.describe_vpcs()
-        vpc_ids = [vpc["VpcId"] for vpc in vpcs_response.get("Vpcs", [])]
+        sgs = []
+        # Use pagination to ensure we don't miss any security groups
+        for page in paginator.paginate():
+            for sg in page.get("SecurityGroups", []):
+                sgs.append(
+                    {
+                        "id": sg.get("GroupId"),
+                        "name": sg.get("GroupName"),
+                        "vpc_id": sg.get("VpcId"),
+                        "description": sg.get("Description"),
+                        # Count rules to detect changes quickly
+                        "ingress_rules_count": len(sg.get("IpPermissions", [])),
+                        "egress_rules_count": len(sg.get("IpPermissionsEgress", [])),
+                    }
+                )
 
-        all_sgs = []
-        for vpc_id in vpc_ids:
-            response = ec2_client.describe_security_groups(
-                Filters=[{"Name": "vpc-id", "Values": [vpc_id]}]
-            )
-            all_sgs.extend(response.get("SecurityGroups", []))
-
-        return [
-            {
-                "id": sg.get("GroupId"),
-                "name": sg.get("GroupName"),
-                "vpc_id": sg.get("VpcId"),
-                "ingress_rules": len(sg.get("IpPermissions", [])),
-                "egress_rules": len(sg.get("IpPermissionsEgress", [])),
-            }
-            for sg in all_sgs
-        ]
+        return sgs
 
     def _get_cloudwatch_client(self):
         """Get CloudWatch client (lazy initialization)."""
         if not self.cloudwatch:
             self.cloudwatch = self.factory.get_client("cloudwatch")
         return self.cloudwatch
+
+    async def _get_current_iam_identity(self) -> dict[str, Any]:
+        """
+        Get current IAM identity (user/role) making the API calls.
+        This identifies who is creating the baseline or making changes.
+        """
+        try:
+            sts_client = self.factory.get_client("sts")
+            identity = sts_client.get_caller_identity()
+
+            # Parse ARN to get user/role name
+            arn = identity.get("Arn", "")
+            arn_parts = arn.split(":")
+            resource_part = arn_parts[-1] if len(arn_parts) > 0 else ""
+
+            # Extract user or role name
+            if "/" in resource_part:
+                identity_type, identity_name = resource_part.split("/", 1)
+            else:
+                identity_type = "unknown"
+                identity_name = resource_part
+
+            return {
+                "arn": arn,
+                "account_id": identity.get("Account"),
+                "user_id": identity.get("UserId"),
+                "type": identity_type,  # user, role, assumed-role, etc.
+                "name": identity_name,
+                "timestamp": datetime.now().isoformat(),
+            }
+        except Exception as e:
+            logger.warning(f"Could not get IAM identity: {e}")
+            return {
+                "arn": "unknown",
+                "account_id": "unknown",
+                "user_id": "unknown",
+                "type": "unknown",
+                "name": "unknown",
+                "timestamp": datetime.now().isoformat(),
+                "error": str(e),
+            }
 
     def _collect_cloudwatch_metrics(
         self,
@@ -900,17 +1099,32 @@ class Boto3DriftDetector:
         logger.info("Comparing baseline vs current state")
         drift_records = []
 
+        # Extract baseline creator info from scanned_by
+        baseline_creator = baseline.get("scanned_by", {})
+        baseline_created_at = baseline.get("timestamp")
+
         # Compare each resource type
         for resource_type, baseline_resources in baseline.get("resources", {}).items():
             current_resources = current.get("resources", {}).get(resource_type, [])
 
             # Detect drift for this resource type
             drifts = await self._compare_resource_type(
-                resource_type, baseline_resources, current_resources, account_id, region
+                resource_type,
+                baseline_resources,
+                current_resources,
+                account_id,
+                region,
+                baseline_creator=baseline_creator,
+                baseline_created_at=baseline_created_at,
             )
             drift_records.extend(drifts)
 
         logger.info(f"Found {len(drift_records)} drifts")
+        
+        # Log drift history
+        if drift_records:
+            await self._log_drift_history(drift_records)
+        
         return drift_records
 
     async def _compare_resource_type(
@@ -920,6 +1134,8 @@ class Boto3DriftDetector:
         current_resources: list[dict[str, Any]],
         account_id: str,
         region: str,
+        baseline_creator: dict[str, Any] | None = None,
+        baseline_created_at: str | None = None,
     ) -> list[DriftRecord]:
         """Compare a specific resource type for drift."""
         drifts = []
@@ -939,6 +1155,8 @@ class Boto3DriftDetector:
                     current_value={},
                     account_id=account_id,
                     region=region,
+                    baseline_creator=baseline_creator,
+                    baseline_created_at=baseline_created_at,
                 )
                 drifts.append(drift)
 
@@ -953,6 +1171,8 @@ class Boto3DriftDetector:
                     current_value=current_resource,
                     account_id=account_id,
                     region=region,
+                    baseline_creator=baseline_creator,
+                    baseline_created_at=baseline_created_at,
                 )
                 drifts.append(drift)
 
@@ -976,6 +1196,8 @@ class Boto3DriftDetector:
                     account_id=account_id,
                     region=region,
                     diff=diff,
+                    baseline_creator=baseline_creator,
+                    baseline_created_at=baseline_created_at,
                 )
                 drifts.append(drift)
 
@@ -992,6 +1214,7 @@ class Boto3DriftDetector:
     def _calculate_diff(self, baseline: dict[str, Any], current: dict[str, Any]) -> dict[str, Any]:
         """
         Calculate differences between baseline and current.
+        Focuses on SME-critical fields for EC2 drift detection.
 
         Excludes metrics_baseline from drift detection since metrics are
         monitoring data that naturally changes and cannot be reverted.
@@ -1005,6 +1228,14 @@ class Boto3DriftDetector:
             "timestamp",  # Timestamp fields
         }
 
+        # Critical fields for SME monitoring (prioritized)
+        critical_fields = [
+            "type",  # Instance type change -> cost impact
+            "iam_profile",  # IAM role change -> security risk
+            "public_ip",  # Public IP assignment -> exposure risk
+            "security_groups",  # Firewall rules -> CRITICAL security risk
+        ]
+
         all_keys = set(baseline.keys()) | set(current.keys())
         # Filter out excluded keys
         all_keys = all_keys - excluded_keys
@@ -1013,8 +1244,15 @@ class Boto3DriftDetector:
             baseline_val = baseline.get(key)
             current_val = current.get(key)
 
-            if baseline_val != current_val:
-                diff[key] = {"baseline": baseline_val, "current": current_val}
+            # Special handling for security_groups: compare as JSON to handle list ordering
+            if key == "security_groups":
+                if json.dumps(baseline_val, sort_keys=True) != json.dumps(
+                    current_val, sort_keys=True
+                ):
+                    diff[key] = {"baseline": baseline_val, "current": current_val}
+            else:
+                if baseline_val != current_val:
+                    diff[key] = {"baseline": baseline_val, "current": current_val}
 
         return diff
 
@@ -1029,8 +1267,10 @@ class Boto3DriftDetector:
         region: str,
         diff: dict[str, Any] | None = None,
         include_history: bool = True,
+        baseline_creator: dict[str, Any] | None = None,
+        baseline_created_at: str | None = None,
     ) -> DriftRecord:
-        """Create a DriftRecord from detected drift."""
+        """Create a DriftRecord from detected drift with baseline creator info."""
         if diff is None:
             diff = self._calculate_diff(baseline_value, current_value)
 
@@ -1049,12 +1289,29 @@ class Boto3DriftDetector:
         diff_str = json.dumps(diff, sort_keys=True)
         diff_hash = hashlib.sha256(diff_str.encode()).hexdigest()
 
+        # Add baseline creator information to diff context
+        if baseline_creator:
+            # Enrich diff with baseline context
+            if not isinstance(diff, dict):
+                diff = {}
+
+            diff["_baseline_context"] = {
+                "created_by": baseline_creator.get("name", "unknown"),
+                "created_by_arn": baseline_creator.get("arn", "unknown"),
+                "created_by_type": baseline_creator.get("type", "unknown"),
+                "created_at": baseline_created_at,
+            }
+
         # Enrich with change history (who/when/what changed)
+        # Pass diff to find the SPECIFIC event that caused this drift
         change_history = None
+        updated_by = None
+        updated_at = None
+
         if include_history:
             try:
                 history = self.history_collector.get_enriched_history(
-                    resource_id, resource_type, region
+                    resource_id, resource_type, region, diff=diff  # Pass diff for matching
                 )
                 if history and history.get("timeline"):
                     change_history = {
@@ -1062,11 +1319,32 @@ class Boto3DriftDetector:
                         "last_modified_at": history.get("last_modified_at"),
                         "recent_events": history["timeline"][:5],  # Last 5 events
                         "total_events": len(history["timeline"]),
+                        "drift_causing_event": history.get(
+                            "drift_causing_event"
+                        ),  # NEW: specific event
                     }
-                    logger.info(
-                        f"Enriched drift with change history: "
-                        f"{change_history['total_events']} events found"
-                    )
+
+                    # Extract updated_by and updated_at for quick access
+                    updated_by = history.get("last_modified_by")
+                    updated_at = history.get("last_modified_at")
+
+                    # Add drift metadata to diff for easy UI access
+                    if updated_by:
+                        logger.info(f"Drift on {resource_id} caused by: {updated_by}")
+                        diff["_drift_metadata"] = {
+                            "updated_by": updated_by,
+                            "updated_at": updated_at,
+                            "drift_causing_event": history.get("drift_causing_event", {}).get(
+                                "event_name"
+                            )
+                            if history.get("drift_causing_event")
+                            else None,
+                        }
+                    else:
+                        logger.debug(
+                            f"No CloudTrail user found for {resource_id} "
+                            f"(change may be older than 24h or system-initiated)"
+                        )
             except Exception as e:
                 logger.warning(f"Could not enrich with change history: {e}")
 
@@ -1083,7 +1361,9 @@ class Boto3DriftDetector:
             account_id=account_id,
             region=region,
             diff_hash=diff_hash,
-            change_history=change_history,  # NEW: WHO/WHEN/WHAT changed
+            change_history=change_history,  # WHO/WHEN/WHAT changed
+            updated_by=updated_by,  # Quick access: who caused the drift
+            updated_at=updated_at,  # Quick access: when drift was caused
         )
 
     def _calculate_severity(
@@ -1121,3 +1401,71 @@ class Boto3DriftDetector:
 
         # Default to medium
         return Severity.MEDIUM
+
+    async def _log_drift_history(self, drift_records: list[DriftRecord]) -> None:
+        """
+        Log drift history to a file for audit trail.
+        
+        Args:
+            drift_records: List of detected drift records
+        """
+        try:
+            # Create drift history directory
+            project_root = Path(__file__).parent.parent.parent
+            history_dir = project_root / "data" / "drift_history"
+            history_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Create history file with date
+            today = datetime.now().strftime("%Y-%m-%d")
+            history_file = history_dir / f"drift_history_{today}.jsonl"
+            
+            # Append each drift as a JSON line
+            with open(history_file, "a") as f:
+                for drift in drift_records:
+                    history_entry = {
+                        "timestamp": datetime.now().isoformat(),
+                        "drift_id": drift.drift_id,
+                        "resource_id": drift.resource_id,
+                        "resource_type": drift.resource_type,
+                        "drift_type": drift.drift_type.value,
+                        "severity": drift.severity.value,
+                        "account_id": drift.account_id,
+                        "region": drift.region,
+                        "updated_by": drift.updated_by,
+                        "updated_at": drift.updated_at,
+                        "detected_at": drift.detected_at.isoformat(),
+                        "diff_summary": self._summarize_diff(drift.diff),
+                    }
+                    f.write(json.dumps(history_entry, default=str) + "\n")
+            
+            logger.info(f"Drift history logged to {history_file}")
+            
+        except Exception as e:
+            logger.warning(f"Could not log drift history: {e}")
+
+    def _summarize_diff(self, diff: dict[str, Any]) -> dict[str, Any]:
+        """
+        Create a summary of diff for logging (exclude metadata).
+        
+        Args:
+            diff: Full diff dictionary
+            
+        Returns:
+            Summarized diff without metadata
+        """
+        summary = {}
+        for key, value in diff.items():
+            # Skip metadata fields
+            if key.startswith("_"):
+                continue
+            
+            # For simple changes, just note the field changed
+            if isinstance(value, dict) and "baseline" in value and "current" in value:
+                summary[key] = {
+                    "from": str(value["baseline"])[:100],  # Truncate long values
+                    "to": str(value["current"])[:100],
+                }
+            else:
+                summary[key] = "changed"
+        
+        return summary

@@ -1,7 +1,15 @@
 {
   "account_id": "961639320333",
   "region": "ap-southeast-1",
-  "timestamp": "2025-11-20T17:17:10.041508",
+  "timestamp": "2025-11-21T02:10:25.064216",
+  "scanned_by": {
+    "arn": "arn:aws:iam::961639320333:user/cloud_drift_AI",
+    "account_id": "961639320333",
+    "user_id": "AIDA57ZRLRMGQLVYTPT3D",
+    "type": "user",
+    "name": "cloud_drift_AI",
+    "timestamp": "2025-11-21T02:10:25.063173"
+  },
   "resources": {
     "vpcs": [
       {
@@ -9,78 +17,87 @@
         "cidr": "10.0.0.0/16",
         "is_default": false,
         "state": "available",
-        "tags": []
+        "tags": {}
       },
       {
         "id": "vpc-04bf8abab8f95f681",
         "cidr": "10.0.0.0/16",
         "is_default": false,
         "state": "available",
-        "tags": [
-          {
-            "Key": "Name",
-            "Value": "my-vpc"
-          }
-        ]
+        "tags": {
+          "Name": "my-vpc"
+        }
       },
       {
         "id": "vpc-0f76e1d18908fef9f",
         "cidr": "10.0.0.0/16",
         "is_default": false,
         "state": "available",
-        "tags": [
-          {
-            "Key": "Name",
-            "Value": "my-vpc"
-          }
-        ]
+        "tags": {
+          "Name": "my-vpc"
+        }
       },
       {
         "id": "vpc-0a89e1317c7f0c943",
         "cidr": "10.0.0.0/16",
         "is_default": false,
         "state": "available",
-        "tags": [
-          {
-            "Key": "Name",
-            "Value": "driftguards-eks-dev-wny27s-vpc"
-          },
-          {
-            "Key": "Environment",
-            "Value": "dev"
-          }
-        ]
+        "tags": {
+          "Name": "driftguards-eks-dev-wny27s-vpc",
+          "Environment": "dev"
+        }
       },
       {
         "id": "vpc-0e4ff52978c82fd93",
         "cidr": "10.0.0.0/16",
         "is_default": false,
         "state": "available",
-        "tags": []
+        "tags": {}
       }
     ],
     "ec2_instances": [
       {
         "id": "i-0b86f8c040592073e",
-        "type": "t2.micro",
-        "state": "running",
-        "state_transition_reason": "",
+        "name": "my-ec2-instance-dam",
+        "type": "t3a.medium",
+        "state": "stopped",
+        "volumes": [
+          {
+            "device": "/dev/xvda",
+            "id": "vol-066debfd06eb201ee",
+            "size": 50,
+            "type": "gp2",
+            "encrypted": false,
+            "iops": 150,
+            "throughput": null,
+            "delete_on_termination": true
+          }
+        ],
+        "state_transition_reason": "User initiated (2025-11-20 15:06:58 GMT)",
         "launch_time": "2025-11-19 15:08:56+00:00",
+        "public_ip": null,
+        "private_ip": "10.0.1.189",
+        "private_dns": "ip-10-0-1-189.ap-southeast-1.compute.internal",
+        "public_dns": "",
+        "vpc_id": "vpc-04bf8abab8f95f681",
+        "subnet_id": "subnet-0e83c2d5492c57e70",
+        "iam_profile": null,
+        "security_groups": [
+          {
+            "id": "sg-085cc5388ee8435f4",
+            "name": "my-security-group-23fe7ea"
+          }
+        ],
+        "key_name": "my-key-pair-aea67cb",
         "availability_zone": "ap-southeast-1a",
         "tenancy": "default",
         "host_id": null,
-        "vpc_id": "vpc-04bf8abab8f95f681",
-        "subnet_id": "subnet-0e83c2d5492c57e70",
-        "private_ip": "10.0.1.189",
-        "private_dns": "ip-10-0-1-189.ap-southeast-1.compute.internal",
-        "public_ip": "54.255.118.70",
-        "public_dns": "ec2-54-255-118-70.ap-southeast-1.compute.amazonaws.com",
         "network_interfaces": [
           {
             "id": "eni-00498f9d0048420b8",
             "subnet_id": "subnet-0e83c2d5492c57e70",
             "private_ip": "10.0.1.189",
-            "public_ip": "54.255.118.70",
+            "public_ip": null,
             "security_groups": [
               {
                 "id": "sg-085cc5388ee8435f4",
@@ -91,14 +108,6 @@
             "device_index": 0
           }
         ],
-        "security_groups": [
-          {
-            "id": "sg-085cc5388ee8435f4",
-            "name": "my-security-group-23fe7ea"
-          }
-        ],
-        "key_name": "my-key-pair-aea67cb",
-        "iam_instance_profile": null,
         "root_device_type": "ebs",
         "root_device_name": "/dev/xvda",
         "block_device_mappings": [
@@ -117,23 +126,17 @@
         "hypervisor": "xen",
         "cpu_options": {
           "core_count": 1,
-          "threads_per_core": 1
+          "threads_per_core": 2
         },
         "ena_support": true,
-        "ebs_optimized": false,
+        "ebs_optimized": true,
         "monitoring_state": "disabled",
         "instance_lifecycle": null,
         "capacity_reservation_id": null,
         "capacity_reservation_specification": {
           "CapacityReservationPreference": "open"
         },
-        "elastic_ip_associations": [
-          {
-            "public_ip": "54.255.118.70",
-            "allocation_id": null,
-            "ip_owner_id": "amazon"
-          }
-        ],
+        "elastic_ip_associations": [],
         "metadata_options": {
           "http_tokens": "optional",
           "http_put_response_hop_limit": 1,
@@ -142,33 +145,30 @@
         "hibernation_configured": false,
         "usage_operation": "RunInstances",
         "usage_operation_update_time": "2025-11-19 15:08:56+00:00",
-        "tags": [
-          {
-            "Key": "Name",
-            "Value": "my-ec2-instance"
-          }
-        ],
+        "tags": {
+          "Name": "my-ec2-instance-dam"
+        },
         "metrics_baseline": {
           "cpuutilization": {
-            "average": 4.2494699684098345,
-            "maximum": 20.561231087546876,
-            "minimum": 0.0014479122844759,
+            "average": 4.226653623226202,
+            "maximum": 11.783333333333333,
+            "minimum": 3.8849520633597336,
             "period_hours": 24,
-            "captured_at": "2025-11-20T10:17:19.130643"
+            "captured_at": "2025-11-20T19:10:33.870948"
           },
           "networkin": {
-            "average": 463525.3912356322,
-            "maximum": 92000851.0,
+            "average": 3564.7436403508773,
+            "maximum": 3321469.0,
             "minimum": 0.0,
             "period_hours": 24,
-            "captured_at": "2025-11-20T10:17:19.202480"
+            "captured_at": "2025-11-20T19:10:33.937986"
           },
           "networkout": {
-            "average": 1881.821724137931,
-            "maximum": 202246.0,
+            "average": 947.7367105263158,
+            "maximum": 189370.0,
             "minimum": 0.0,
             "period_hours": 24,
-            "captured_at": "2025-11-20T10:17:19.270038"
+            "captured_at": "2025-11-20T19:10:34.023081"
           }
         }
       }
@@ -230,8 +230,6 @@
         "name": "minimal-ecs",
         "arn": "arn:aws:ecs:ap-southeast-1:961639320333:cluster/minimal-ecs",
         "status": "ACTIVE",
-        "running_tasks": 0,
-        "active_services": 0,
         "running_tasks_count": 0,
         "pending_tasks_count": 0,
         "active_services_count": 0,
@@ -250,67 +248,76 @@
     "lambda_functions": [],
     "security_groups": [
       {
+        "id": "sg-0b96788ed3e5d39b5",
+        "name": "default",
+        "vpc_id": "vpc-0f76e1d18908fef9f",
+        "description": "default VPC security group",
+        "ingress_rules_count": 1,
+        "egress_rules_count": 1
+      },
+      {
         "id": "sg-087c4d338621dc532",
         "name": "eks-cluster-sg-minimal-eks-433574497",
         "vpc_id": "vpc-04157f87e1e9a2006",
-        "ingress_rules": 1,
-        "egress_rules": 1
+        "description": "EKS created security group applied to ENI that is attached to EKS Control Plane master nodes, as well as any managed workloads.",
+        "ingress_rules_count": 1,
+        "egress_rules_count": 1
       },
       {
         "id": "sg-0a89e90a3787c4d8a",
         "name": "default",
         "vpc_id": "vpc-04157f87e1e9a2006",
-        "ingress_rules": 1,
-        "egress_rules": 1
+        "description": "default VPC security group",
+        "ingress_rules_count": 1,
+        "egress_rules_count": 1
       },
       {
         "id": "sg-085cc5388ee8435f4",
         "name": "my-security-group-23fe7ea",
         "vpc_id": "vpc-04bf8abab8f95f681",
-        "ingress_rules": 2,
-        "egress_rules": 1
+        "description": "Allow SSH and HTTP",
+        "ingress_rules_count": 2,
+        "egress_rules_count": 1
       },
       {
         "id": "sg-07ff4bdfd99008796",
         "name": "default",
         "vpc_id": "vpc-04bf8abab8f95f681",
-        "ingress_rules": 1,
-        "egress_rules": 1
-      },
-      {
-        "id": "sg-0b96788ed3e5d39b5",
-        "name": "default",
-        "vpc_id": "vpc-0f76e1d18908fef9f",
-        "ingress_rules": 1,
-        "egress_rules": 1
-      },
-      {
-        "id": "sg-05c735dba46b0af3a",
-        "name": "my-security-group-84471be",
-        "vpc_id": "vpc-0f76e1d18908fef9f",
-        "ingress_rules": 2,
-        "egress_rules": 1
-      },
-      {
-        "id": "sg-05623e509969b4243",
-        "name": "driftguards-eks-dev-wny27s-additional-sg",
-        "vpc_id": "vpc-0a89e1317c7f0c943",
-        "ingress_rules": 1,
-        "egress_rules": 1
-      },
-      {
-        "id": "sg-0a24db8a2e67a8d29",
-        "name": "default",
-        "vpc_id": "vpc-0a89e1317c7f0c943",
-        "ingress_rules": 1,
-        "egress_rules": 1
+        "description": "default VPC security group",
+        "ingress_rules_count": 1,
+        "egress_rules_count": 1
       },
       {
         "id": "sg-08371793229b8d9e9",
         "name": "default",
         "vpc_id": "vpc-0e4ff52978c82fd93",
-        "ingress_rules": 1,
-        "egress_rules": 1
+        "description": "default VPC security group",
+        "ingress_rules_count": 1,
+        "egress_rules_count": 1
+      },
+      {
+        "id": "sg-05c735dba46b0af3a",
+        "name": "my-security-group-84471be",
+        "vpc_id": "vpc-0f76e1d18908fef9f",
+        "description": "Allow SSH and HTTP",
+        "ingress_rules_count": 2,
+        "egress_rules_count": 1
+      },
+      {
+        "id": "sg-0a24db8a2e67a8d29",
+        "name": "default",
+        "vpc_id": "vpc-0a89e1317c7f0c943",
+        "description": "default VPC security group",
+        "ingress_rules_count": 1,
+        "egress_rules_count": 1
+      },
+      {
+        "id": "sg-05623e509969b4243",
+        "name": "driftguards-eks-dev-wny27s-additional-sg",
+        "vpc_id": "vpc-0a89e1317c7f0c943",
+        "description": "Additional security group for EKS cluster",
+        "ingress_rules_count": 1,
+        "egress_rules_count": 1
       }
     ]
   }
